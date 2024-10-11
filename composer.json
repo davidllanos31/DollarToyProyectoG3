@@ -1,0 +1,7 @@
+{
+    "name": "vendor/dollar-toy",
+    "description": "sistemas de ventas",
+    "type": "project",
+    "minimum-stability": "stable",
+    "require": {}
+}

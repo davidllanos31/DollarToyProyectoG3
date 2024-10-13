@@ -1,7 +1,11 @@
 {
-    "name": "vendor/dollar-toy",
-    "description": "sistemas de ventas",
+    "name": "g3/dollartoy",
+    "description": "Sistema de ventas web de jugueteria",
     "type": "project",
-    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "G3\\Dollartoy\\": "src/"
+        }
+    },
     "require": {}
 }

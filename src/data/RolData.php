@@ -18,7 +18,7 @@ class RolData extends BaseData implements RolInterface
 
         $roles = [];
         foreach ($rows as $row) {
-            $roles[] = new Rol((int)$row['id_rol'], $row['nombre']);
+            $roles[] = new Rol($row['id_rol'], $row['nombre']);
         }
 
         return $roles;

@@ -4,16 +4,16 @@ namespace app\Models;
 
 class Rol
 {
-    public ?int $id;
+    public ?string $id;
     public string $nombre;
 
-    public function __construct(?int $id, string $nombre)
+    public function __construct(?string $id, string $nombre)
     {
         $this->id = $id;
         $this->nombre = $nombre;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
@@ -23,7 +23,7 @@ class Rol
         return $this->nombre;
     }
 
-    public function setId(int $id): void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }

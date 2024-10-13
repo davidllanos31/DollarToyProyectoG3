@@ -1,8 +1,8 @@
 <?php
 //ARCHIVO PARA MANEJAR RUTAS CON SU RESPECTIVO CONTROLLER
 
-use Grupo3\DollarToyProyectoG3\Controller\HomeController;
-use Grupo3\DollarToyProyectoG3\Controller\AuthController;
+use Grupo3\DollarToyProyectoG3\Controllers\HomeController;
+use Grupo3\DollarToyProyectoG3\Controllers\AuthController;
 
 return [
     '/' => [AuthController::class, 'showLoginForm'],

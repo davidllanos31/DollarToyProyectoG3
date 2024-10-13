@@ -9,7 +9,7 @@ use app\Data\BaseData;
 
 class RolData extends BaseData implements RolInterface
 {
-    const TABLE = 'rol';
+    const TABLE = 'tb_rol';
 
     public function get(): array {
         $sql = "SELECT * FROM " . self::TABLE;
@@ -18,7 +18,7 @@ class RolData extends BaseData implements RolInterface
 
         $roles = [];
         foreach ($rows as $row) {
-            $roles[] = new Rol($row['id'], $row['nombre']);
+            $roles[] = new Rol((int)$row['id_rol'], $row['nombre']);
         }
 
         return $roles;

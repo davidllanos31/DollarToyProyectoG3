@@ -4,7 +4,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Grupo3\\DollarToyProyectoG3\\": "src/"
+            "Grupo3\\DollarToyProyectoG3\\": "src/",
+            "app\\": "src/"
         }
     },
     "require": {}

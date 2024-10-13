@@ -2,7 +2,11 @@
 
 namespace app\Business\RolBusiness;
 
+use app\exceptions\DataException;
 use app\Interfaces\RolInterface;
+use app\Models\Rol;
+use app\exceptions\ValidationException;
+use app\interfaces\ValidatorInterface;
 
 class GetRol
 {
@@ -20,6 +24,10 @@ class GetRol
 
     public function getById(int $id)
     {
-        return $this->rolRepository->exists($id) ? $this->rolRepository->getById($id) : null;
+        $rol = $this->rolRepository->exists($id);
+        if ($rol === null) {
+            throw new DataException('No existe el rol con el ID ' . $id);
+        }
+        return $rol;
     }
 }

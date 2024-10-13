@@ -37,7 +37,7 @@ class RolController
     public function create()
     {
         $title = 'Crear Role';
-        $content = __DIR__ . '/../views/pages/rol/create.php';
+        $content = __DIR__ . '/../views/pages/roles/create.php';
         include __DIR__ . '/../views/layouts/main.php';
     }
 
@@ -63,7 +63,7 @@ class RolController
         $rol = $getRol->getById($id);
 
         $title = 'Editar Role';
-        $content = __DIR__ . '/../views/pages/rol/edit.php';
+        $content = __DIR__ . '/../views/pages/roles/edit.php';
         include __DIR__ . '/../views/layouts/main.php';
     }
     

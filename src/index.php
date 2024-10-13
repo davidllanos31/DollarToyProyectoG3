@@ -1,35 +1,23 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php'; //Autoloader
 
-use app\Controllers\RolController;
-use app\Data\RolData;
+$routes = require_once __DIR__ . '/../routes/web.php'; // TODAS LA RUTAS
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$requestUri = $_SERVER['REQUEST_URI'];
-$projectFolder = '/DollarToyProyectoG3';
-$baseUrl = $projectFolder;
 
-$uri = str_replace($projectFolder, '', $requestUri);
-
-$rolRepository = new RolData();
-$rolController = new RolController($rolRepository);
-
-$viewPath = __DIR__ . '/views/';
-
-switch ($uri) {
-    case '/':
-        $title = 'Inicio';
-        require $viewPath . 'users.php';
-        break;
-    case '/usuarios':
-        $title = 'Usuarios';
-        require $viewPath . 'users.php';
-        break;
-    case '/roles':
-        $rolController->index();
-        break;
-    default:
-        $title = 'Inicio';
-        require $viewPath . 'users.php';
-        break;
+$baseUri = '/DollarToyProyectoG3';
+if (strpos($uri, $baseUri) === 0) {
+    $uri = substr($uri, strlen($baseUri));
+}
+// VERIFICAR LA RUTA
+if (array_key_exists($uri, $routes)) {
+    [$controller, $method] = $routes[$uri]; //usa el controlador de la ruta
+    $controllerInstance = new $controller();
+    $controllerInstance->$method();
+} else {
+    // Manejar 404
+    header("HTTP/1.0 404 Not Found");
+    echo "Página no encontrada";
+    $log->warning("Ruta no encontrada: {$uri}");
 }

@@ -2,20 +2,33 @@
 
 namespace app\Controllers;
 
-use app\Interfaces\RolInterface;
+use app\Models\Rol;
+use app\Business\RolBusiness\AddRol;
+use app\Business\RolBusiness\GetRol;
+use app\Business\RolBusiness\UpdateRol;
+use app\Business\RolBusiness\DeleteRol;
+use app\Data\RolData;
+use app\Validators\RolValidator;
+use app\Exceptions\DataException;
+use app\Exceptions\ValidationException;
+use app\Factories\RolFactory;
 
 class RolController
 {
-    private RolInterface $rol;
+    private $validator;
+    private $repository;
 
-    public function __construct(RolInterface $rol)
+    public function __construct()
     {
-        $this->rol = $rol;
+        $this->validator = new RolValidator();
+        $this->repository = new RolData();
     }
 
     public function index()
     {
-        $rols = $this->rol->get();
+        $getRol = new GetRol($this->repository); 
+        $roles = $getRol->get();
+
         $title = 'Lista de Roles';
         $content = __DIR__ . '/../views/pages/roles/index.php';
         include __DIR__ . '/../views/layouts/main.php';
@@ -24,5 +37,56 @@ class RolController
     public function create()
     {
         $title = 'Crear Role';
+        $content = __DIR__ . '/../views/pages/rol/create.php';
+        include __DIR__ . '/../views/layouts/main.php';
+    }
+
+    public function store()
+    {
+        $body = $_POST;
+        $addRol = new AddRol($this->repository, $this->validator);
+
+        try {
+            $rol = RolFactory::create(null, $body['nombre']);
+            $addRol->add($rol);
+            header('Location: /roles');
+        } catch (ValidationException $e) {
+            echo $e->getMessage();
+        } catch (DataException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function edit($id)
+    {
+        $getRol = new GetRol($this->repository);
+        $rol = $getRol->getById($id);
+
+        $title = 'Editar Role';
+        $content = __DIR__ . '/../views/pages/rol/edit.php';
+        include __DIR__ . '/../views/layouts/main.php';
+    }
+    
+    public function update($id)
+    {
+        $body = $_POST;
+        $updateRol = new UpdateRol($this->repository, $this->validator);
+
+        try {
+            $rol = RolFactory::create($id, $body['nombre']);
+            $updateRol->update($rol);
+            header('Location: /roles');
+        } catch (ValidationException $e) {
+            echo $e->getMessage();
+        } catch (DataException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function delete($id)
+    {
+        $deleteRol = new DeleteRol($this->repository);
+        $deleteRol->delete($id);
+        header('Location: /roles');
     }
 }

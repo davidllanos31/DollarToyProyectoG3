@@ -55,4 +55,13 @@ class RolData extends BaseData implements RolInterface
         $stmt->execute(['id' => $id]);
         return $stmt->fetchColumn() > 0;
     }
+
+    public function getById(int $id): ?Rol
+    {
+        $sql = "SELECT * FROM " . self::TABLE . " WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? new Rol($row['id'], $row['nombre']) : null;
+    }
 }

@@ -11,4 +11,5 @@ interface RolInterface
     public function update(Rol $rol): bool; // Usar la clase Rol aquí
     public function delete(int $id): bool;
     public function exists(int $id): bool;
+    public function getById(int $id): ?Rol;
 }

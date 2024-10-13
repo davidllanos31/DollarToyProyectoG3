@@ -2,9 +2,11 @@
 
 namespace app\interfaces;
 
+use app\Models\Rol;
+
 interface ValidatorInterface
 {
     public function getError(): string;
-    public function validateAdd($data): bool;
-    public function validateUpdate($data): bool;
+    public function validateAdd(Rol $data): bool;
+    public function validateUpdate(Rol $data): bool;
 }

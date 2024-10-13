@@ -1,10 +1,10 @@
 {
-    "name": "g3/dollartoy",
-    "description": "Sistema de ventas web de jugueteria",
+    "name": "grupo3/dollar-toy-proyecto-g3",
+    "description": "Sistema de gestión de jugueteria",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "G3\\Dollartoy\\": "src/"
+            "Grupo3\\DollarToyProyectoG3\\": "src/"
         }
     },
     "require": {}

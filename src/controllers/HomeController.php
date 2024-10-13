@@ -8,6 +8,7 @@ class HomeController
     {
         $title = "Dashboard";
         $content = __DIR__ . '/../views/home.php';
+        $data = [];
 
         if ($this->isAjaxRequest()) {
             include $content; // Solo el contenido para AJAX

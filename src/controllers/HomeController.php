@@ -6,6 +6,9 @@ class HomeController
 {
     public function index()
     {
-        require_once __DIR__ . '/../views/home.php';
+        $title = "Dashboard";
+        $content = __DIR__ . '/../views/home.php'; //CONTENIDO
+        $data = "data";
+        include __DIR__ . '/../views/layouts/main.php'; //Layout principal: tiene un navbar y footer, espera un CONTENIDO
     }
 }

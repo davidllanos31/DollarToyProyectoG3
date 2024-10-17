@@ -12,8 +12,8 @@ class AuthController
     public function login()
     {
         // Procesar la autenticación
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
+        // $username = $_POST['username'] ?? '';
+        // $password = $_POST['password'] ?? '';
 
         header('Location: /DollarToyProyectoG3/home');
         exit();

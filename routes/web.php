@@ -16,5 +16,5 @@ return [
     '/ventas' => [VentasController::class, 'index'],
     // Agregar más rutas...
     '/categorias' => [CategoriaController::class, 'index'],
-
+    '/categorias/buscar' => [CategoriaController::class, 'buscar'], 
 ];

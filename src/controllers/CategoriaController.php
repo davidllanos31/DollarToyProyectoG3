@@ -20,7 +20,6 @@ class CategoriaController
     {
         $this->validator = new CategoriaValidator();
         $this->repository = new CategoriaData();
-
     }
 
     public function index()
@@ -35,6 +34,24 @@ class CategoriaController
     public function create()
     {
         require_once 'views/categoria/create.php';
+    }
+
+    public function buscar()
+    {
+        $query = $_POST['query'];
+
+        $categorias = $this->repository->find(['id_categoria' => null, 'nombre' => $query]);
+
+        $categoriasArray = array_map(function($categoria) {
+            return [
+                'id' => $categoria->getId(),
+                'nombre' => $categoria->getNombre(),
+                'descripcion' => $categoria->getDescripcion()
+            ];
+        }, $categorias);
+    
+        echo json_encode($categoriasArray);
+        
     }
 
     public function store()

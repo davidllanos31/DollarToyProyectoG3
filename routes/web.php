@@ -1,6 +1,7 @@
 <?php
 //ARCHIVO PARA MANEJAR RUTAS CON SU RESPECTIVO CONTROLLER
 
+use app\Controllers\CategoriaController;
 use Grupo3\DollarToyProyectoG3\Controllers\HomeController;
 use Grupo3\DollarToyProyectoG3\Controllers\AuthController;
 use Grupo3\DollarToyProyectoG3\Controllers\UserController;
@@ -12,4 +13,6 @@ return [
     '/home' => [HomeController::class, 'index'],
     '/usuarios' => [UserController::class, 'index'],
     // Agregar más rutas...
+    '/categorias' => [CategoriaController::class, 'index'],
+
 ];

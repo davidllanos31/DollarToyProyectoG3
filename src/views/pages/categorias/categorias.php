@@ -1,5 +1,4 @@
-<input type="text" id="buscar" placeholder="Buscar productos...">
-<div id="resultado"></div>
+<input type="text" id="buscar-categorias" placeholder="Buscar productos...">
 
 <table id="categoriasTable" border="1" class="table table-striped">
     <thead>
@@ -23,39 +22,3 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-
-<script>
-    $(document).ready(function() {
-        $('#buscar').on('keyup', function() {
-            var query = $(this).val();
-            if (query.length > 2) {
-                $.ajax({
-                    url: '/DollarToyProyectoG3/categorias/buscar',
-                    method: 'POST',
-                    data: {
-                        query: query,
-                        action: 'buscar'
-                    },
-                    success: function(response) {
-                        var data = JSON.parse(response);
-                        console.log(data);
-                        var resultado = '';
-                        data.forEach(function(categoria) {
-                            resultado += '<tr>';
-                            resultado += '<td>' + categoria.id + '</td>';
-                            resultado += '<td>' + categoria.nombre + '</td>';
-                            resultado += '<td>' + categoria.descripcion + '</td>';
-                            resultado += '<td>';
-                            resultado += '<a href="/categorias/edit/' + categoria.id + '">Editar</a>';
-                            resultado += ' <a href="/categorias/delete/' + categoria.id + '" onclick="return confirm(\'¿Estás seguro?\')">Eliminar</a>';
-                            resultado += '</td>';
-                            resultado += '</tr>';
-                        });
-
-                        $('#categoriasTable tbody').html(resultado);
-                    }
-                });
-            }
-        });
-    });
-</script>

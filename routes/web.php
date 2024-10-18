@@ -19,4 +19,8 @@ return [
     '/categorias/buscar' => [CategoriaController::class, 'buscar'], 
     '/categorias/editar' => [CategoriaController::class, 'update'],
     '/categorias/eliminar' => [CategoriaController::class, 'delete'],
+    
+    '/sedes' => [SedesController::class, 'index'],
+    '/sedes/buscar' => [SedesController::class, 'buscar'],
+    '/sedes/crear' => [SedesController::class, 'create'],
 ];

@@ -2,6 +2,7 @@
 //ARCHIVO PARA MANEJAR RUTAS CON SU RESPECTIVO CONTROLLER
 
 use app\Controllers\CategoriaController;
+use app\Controllers\RolController;
 use Grupo3\DollarToyProyectoG3\Controllers\HomeController;
 use Grupo3\DollarToyProyectoG3\Controllers\AuthController;
 use Grupo3\DollarToyProyectoG3\Controllers\UserController;
@@ -14,7 +15,6 @@ return [
     '/home' => [HomeController::class, 'index'],
     '/usuarios' => [UserController::class, 'index'],
     '/ventas' => [VentasController::class, 'index'],
-    // Agregar más rutas...
     '/categorias' => [CategoriaController::class, 'index'],
     '/categorias/buscar' => [CategoriaController::class, 'buscar'], 
     '/categorias/editar' => [CategoriaController::class, 'update'],
@@ -23,4 +23,6 @@ return [
     '/sedes' => [SedesController::class, 'index'],
     '/sedes/buscar' => [SedesController::class, 'buscar'],
     '/sedes/crear' => [SedesController::class, 'create'],
+    '/roles' => [RolController::class, 'index'], 
+    '/roles/buscar' => [RolController::class, 'buscar'], 
 ];

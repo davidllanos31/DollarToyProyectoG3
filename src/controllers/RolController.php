@@ -30,8 +30,7 @@ class RolController
         $roles = $getRol->get();
 
         $title = 'Lista de Roles';
-        $content = __DIR__ . '/../views/pages/roles/index.php';
-        include __DIR__ . '/../views/layouts/main.php';
+        include __DIR__ . '/../views/pages/roles/index.php';
     }
 
     public function create()

@@ -20,4 +20,4 @@
 <body>
     <div class="d-flex">
     <?php include __DIR__ . '/navbar.php'; ?>   
-    <main id="content" class="flex-grow-1 p-4"
+    <main id="content" class="flex-grow-1 p-4">

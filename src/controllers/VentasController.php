@@ -7,7 +7,7 @@ use app\Data\RolData;
 
 class VentasController {
     //Atributos para conexión bd
-    private $validator;
+    private $validator;//opcional
     private $repository;
 
     public function __construct()

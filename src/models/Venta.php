@@ -1,6 +1,6 @@
 <?php
 namespace app\Models;
-class VentaModel
+class Venta
 {   
     public string $codigo;
     public string $nombre;

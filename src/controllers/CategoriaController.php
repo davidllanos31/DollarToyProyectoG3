@@ -27,8 +27,7 @@ class CategoriaController
         $getCategoria = new CategoriaGet($this->repository, $this->validator);
         $categorias = $getCategoria->find(['id_categoria' => null, 'nombre' => null]);
         $title = 'Lista de Categorias';
-        $content = __DIR__ . '/../views/pages/categorias/index.php';
-        include __DIR__ . '/../views/layouts/main.php';
+        require_once __DIR__ . '/../views/pages/categorias/index.php';
     }
 
     public function create()

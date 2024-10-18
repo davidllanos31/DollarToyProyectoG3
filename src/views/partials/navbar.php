@@ -1,8 +1,23 @@
-<nav>
-    <ul>
-        <li><a href="#" class="nav-link" data-url="/DollarToyProyectoG3/home">Home</a></li>
-        <li><a href="#" class="nav-link" data-url="/DollarToyProyectoG3/usuarios">Ver usuarios</a></li>
-        <li><a href="#" class="nav-link" data-url="/DollarToyProyectoG3/ventas">Ver ventas</a></li>
-        <li><a href="#" class="nav-link" data-url="/DollarToyProyectoG3/logout">Logout</a></li>
+<div class="sidebar">
+    <h4>Dollar Toy</h4>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a href="<?= BASE_URI; ?>/home" class="nav-link active">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= BASE_URI; ?>/usuarios" class="nav-link" >Usuarios</a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= BASE_URI; ?>/categorias" class="nav-link" >Categorias</a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= BASE_URI; ?>/ventas" class="nav-link" >Ventas</a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= BASE_URI; ?>/sedes" class="nav-link" >Sedes</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link" >Logout</a>
+        </li>
     </ul>
-</nav>
+</div>

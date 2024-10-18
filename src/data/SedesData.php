@@ -13,14 +13,14 @@ class SedesData extends BaseData implements SedesInterface
 
     public function find(array $filters): array
     {
-        $sql = "CALL sp_listar_sede(?, ?)";
+        $sql = "CALL sp_listar_sede";
         $stmt = $this->pdo->prepare($sql);
         
         $id = $filters['id'] ?? null;
         $nombre = $filters['nombre'] ?? null;
         
-        $stmt->bindParam(1, $id, PDO::PARAM_INT);
-        $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
+        // $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        // $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
         $stmt->execute();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -1,6 +1,6 @@
 <input type="text" id="buscar-sedes" placeholder="Buscar Sedes...">
 
-<table id="sedesTable" border="1" clas="table table-striped">
+<table id="sedesTable" border="1" class="table table-striped">
     <thead> 
         <tr>
             <th>ID</th>

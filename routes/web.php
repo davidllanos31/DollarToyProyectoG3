@@ -3,10 +3,12 @@
 
 use app\Controllers\CategoriaController;
 use app\Controllers\RolController;
+use app\Controllers\SedesController;
 use Grupo3\DollarToyProyectoG3\Controllers\HomeController;
 use Grupo3\DollarToyProyectoG3\Controllers\AuthController;
 use Grupo3\DollarToyProyectoG3\Controllers\UserController;
 use Grupo3\DollarToyProyectoG3\Controllers\VentasController;
+// use Grupo3\DollarToyProyectoG3\Controllers\SedesController;
 
 return [
     '/' => [AuthController::class, 'showLoginForm'],

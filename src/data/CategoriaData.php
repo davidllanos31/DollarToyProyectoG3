@@ -29,7 +29,7 @@ class CategoriaData extends BaseData implements CategoriaInterface
         foreach ($result as $row) { 
             $categorias[] = new Categoria($row['id_categoria'], $row['nombre'], $row['descripcion']);
         }
-        // var_dump($categorias);
+        
         return $categorias;
     }
     

@@ -6,6 +6,7 @@ require __DIR__ . '/config/database.php';
 $routes = require_once __DIR__ . '/../routes/web.php'; // TODAS LA RUTAS
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $baseUri = '/DollarToyProyectoG3';
+define('BASE_URI', $baseUri);
 
 if (strpos($uri, $baseUri) === 0) {//quita dollartoy de la ruta
     $uri = substr($uri, strlen($baseUri));

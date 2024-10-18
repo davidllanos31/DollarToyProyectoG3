@@ -15,8 +15,8 @@
                 <td><?php echo $categoria->getNombre(); ?></td>
                 <td><?php echo $categoria->getDescripcion(); ?></td>
                 <td>
-                    <a href="/categorias/editar/<?php echo $categoria->getId(); ?>">Editar</a>
-                    <a href="/categorias/eliminar/<?php echo $categoria->getId(); ?>" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                    <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria->getId(); ?>">Editar</a>
+                    <a href="<?= BASE_URI; ?>/categorias/eliminar/<?php echo $categoria->getId(); ?>" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -17,4 +17,6 @@ return [
     // Agregar más rutas...
     '/categorias' => [CategoriaController::class, 'index'],
     '/categorias/buscar' => [CategoriaController::class, 'buscar'], 
+    '/categorias/editar' => [CategoriaController::class, 'update'],
+    '/categorias/eliminar' => [CategoriaController::class, 'delete'],
 ];

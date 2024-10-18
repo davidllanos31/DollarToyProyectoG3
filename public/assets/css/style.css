@@ -54,8 +54,8 @@ nav ul li a:hover {
 
 /* Contenido principal */
 main {
-    margin-left: 200px; /* Espacio para el navbar */
-    padding: 20px;
+    /* margin-left: 200px; */
+    /* padding: 20px; */
     width: 100%;
     background-color: #f4f4f4;
 }

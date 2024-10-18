@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.nav-link').click(function(e) {
+    $(document).on('click', '.nav-link', function(e) {
         e.preventDefault();
         var url = $(this).data('url');
 
@@ -8,6 +8,7 @@ $(document).ready(function() {
             method: 'GET',
             success: function(response) {
                 $('#content').html(response);
+                history.pushState(null, '', url);
             },
             error: function() {
                 $('#content').html('<p>Error al cargar la página.</p>');

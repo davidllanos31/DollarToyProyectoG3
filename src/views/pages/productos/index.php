@@ -9,7 +9,7 @@ switch ($url[0]) {
     default:
         switch ($url[1]) {
             default:
-                require_once __DIR__ . '/categorias.php';
+                require_once __DIR__ . '/productos.php';
                 break;
         }
         break;

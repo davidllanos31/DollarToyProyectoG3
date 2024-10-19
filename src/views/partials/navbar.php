@@ -17,6 +17,9 @@
             <a href="<?= BASE_URI; ?>/sedes" class="nav-link" >Sedes</a>
         </li>
         <li class="nav-item">
+            <a href="<?= BASE_URI; ?>/productos" class="nav-link" >Productos</a>
+        </li>
+        <li class="nav-item">
             <a href="#" class="nav-link" >Logout</a>
         </li>
     </ul>

@@ -36,8 +36,12 @@
     <?php //include __DIR__ . '/../partials/footer.php'; ?>
     <script src="<?= BASE_URI; ?>/public/assets/js/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="<?= BASE_URI; ?>/public/assets/js/crudcategorias-jquery.js"></script>
+    <!-- <script src="<?= BASE_URI; ?>/public/assets/js/crudcategorias-jquery.js"></script> -->
     <script src="<?= BASE_URI; ?>/public/assets/js/crudVentas.js"></script>
+    <script src="/DollarToyProyectoG3/public/assets/js/contenido-jquery.js"></script>
+    <script src="/DollarToyProyectoG3/public/assets/js/crudcategorias-jquery.js"></script>
+    <script src="/DollarToyProyectoG3/public/assets/js/crudsedes.js"></script>
+    
 </body>
 
 </html>

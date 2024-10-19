@@ -45,7 +45,8 @@ class SedesController
             return [
                 'id' => $sede->getId(),
                 'nombre' => $sede->getNombre(),
-                'direccion' => $sede->getDireccion()
+                'direccion' => $sede->getDireccion(),
+                'ciudad' => $sede->getCiudad()
             ];
         }, $sedes);
     

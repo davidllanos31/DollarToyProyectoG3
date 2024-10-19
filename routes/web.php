@@ -8,6 +8,7 @@ use Grupo3\DollarToyProyectoG3\Controllers\HomeController;
 use Grupo3\DollarToyProyectoG3\Controllers\AuthController;
 use Grupo3\DollarToyProyectoG3\Controllers\UserController;
 use Grupo3\DollarToyProyectoG3\Controllers\VentaController;
+use app\Controllers\ProductoController;
 // use Grupo3\DollarToyProyectoG3\Controllers\SedesController;
 
 return [
@@ -28,4 +29,7 @@ return [
     '/sedes/crear' => [SedesController::class, 'create'],
     '/roles' => [RolController::class, 'index'], 
     '/roles/buscar' => [RolController::class, 'buscar'], 
+
+    '/productos' => [ProductoController::class, 'index'],
+    // '/productos/buscar' => [ProductoController::class, 'buscar'],
 ];

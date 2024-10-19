@@ -19,7 +19,7 @@
             <td><?php echo $producto['descripcion']; ?></td>
             <td><?php echo $producto['precio']; ?></td>
             <td><?php echo $producto['imagen_url']; ?></td>
-            <td>Hpla</td>
+            <td>H0la</td>
             <td>
                 <!-- 
                 <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria['id']; ?>">Editar</a>

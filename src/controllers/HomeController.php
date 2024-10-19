@@ -13,7 +13,7 @@ class HomeController
         if ($this->isAjaxRequest()) {
             include $content; // Solo el contenido para AJAX
         } else {
-            include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
+            // include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
         }
     }
     private function isAjaxRequest()

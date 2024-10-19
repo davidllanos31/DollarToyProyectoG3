@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-10-2024 a las 23:58:05
+-- Tiempo de generación: 19-10-2024 a las 05:21:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,6 +39,34 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_cliente` (IN `p_id_clien
             apellido = p_apellido,
             email = p_email
         WHERE id_cliente = p_id_cliente;
+    END IF;
+END$$
+
+DROP PROCEDURE IF EXISTS `sp_guardar_detalle_venta`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_detalle_venta` (IN `p_id_detalle_venta` INT, IN `p_id_venta` INT, IN `p_id_producto` INT, IN `p_cantidad` INT, IN `p_precio_unitario` FLOAT)   BEGIN
+    IF p_id_detalle_venta = 0 THEN
+        INSERT INTO tb_detalle_venta (id_venta, id_producto, cantidad, precio_unitario)
+        VALUES (p_id_venta, p_id_producto, p_cantidad, p_precio_unitario);
+    ELSE
+        UPDATE tb_detalle_venta
+        SET id_venta = p_id_venta,
+            id_producto = p_id_producto,
+            cantidad = p_cantidad,
+            precio_unitario = p_precio_unitario
+        WHERE id_detalle_venta = p_id_detalle_venta;
+    END IF;
+END$$
+
+DROP PROCEDURE IF EXISTS `sp_guardar_metodo_pago`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_metodo_pago` (IN `p_id_metodopago` INT, IN `p_nombre` VARCHAR(50))   BEGIN
+    IF p_id_metodopago = 0 THEN
+        INSERT INTO tb_metodo_pago (nombre)
+        VALUES (p_nombre);
+
+    ELSE
+        UPDATE tb_metodo_pago
+        SET nombre = p_nombre
+        WHERE id_metodopago = p_id_metodopago;
     END IF;
 END$$
 
@@ -122,63 +150,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_usuario` (IN `p_id_usuar
     END IF;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_ListarProductoxSede`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ListarProductoxSede` (IN `p_id_sede` INT)   BEGIN
-    SELECT 
-        p.nombre AS nombre_producto,
-        p.descripcion,
-        p.precio,
-        c.nombre AS categoria,
-        sp.stock_disponible
-    FROM 
-        tb_sedeproducto sp
-    JOIN 
-        tb_producto p ON sp.id_producto = p.id_producto
-    JOIN 
-        tb_categoria c ON p.id_categoria_producto = c.id_categoria
-    WHERE 
-        sp.id_sede = p_id_sede;
-END$$
-
-DROP PROCEDURE IF EXISTS `sp_ListarVentaDetalle`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ListarVentaDetalle` (IN `p_id_cliente` INT)   BEGIN
-    SELECT 
-        v.id_venta,
-        v.fecha_venta,
-        p.nombre AS nombre_producto,
-        dv.cantidad,
-        dv.precio_unitario,
-        (dv.cantidad * dv.precio_unitario) AS total
-    FROM 
-        tb_venta v
-    JOIN 
-        tb_detalle_venta dv ON v.id_venta = dv.id_venta
-    JOIN 
-        tb_producto p ON dv.id_producto = p.id_producto
-    WHERE 
-        v.id_venta_cliente = p_id_cliente;
-END$$
-
-DROP PROCEDURE IF EXISTS `sp_ListarVentas`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ListarVentas` ()   BEGIN
-    SELECT 
-        CONCAT(c.nombre, ' ', c.apellido) AS nombre_cliente,
-        CONCAT(u.nombre, ' ', u.apellido) AS nombre_vendedor,
-        p.nombre AS nombre_producto,
-        v.cantidad,
-        DATE(v.fecha_venta) AS fecha_venta,
-        m.nombre AS metodo_pago,
-        v.total
-    FROM 
-        tb_venta v
-    JOIN 
-        tb_cliente c ON v.id_venta_cliente = c.id_cliente
-    JOIN 
-        tb_producto p ON v.id_venta_producto = p.id_producto
-    JOIN 
-        tb_usuario u ON v.id_venta_usuario = u.id_usuario
-    JOIN 
-        tb_metodo_pago m ON v.id_metodopago_venta = m.id_metodopago;
+DROP PROCEDURE IF EXISTS `sp_guardar_venta`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_venta` (IN `p_id_venta` INT, IN `p_id_usuario` INT, IN `p_id_cliente` INT, IN `p_cantidad` INT, IN `p_fecha_venta` DATETIME, IN `p_id_metodopago` INT, IN `p_total` FLOAT)   BEGIN
+    IF p_id_venta = 0 THEN
+        INSERT INTO tb_venta (id_venta_usuario, id_venta_cliente, cantidad, fecha_venta, id_metodopago_venta, total)
+        VALUES (p_id_usuario, p_id_cliente, p_cantidad, p_fecha_venta, p_id_metodopago, p_total);
+    ELSE
+        UPDATE tb_venta
+        SET id_venta_usuario = p_id_usuario,
+            id_venta_cliente = p_id_cliente,
+            cantidad = p_cantidad,
+            fecha_venta = p_fecha_venta,
+            id_metodopago_venta = p_id_metodopago,
+            total = p_total
+        WHERE id_venta = p_id_venta;
+    END IF;
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_listar_categoria`$$
@@ -209,6 +195,26 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_cliente` (IN `p_id_client
         (p_nombre IS NULL OR c.nombre LIKE CONCAT('%', p_nombre, '%')) AND
         (p_apellido IS NULL OR c.apellido LIKE CONCAT('%', p_apellido, '%')) AND
         (p_email IS NULL OR c.email LIKE CONCAT('%', p_email, '%'));
+END$$
+
+DROP PROCEDURE IF EXISTS `sp_listar_detalle_venta`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_detalle_venta` (IN `p_id_detalle_venta` INT, IN `p_id_venta` INT, IN `p_id_producto` INT, IN `p_cantidad_min` INT, IN `p_cantidad_max` INT, IN `p_precio_unitario_min` FLOAT, IN `p_precio_unitario_max` FLOAT)   BEGIN
+    SELECT 
+        dv.id_detalle_venta,
+        dv.id_venta,
+        dv.id_producto,
+        dv.cantidad,
+        dv.precio_unitario
+    FROM 
+        tb_detalle_venta dv
+    WHERE
+        (p_id_detalle_venta IS NULL OR dv.id_detalle_venta = p_id_detalle_venta) AND
+        (p_id_venta IS NULL OR dv.id_venta = p_id_venta) AND
+        (p_id_producto IS NULL OR dv.id_producto = p_id_producto) AND
+        (p_cantidad_min IS NULL OR dv.cantidad >= p_cantidad_min) AND
+        (p_cantidad_max IS NULL OR dv.cantidad <= p_cantidad_max) AND
+        (p_precio_unitario_min IS NULL OR dv.precio_unitario >= p_precio_unitario_min) AND
+        (p_precio_unitario_max IS NULL OR dv.precio_unitario <= p_precio_unitario_max);
 END$$
 
 DROP PROCEDURE IF EXISTS `sp_listar_producto`$$
@@ -247,6 +253,20 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_rol` (IN `p_id_rol` INT, 
         (p_nombre IS NULL OR r.nombre LIKE CONCAT('%', p_nombre, '%'));
 END$$
 
+DROP PROCEDURE IF EXISTS `sp_listar_sede`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_sede` (IN `p_id_sede` INT, IN `p_nombre` VARCHAR(100))   BEGIN
+    SELECT 
+        s.id_sede,
+        s.nombre,
+        s.direccion,
+        s.ciudad
+    FROM 
+        tb_sedes s
+    WHERE
+        (p_id_sede IS NULL OR s.id_sede = p_id_sede) AND
+        (p_nombre IS NULL OR s.nombre LIKE CONCAT('%', p_nombre, '%'));
+END$$
+
 DROP PROCEDURE IF EXISTS `sp_listar_usuario`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_usuario` (IN `p_id_usuario` INT, IN `p_nombre` VARCHAR(255), IN `p_apellido` VARCHAR(255), IN `p_email` VARCHAR(255), IN `p_id_rol` INT)   BEGIN
     SELECT 
@@ -269,6 +289,28 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_usuario` (IN `p_id_usuari
         (p_id_rol IS NULL OR u.id_usuario_rol = p_id_rol);
 END$$
 
+DROP PROCEDURE IF EXISTS `sp_listar_venta`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_venta` (IN `p_id_venta` INT, IN `p_id_usuario` INT, IN `p_id_cliente` INT, IN `p_fecha_venta` DATETIME, IN `p_id_metodopago` INT, IN `p_total_min` FLOAT, IN `p_total_max` FLOAT)   BEGIN
+    SELECT 
+        v.id_venta,
+        v.id_venta_usuario,
+        v.id_venta_cliente,
+        v.cantidad,
+        v.fecha_venta,
+        v.id_metodopago_venta,
+        v.total
+    FROM 
+        tb_venta v
+    WHERE
+        (p_id_venta IS NULL OR v.id_venta = p_id_venta) AND
+        (p_id_usuario IS NULL OR v.id_venta_usuario = p_id_usuario) AND
+        (p_id_cliente IS NULL OR v.id_venta_cliente = p_id_cliente) AND
+        (p_fecha_venta IS NULL OR v.fecha_venta = p_fecha_venta) AND
+        (p_id_metodopago IS NULL OR v.id_metodopago_venta = p_id_metodopago) AND
+        (p_total_min IS NULL OR v.total >= p_total_min) AND
+        (p_total_max IS NULL OR v.total <= p_total_max);
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -289,8 +331,8 @@ CREATE TABLE `tb_categoria` (
 --
 
 INSERT INTO `tb_categoria` (`id_categoria`, `nombre`, `descripcion`) VALUES
-(1, 'Comida', 'Alimentos'),
-(2, 'Comida', 'Alimentos'),
+(1, 'Eletronicos', 'Alimentos'),
+(2, 'Tecnologias', 'Alimentos'),
 (3, 'Comida', 'Alimentos'),
 (4, 'Comida', 'Alimentos varios'),
 (5, 'Comida', 'Alimentos varios'),
@@ -386,7 +428,7 @@ CREATE TABLE `tb_rol` (
 INSERT INTO `tb_rol` (`id_rol`, `nombre`) VALUES
 (1, 'Admin'),
 (2, 'Soporte'),
-(3, 'Soporte'),
+(3, 'Veedor'),
 (4, 'Soporte');
 
 -- --------------------------------------------------------

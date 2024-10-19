@@ -1,42 +1,114 @@
 <?php
 
-namespace Grupo3\DollarToyProyectoG3\Controllers;
+namespace app\Controllers;
 
-use app\Business\UsuarioBusiness\GetUsuario;
+use app\Business\UsuarioBusiness\UsuarioDelete;
+use app\Models\Usuario;
+use app\Business\UsuarioBusiness\UsuarioGet;
 use app\Data\UsuarioData;
+use app\Validators\UsuarioValidator;
+use app\Exceptions\DataException;
+use app\Exceptions\ValidationException;
+use app\Factories\UserFactory;
 
 class UsuarioController
 {
-    private UsuarioData $repository;
+    private $validator;
+    private $repository;
 
     public function __construct()
     {
+        $this->validator = new UsuarioValidator();
         $this->repository = new UsuarioData();
     }
 
     public function index()
     {
-        // Instanciamos GetUsuario para obtener la lista de usuarios
-        $getUsuario = new GetUsuario($this->repository);
-        $usuarios = $getUsuario->get(); // Obtener la lista de usuarios
+        $getUsuario = new UsuarioGet($this->repository, $this->validator);
+        $usuarios = $getUsuario->find(['id_rol' => null]);
+        $title = 'Lista de Usuarios';
+        require_once __DIR__ . '/../views/pages/usuarios/index.php';
+    }
 
-        // Definimos la ruta de la vista
-        $content = __DIR__ . '/../views/usuarios.php';
-        $title = 'Listado de Usuarios'; // Definimos el título de la vista
+    public function create()
+    {
+        require_once 'views/usuario/create.php';
+    }
 
-        // Verificamos si la petición es AJAX
-        if ($this->isAjaxRequest()) {
-            // Solo se incluye el contenido para peticiones AJAX
-            include $content;
-        } else {
-            // Incluimos la vista principal que contiene el layout y el contenido
-            include __DIR__ . '/../views/layouts/main.php';
+    public function buscar()
+    {
+        $query = $_POST['query'];
+        $usuarios = $this->repository->find(['id_rol' => $query]);
+
+        $usuariosArray = array_map(function ($usuario) {
+            return [
+                'id' => $usuario->getId(),
+                'nombre' => $usuario->getNombre(),
+                'apellido' => $usuario->getApellido(),
+                'email' => $usuario->getEmail(),
+                'celular' => $usuario->getCelular(),
+                'fecha_registro' => $usuario->getFechaRegistro(),
+                'rol' => $usuario->getRol()
+            ];
+        }, $usuarios);
+
+        echo json_encode($usuariosArray);
+    }
+
+    public function store()
+    {
+        $body = $_POST;
+
+        try {
+            $usuario = UserFactory::create(
+                null,
+                $body['nombre'],
+                $body['apellido'],
+                $body['email'],
+                $body['celular'],
+                $body['fecha_registro'],
+                $body['rol']
+            );
+            header('Location: /usuarios');
+        } catch (ValidationException $e) {
+            echo $e->getMessage();
+        } catch (DataException $e) {
+            echo $e->getMessage();
         }
     }
 
-    private function isAjaxRequest(): bool
+    public function edit($id)
     {
-        // Verifica si la solicitud es AJAX
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        // $getUsuario = new UsuarioGet($this->repository, $this->validator);
+        // $usuario = $getUsuario->find(['id_usuario' => $id]);
+    }
+
+    public function update($id)
+    {
+        $body = $_POST;
+
+        try {
+            $usuario = UserFactory::create(
+                $id,
+                $body['nombre'],
+                $body['apellido'],
+                $body['email'],
+                $body['celular'],
+                $body['fecha_registro'],
+                $body['rol']
+            );
+            header('Location: /usuarios');
+        } catch (ValidationException $e) {
+            echo $e->getMessage();
+        } catch (DataException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function delete($id)
+    {
+        $deleteUsuario = new UsuarioDelete($this->repository);
+        $deleteUsuario->deleteById($id);
+        header('Location: /usuarios');
     }
 }

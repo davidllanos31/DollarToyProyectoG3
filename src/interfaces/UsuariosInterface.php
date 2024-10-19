@@ -1,14 +1,13 @@
 <?php
 
-namespace app\Interfaces;
+namespace app\interfaces;
 
-use app\Models\Usuario; // Asegúrate de que el nombre de la clase es correcto
+use app\Models\Usuario;
 
 interface UsuarioInterface
 {
-    public function create(Usuario $usuario): bool; // Método para crear un usuario
-    public function get(): array; // Método para obtener una lista de usuarios
-    public function update(Usuario $usuario): bool; // Método para actualizar un usuario
-    public function delete(string $id_usuario): bool; // Método para eliminar un usuario
-    public function getById(string $id_usuario): ?Usuario; // Método para obtener un usuario por ID
+    public function find(array $filters): array;
+    public function save(Usuario $usuario): bool;
+    public function delete(int $id): bool;
+    public function exists(int $id): bool;
 }

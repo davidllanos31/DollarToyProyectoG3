@@ -4,66 +4,99 @@ namespace app\Models;
 
 class Usuario
 {
-    private string $id_usuario;
+    private int $id;
     private string $nombre;
     private string $apellido;
     private string $email;
-    private int $celular;
-    private string $contraseña; // Considera encriptar esta propiedad
-    private string $fecha_registro;
-    private string $id_usuario_rol;
+    private string $celular;
+    private string $fechaRegistro;
+    private string $rol;
 
     public function __construct(
-        string $id_usuario,
+        int $id,
         string $nombre,
         string $apellido,
         string $email,
-        int $celular,
-        string $contraseña,
-        string $fecha_registro,
-        string $id_usuario_rol
+        string $celular,
+        string $fechaRegistro,
+        string $rol
     ) {
-        $this->id_usuario = $id_usuario;
+        $this->id = $id;
         $this->nombre = $nombre;
         $this->apellido = $apellido;
         $this->email = $email;
         $this->celular = $celular;
-        $this->contraseña = $contraseña;
-        $this->fecha_registro = $fecha_registro;
-        $this->id_usuario_rol = $id_usuario_rol;
+        $this->fechaRegistro = $fechaRegistro;
+        $this->rol = $rol;
     }
 
-    // Métodos getters
-    public function getIdUsuario(): string
+    public function getId(): int
     {
-        return $this->id_usuario;
+        return $this->id;
     }
+
     public function getNombre(): string
     {
         return $this->nombre;
     }
+
     public function getApellido(): string
     {
         return $this->apellido;
     }
+
     public function getEmail(): string
     {
         return $this->email;
     }
-    public function getCelular(): int
+
+    public function getCelular(): string
     {
         return $this->celular;
     }
-    public function getContraseña(): string
-    {
-        return $this->contraseña;
-    }
+
     public function getFechaRegistro(): string
     {
-        return $this->fecha_registro;
+        return $this->fechaRegistro;
     }
-    public function getIdUsuarioRol(): string
+
+    public function getRol(): string
     {
-        return $this->id_usuario_rol;
+        return $this->rol;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setNombre(string $nombre): void
+    {
+        $this->nombre = $nombre;
+    }
+
+    public function setApellido(string $apellido): void
+    {
+        $this->apellido = $apellido;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setCelular(string $celular): void
+    {
+        $this->celular = $celular;
+    }
+
+    public function setFechaRegistro(string $fechaRegistro): void
+    {
+        $this->fechaRegistro = $fechaRegistro;
+    }
+
+    public function setRol(string $rol): void
+    {
+        $this->rol = $rol;
     }
 }

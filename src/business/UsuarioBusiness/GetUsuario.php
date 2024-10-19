@@ -2,33 +2,36 @@
 
 namespace app\Business\UsuarioBusiness;
 
+use app\exceptions\DataException;
 use app\Interfaces\UsuarioInterface;
+use app\interfaces\ValidatorInterfaceActual;
 
-class GetUsuario
+class UsuarioGet
 {
-    private UsuarioInterface $usuarioRepository; // Tipado de variable
+    private UsuarioInterface $usuario;
+    private ValidatorInterfaceActual $validator;
 
-    public function __construct(UsuarioInterface $usuarioRepository)
+    public function __construct(UsuarioInterface $usuario, ValidatorInterfaceActual $validator)
     {
-        $this->usuarioRepository = $usuarioRepository;
+        $this->usuario = $usuario;
+        $this->validator = $validator;
     }
 
-    public function get(): array
+    public function find(array $filters): array
     {
-        try {
-            $usuarios = $this->usuarioRepository->get(); // Obtén la lista de usuarios
-
-            // Verifica si la obtención fue exitosa y devuelve el resultado
-            if (is_array($usuarios)) {
-                return $usuarios; // Retorna el array de usuarios
-            } else {
-                // Si no es un array, lanza una excepción
-                throw new \Exception('Error al obtener la lista de usuarios.'); // Mejora la información de la excepción
-            }
-        } catch (\Exception $e) {
-            // Manejo de errores, loguea o muestra un mensaje según tu preferencia
-            error_log("Error en GetUsuario: " . $e->getMessage());
-            return []; // Devuelve un array vacío en caso de error
+        if (!$this->validator->validateFind(['id_rol' => null])) {
+            throw new DataException($this->validator->getError());
         }
+
+        $usuarios = $this->usuario->find($filters);
+
+        if (empty($usuarios)) {
+            if (isset($filters['id_rol'])) {
+                throw new DataException('No se encontraron usuarios con el rol ' . $filters['id_rol']);
+            }
+            throw new DataException('No hay usuarios disponibles que coincidan con los criterios');
+        }
+
+        return $usuarios;
     }
 }

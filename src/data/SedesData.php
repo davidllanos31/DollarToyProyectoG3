@@ -24,7 +24,7 @@ class SedesData extends BaseData implements SedesInterface
         $stmt->execute();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+ 
         $sedes = [];
         foreach ($result as $row) { 
             $sedes[] = new Sedes($row['id_sede'], $row['nombre'], $row['direccion'], $row['ciudad']);

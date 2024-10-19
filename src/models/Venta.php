@@ -4,29 +4,20 @@ namespace app\Models;
 
 class Venta
 {
-    public string $nombre_cliente;
-    public string $nombre_vendedor;
-    public string $nombre_producto;
-    public int $cantidad;
+    public $id_usuario; //vendedor
+    public $cliente;
     public string $fecha_venta;
-    public string $metodo_pago;
+    public string $id_metodopago;
     public float $total;
+    public $detalles = [];
 
-    public function __construct(
-        string $nombre_cliente,
-        string $nombre_vendedor,
-        string $nombre_producto,
-        int $cantidad,
-        string $fecha_venta,
-        string $metodo_pago,
-        float $total
-    ) {
-        $this->nombre_cliente = $nombre_cliente;
-        $this->nombre_vendedor = $nombre_vendedor;
-        $this->nombre_producto = $nombre_producto;
-        $this->cantidad = $cantidad;
+    public function __construct($id_usuario, $cliente, $fecha_venta, $id_metodopago, $total, $detalles)
+    {
+        $this->id_usuario = $id_usuario;
+        $this->cliente = $cliente;
         $this->fecha_venta = $fecha_venta;
-        $this->metodo_pago = $metodo_pago;
+        $this->id_metodopago = $id_metodopago;
         $this->total = $total;
+        $this->detalles = $detalles;
     }
 }

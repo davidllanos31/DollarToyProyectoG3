@@ -41,19 +41,29 @@ class VentaData extends BaseData implements VentaInterface
     public function create(Venta $venta): bool
     {
         try {
-            $sql = "INSERT INTO " . self::TABLE . " (nombre_cliente, nombre_vendedor, nombre_producto, cantidad, fecha_venta, metodo_pago, total)
-                    VALUES (:nombre_cliente, :nombre_vendedor, :nombre_producto, :cantidad, :fecha_venta, :metodo_pago, :total)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam(':nombre_cliente', $venta->nombre_cliente);
-            $stmt->bindParam(':nombre_vendedor', $venta->nombre_vendedor);
-            $stmt->bindParam(':nombre_producto', $venta->nombre_producto);
-            $stmt->bindParam(':cantidad', $venta->cantidad);
-            $stmt->bindParam(':fecha_venta', $venta->fecha_venta);
-            $stmt->bindParam(':metodo_pago', $venta->metodo_pago);
-            $stmt->bindParam(':total', $venta->total);
-
-            return $stmt->execute();
+            $this->pdo->beginTransaction();
+            $stmt = $this->pdo->prepare('CALL sp_guardar_venta(?, ?, ?, ?, ?)');
+            $stmt->execute([
+                $venta->id_usuario,
+                $venta->cliente,
+                $venta->fecha_venta,
+                $venta->id_metodopago,
+                $venta->total,
+            ]);
+            $id_venta = $this->pdo->lastInsertId(); //id de la venta recién insertada
+            foreach ($venta->detalles as $detalle) {
+                $stmDetalle = $this->pdo->prepare('CALL sp_guardar_detalle_venta(?, ?, ?, ?)');
+                $stmDetalle->execute([
+                    $id_venta,
+                    $detalle->id_producto,
+                    $detalle->cantidad,
+                    $detalle->precio_unitario
+                ]);
+            }
+            $this->pdo->commit();
+            return true;
         } catch (\Exception $e) {
+            $this->pdo->rollBack();
             error_log("Error al crear la venta: " . $e->getMessage());
             return false;
         }

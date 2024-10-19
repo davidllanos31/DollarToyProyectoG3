@@ -3,73 +3,78 @@
     <a href="#" class="nav-ventas" data-url="<?= BASE_URI; ?>/ventas">Listar Ventas</a>
     <a href="#" class="nav-ventas" data-url="<?= BASE_URI; ?>/ventas/crear">Registrar Nueva Venta</a>
 </div>
-<h3>Nueva Venta</h3>
-<form id="formVenta" action="ruta_a_procesar_venta.php" method="POST">
-        <!-- Datos de la Venta -->
-        <div>
-            <label for="id_usuario">Vendedor</label>
-            <select id="id_usuario" name="id_usuario" required>
-                <option value="">Seleccionar usuario</option>
-                <!-- Aquí se llenarán los usuarios de la base de datos -->
-                <option value="1">Usuario 1</option>
-                <option value="2">Usuario 2</option>
-            </select>
-        </div>
+<h1>Registrar Nueva Venta</h1>
+<h1>Registrar Venta</h1>
 
-        <!-- <div>
-            <label for="id_cliente">Cliente</label>
-            <select id="id_cliente" name="id_cliente" required>
-                <option value="">Seleccionar cliente</option>
-                Aquí se llenarán los clientes de la base de datos
-                <option value="1">Cliente 1</option>
-                <option value="2">Cliente 2</option>
-            </select>
-        </div> -->
+<form action="/crear-venta" method="POST">
+    <fieldset>
+        <legend>Datos de la Venta</legend>
 
-        <div>
-            <label for="id_metodopago">Método de Pago</label>
-            <select id="id_metodopago" name="id_metodopago" required>
-                <option value="">Seleccionar método de pago</option>
-                <!-- Aquí se llenarán los métodos de pago de la base de datos -->
-                <option value="1">Tarjeta de crédito</option>
-                <option value="2">Transferencia bancaria</option>
-            </select>
-        </div>
+        <label for="usuario">ID Usuario:</label>
+        <input type="number" id="usuario" name="id_usuario" required><br>
 
-        <div>
-            <label for="total">Total</label>
-            <input type="number" id="total" name="total" step="0.01" min="0" required>
-        </div>
+        <label for="cliente">Cliente:</label>
+        <input type="text" id="cliente" name="cliente" required><br>
 
-        <!-- Detalles de la Venta -->
-        <h3>Detalles de la Venta</h3>
-        <div id="detallesVenta">
-            <div class="detalleVenta">
-                <div>
-                    <label for="id_producto_0">Producto</label>
-                    <select id="id_producto_0" name="productos[0][id_producto]" required>
-                        <option value="">Seleccionar producto</option>
-                        <!-- Aquí se llenarán los productos de la base de datos -->
-                        <option value="1">Producto 1</option>
-                        <option value="2">Producto 2</option>
-                    </select>
-                </div>
+        <label for="fecha_venta">Fecha de Venta:</label>
+        <input type="date" id="fecha_venta" name="fecha_venta" required><br>
 
-                <div>
-                    <label for="cantidad_0">Cantidad</label>
-                    <input type="number" id="cantidad_0" name="productos[0][cantidad]" min="1" required>
-                </div>
+        <label for="metodo_pago">Método de Pago:</label>
+        <select id="metodo_pago" name="id_metodopago" required>
+            <option value="1">Tarjeta</option>
+            <option value="2">Efectivo</option>
+            <option value="3">Transferencia</option>
+        </select><br>
 
-                <div>
-                    <label for="precio_unitario_0">Precio Unitario</label>
-                    <input type="number" id="precio_unitario_0" name="productos[0][precio_unitario]" step="0.01" min="0" required>
-                </div>
-            </div>
-        </div>
+        <label for="total">Total:</label>
+        <input type="number" id="total" name="total" step="0.01" required><br>
 
-        <div>
-            <button type="button" id="addDetalle" disabled>Agregar Producto</button>
-        </div>
+    </fieldset>
 
-        <button type="submit">Registrar Venta</button>
-    </form>
+    <fieldset>
+        <legend>Productos</legend>
+
+        <table id="productos">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="producto[]" required></td>
+                    <td><input type="number" name="cantidad[]" required></td>
+                    <td><input type="number" name="precio_unitario[]" step="0.01" required></td>
+                    <td><button type="button" onclick="eliminarProducto(this)">Eliminar</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="agregarProducto()">Agregar Producto</button>
+
+    </fieldset>
+
+    <button type="submit">Guardar Venta</button>
+
+</form>
+<script>
+    function agregarProducto() {
+        // Crear fila para agregar nuevo producto en la tabla
+        const tablaProductos = document.getElementById('productos');
+        const nuevaFila = tablaProductos.insertRow();
+
+        nuevaFila.innerHTML = `
+                <td><input type="text" name="producto[]" required></td>
+                <td><input type="number" name="cantidad[]" required></td>
+                <td><input type="number" name="precio_unitario[]" step="0.01" required></td>
+                <td><button type="button" onclick="eliminarProducto(this)">Eliminar</button></td>
+            `;
+    }
+
+    function eliminarProducto(boton) {
+        const fila = boton.parentElement.parentElement;
+        fila.remove();
+    }
+</script>

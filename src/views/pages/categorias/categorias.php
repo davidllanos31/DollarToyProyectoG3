@@ -1,5 +1,5 @@
-<input type="text" id="buscar-categorias" placeholder="Buscar productos...">
-
+<input type="text" id="buscar-categorias" placeholder="Buscar categorias...">
+<!--<button><a href="<?= BASE_URI; ?>/src/controllers/lib_props.php?categorias=<?= urlencode(json_encode($categorias)); ?>">Excel</a></button>-->
 <table id="categoriasTable" border="1" class="table table-striped">
     <thead>
         <tr>

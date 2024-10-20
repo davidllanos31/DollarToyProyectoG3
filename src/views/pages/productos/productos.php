@@ -1,5 +1,5 @@
 <input type="text" id="buscar-productos" placeholder="Buscar productos...">
-
+<button><a href="<?= BASE_URI; ?>/src/controllers/lib_props.php?productos=<?= urlencode(json_encode($productos)); ?>">Excel</a></button>
 <table id="productosTable" border="1" class="table table-striped">
     <thead>
         <tr>

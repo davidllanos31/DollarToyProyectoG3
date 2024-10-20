@@ -15,7 +15,7 @@ use Grupo3\DollarToyProyectoG3\Controllers\InicioController;
 
 return [
     '/' => [InicioController::class, 'index'],
-    '/IniciarSesion' => [AuthController::class, 'showLoginForm'],
+    '/iniciar-sesion' => [AuthController::class, 'showLoginForm'],
     '/login' => [AuthController::class, 'login'],
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],

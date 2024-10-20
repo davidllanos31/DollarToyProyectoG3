@@ -58,7 +58,7 @@ $(document).ready(function () {
     });
 
     // Actualiza el subtotal en tiempo real
-    $('#content').on('input', '#detallesContainer .cantidad, #detallesContainer .precio', function () {
+    $('#content').on('input', '#detallesBody .cantidad, #detallesBody .precio', function () {
         calcularSubtotal($(this).closest('.detalle'));
     });
 
@@ -81,7 +81,7 @@ $(document).ready(function () {
     }
 
     // Calcular subtotal inicial para cada detalle existente
-    $('#detallesContainer .detalle').each(function () {
+    $('#detallesBody .detalle').each(function () {
         calcularSubtotal($(this));
     });
 
@@ -126,17 +126,21 @@ $(document).ready(function () {
         const precioProducto = $(this).data('precio');
 
         // Añadir detalles al formulario
-        $('#detallesContainer').append(`
-            <div class="detalle">
-                <label for="id_producto">ID Producto:</label>
-                <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly>
-                <label for="cantidad_detalle">Cantidad:</label>
-                <input type="number" name="detalles[cantidad][]" required class="cantidad">
-                <label for="precio_unitario">Precio Unitario:</label>
-                <input type="number" name="detalles[precio_unitario][]" value="${precioProducto}" readonly class="precio">
-                <label for="sub_total">Sub Total:</label>
-                <input type="number" name="sub_total[]" readonly class="sub-total">
-            </div>
+        $('#detallesBody').append(`
+            <tr class="detalle">
+                <td>
+                    <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly class="form-control form-control-sm">
+                </td>
+                <td>
+                    <input type="number" name="detalles[cantidad][]" required class="form-control form-control-sm cantidad">
+                </td>
+                <td>
+                    <input type="number" name="detalles[precio_unitario][]" value="${precioProducto}" readonly class="form-control form-control-sm precio">
+                </td>
+                <td>
+                    <input type="number" name="sub_total[]" readonly class="form-control form-control-sm sub-total">
+                </td>
+            </tr>
         `);
 
         $('#resultados_busqueda').empty().hide(); // Limpia y oculta los resultados

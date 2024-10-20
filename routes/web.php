@@ -9,6 +9,8 @@ use Grupo3\DollarToyProyectoG3\Controllers\AuthController;
 use Grupo3\DollarToyProyectoG3\Controllers\UserController;
 use Grupo3\DollarToyProyectoG3\Controllers\VentaController;
 use app\Controllers\ProductoController;
+use app\Controllers\UsuarioController;
+
 // use Grupo3\DollarToyProyectoG3\Controllers\SedesController;
 
 return [
@@ -16,7 +18,7 @@ return [
     '/login' => [AuthController::class, 'login'],
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],
-    '/usuarios' => [UserController::class, 'index'],
+    '/usuarios' => [UsuarioController::class, 'index'],
     '/ventas' => [VentaController::class, 'index'],
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
     '/ventas/registrar' => [VentaController::class, 'registrarVenta'],

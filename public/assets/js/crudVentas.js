@@ -19,13 +19,13 @@ $(document).ready(function () {
     $('#content').on('input', '#buscar_venta', function (e) {
         e.preventDefault();
         const query = $(this).val();
-        if (query.length > 2) {
+        if (query.length > 0) {
             $.ajax({
                 url: '/DollarToyProyectoG3/ventas/buscar',
                 method: 'GET',
                 data: { query: query },
                 success: function (response) {
-                    $ventas = response
+                    $('table tbody').html(response);
                 },
                 error: function () {
                     console.log("error al buscar");

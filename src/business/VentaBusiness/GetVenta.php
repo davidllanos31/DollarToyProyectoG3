@@ -5,16 +5,16 @@ namespace app\Business\VentaBusiness;
 use app\Interfaces\VentaInterface;
 
 
-class GetVenta{
+class GetVenta
+{
     private $ventaRepository;
     public function __construct(VentaInterface $ventaRepository)
     {
         $this->ventaRepository = $ventaRepository;
     }
 
-    public function get(): array
+    public function get(array $filters): array
     {
-        return $this->ventaRepository->get();
+        return $this->ventaRepository->get($filters);
     }
-
 }

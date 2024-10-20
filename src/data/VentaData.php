@@ -48,6 +48,9 @@ class VentaData extends BaseData implements VentaInterface
                     (float)$fila['total']
                 );
             }
+            if (empty($filas)) {
+                return [];
+            }
             return $ventas;
         } catch (\Exception $e) {
             // Manejo de errores, puedes registrar el error o lanzar una excepción personalizada

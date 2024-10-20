@@ -8,5 +8,8 @@
             "app\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "phpoffice/phpexcel": "^1.8",
+        "phpoffice/phpspreadsheet": "^3.3"
+    }
 }

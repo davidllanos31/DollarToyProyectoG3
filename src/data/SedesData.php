@@ -13,18 +13,25 @@ class SedesData extends BaseData implements SedesInterface
 
     public function find(array $filters): array
     {
-        $sql = "CALL sp_listar_sede";
-        $stmt = $this->pdo->prepare($sql);
-        
+        $query = "CALL sp_listar_sede(?, ?)";
+        $stmt = $this->pdo->prepare($query);
+
+        $id = $filters['id'] ?? null;
+        $nombre = $filters['nombre'] ?? null;
+
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
+
         $stmt->execute();
 
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
- 
-        $sedes = [];
-        foreach ($result as $row) { 
-            $sedes[] = new Sedes($row['id_sede'], $row['nombre'], $row['direccion'], $row['ciudad']);
+        $sedes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sedesArray = [];
+        foreach ($sedes as $sede) {
+            $sedesArray[] = new Sedes($sede['id_sede'], $sede['nombre'], $sede['direccion'], $sede['ciudad']);
         }
-        return $sedes;
+
+        return $sedesArray;
     }
     
     public function save(Sedes $sede): bool

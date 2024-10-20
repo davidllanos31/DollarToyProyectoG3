@@ -8,7 +8,6 @@
             <th>Apellido</th>
             <th>Email</th>
             <th>Celular</th>
-            <th>Fecha de Registro</th>
             <th>Rol</th>
             <th>Acciones</th>
         </tr>
@@ -21,7 +20,6 @@
                 <td><?php echo $usuario->getApellido(); ?></td>
                 <td><?php echo $usuario->getEmail(); ?></td>
                 <td><?php echo $usuario->getCelular(); ?></td>
-                <td><?php echo $usuario->getFechaRegistro(); ?></td>
                 <td><?php echo $usuario->getRol(); ?></td>
                 <td>
                     <a href="<?= BASE_URI; ?>/usuarios/editar/<?php echo $usuario->getId(); ?>">Editar</a>

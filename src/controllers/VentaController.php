@@ -23,14 +23,49 @@ class VentaController
     public function index()
     {
 
-        $getVenta = new GetVenta($this->repository);
-        $ventas = $getVenta->get();
-        $content = __DIR__ . '/../views/pages/ventas/listarVentas.php';
-        $title = 'Listado de Ventas';
-        if ($this->isAjaxRequest()) {
-            include $content; // Solo el contenido para AJAX
-        } else {
-            include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
+        try {
+            $getVenta = new GetVenta($this->repository);
+            $ventas = $getVenta->get([]);
+            $content = __DIR__ . '/../views/pages/ventas/listarVentas.php';
+            $title = 'Listado de Ventas';
+            if ($this->isAjaxRequest()) {
+                include $content; // Solo el contenido para AJAX
+            } else {
+                include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
+            }
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    public function buscar()
+    {
+        $query = $_GET['query'];
+        try {
+            $getVenta = new GetVenta($this->repository);
+            $ventas = $getVenta->get(['id' => $query]);
+            if ($ventas) {
+                if ($this->isAjaxRequest()) {
+                    foreach ($ventas as $venta) {
+                        echo "<tr>
+                                <td>" . htmlspecialchars($venta->id_venta) . "</td>
+                                <td>" . htmlspecialchars($venta->nombre_usuario) . "</td>
+                                <td>" . htmlspecialchars($venta->cliente) . "</td>
+                                <td>" . htmlspecialchars($venta->fecha_venta) . "</td>
+                                <td>" . htmlspecialchars($venta->nombre_metodopago) . "</td>
+                                <td>" . htmlspecialchars($venta->total) . "</td>
+                              </tr>";
+                    }
+                } else {
+                    $content = __DIR__ . '/../views/pages/ventas/listarVentas.php';
+                    $title = 'Listado de Ventas';
+                    include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
+                }
+            } else {
+                echo "No se encontraron resultados";
+            }
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
     }
 
@@ -54,21 +89,20 @@ class VentaController
             $id_metodopago = $_POST['id_metodopago'];
             $total = $_POST['total'];
             $detalles = [];
-            foreach ($_POST['detalles'] as $index => $id_producto) {
+            foreach ($_POST['detalles']['id_producto'] as $index => $id_producto) {
                 $detalles[] = new DetalleVenta(
                     $id_producto,
-                    $_POST['cantidad_detalle'][$index],
-                    $_POST['precio_unitario'][$index]
+                    $_POST['detalles']['cantidad'][$index],
+                    $_POST['detalles']['precio_unitario'][$index]
                 );
             }
-
             $venta = new Venta($id_usuario, $cliente, $fecha_venta, $id_metodopago, $total, $detalles);
             $registrar_venta = $this->repository->create($venta);
             if ($registrar_venta) {
-                echo ("venta registrada");
+                echo json_encode(['status' => 'success', 'message' => 'Venta registrada con éxito.']);
             }
         } catch (\Exception $e) {
-            echo "Error al guardar la venta: " . $e->getMessage();
+            echo json_encode(['status' => 'error', 'message' => 'Error al guardar la venta: ' . $e->getMessage()]);
         }
     }
 

@@ -9,7 +9,7 @@ class Usuario
     private string $apellido;
     private string $email;
     private string $celular;
-    private string $fechaRegistro;
+    private string $password;
     private string $rol;
 
     public function __construct(
@@ -18,7 +18,7 @@ class Usuario
         string $apellido,
         string $email,
         string $celular,
-        string $fechaRegistro,
+        string $password,
         string $rol
     ) {
         $this->id = $id;
@@ -26,7 +26,7 @@ class Usuario
         $this->apellido = $apellido;
         $this->email = $email;
         $this->celular = $celular;
-        $this->fechaRegistro = $fechaRegistro;
+        $this->password = $password;
         $this->rol = $rol;
     }
 
@@ -55,9 +55,9 @@ class Usuario
         return $this->celular;
     }
 
-    public function getFechaRegistro(): string
+    public function getPassword(): string
     {
-        return $this->fechaRegistro;
+        return $this->password;
     }
 
     public function getRol(): string
@@ -90,9 +90,9 @@ class Usuario
         $this->celular = $celular;
     }
 
-    public function setFechaRegistro(string $fechaRegistro): void
+    public function setPassword(string $password): void
     {
-        $this->fechaRegistro = $fechaRegistro;
+        $this->password = $password;
     }
 
     public function setRol(string $rol): void

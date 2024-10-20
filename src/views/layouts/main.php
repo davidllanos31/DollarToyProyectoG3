@@ -17,10 +17,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="d-flex">
-    <?php include __DIR__ . '/../partials/navbar.php'; ?>    
-    
+        <?php include __DIR__ . '/../partials/navbar.php'; ?>
+
 
         <main id="content" class="flex-grow-1 p-4"> <!-- Asegúrate de que main sea flexible -->
             <?php
@@ -33,7 +34,8 @@
         </main>
     </div>
 
-    <?php //include __DIR__ . '/../partials/footer.php'; ?>
+    <?php //include __DIR__ . '/../partials/footer.php'; 
+    ?>
     <script src="<?= BASE_URI; ?>/public/assets/js/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script src="<?= BASE_URI; ?>/public/assets/js/crudcategorias-jquery.js"></script> -->
@@ -41,7 +43,7 @@
     <script src="/DollarToyProyectoG3/public/assets/js/contenido-jquery.js"></script>
     <script src="/DollarToyProyectoG3/public/assets/js/crudcategorias-jquery.js"></script>
     <script src="/DollarToyProyectoG3/public/assets/js/crudsedes.js"></script>
-    
+
 </body>
 
 </html>

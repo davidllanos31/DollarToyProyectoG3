@@ -25,7 +25,7 @@ class UsuarioController
     public function index()
     {
         $getUsuario = new UsuarioGet($this->repository, $this->validator);
-        $usuarios = $getUsuario->find(['id_rol' => null]);
+        $usuarios = $getUsuario->find(['id' => null, 'nombre' => null, 'apellido' => null, 'email' => null, 'id_rol' => null]);
         $title = 'Lista de Usuarios';
         require_once __DIR__ . '/../views/pages/usuarios/index.php';
     }
@@ -107,7 +107,7 @@ class UsuarioController
 
     public function delete($id)
     {
-        $deleteUsuario = new UsuarioDelete($this->repository);
+        $deleteUsuario = new UsuarioDelete($id, $this->validator);
         $deleteUsuario->deleteById($id);
         header('Location: /usuarios');
     }

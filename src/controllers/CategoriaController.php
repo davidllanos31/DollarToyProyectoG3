@@ -43,16 +43,15 @@ class CategoriaController
 
         $categorias = $this->repository->find(['id_categoria' => null, 'nombre' => $query]);
 
-        $categoriasArray = array_map(function($categoria) {
+        $categoriasArray = array_map(function ($categoria) {
             return [
                 'id' => $categoria->getId(),
                 'nombre' => $categoria->getNombre(),
                 'descripcion' => $categoria->getDescripcion()
             ];
         }, $categorias);
-    
+
         echo json_encode($categoriasArray);
-        
     }
 
     public function store()

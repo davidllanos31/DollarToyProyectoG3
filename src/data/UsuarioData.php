@@ -3,130 +3,77 @@
 namespace app\Data;
 
 use PDO;
-use app\Data\BaseData;
+use app\Interfaces\UsuariosInterface;
 use app\Models\Usuario;
-use app\Interfaces\UsuarioInterface;
 
-class UsuarioData extends BaseData implements UsuarioInterface
+class UsuarioData extends BaseData implements UsuariosInterface
 {
-    const TABLE = 'tb_usuarios'; // Asegúrate de que este sea el nombre correcto de la tabla en tu base de datos
+    const TABLE = 'tb_usuario';
 
-    public function get(): array
+    public function find(array $filters): array
     {
-        try {
-            $sql = "SELECT id_usuario, nombre, apellido, email, celular, contraseña, fecha_registro, id_usuario_rol FROM " . self::TABLE;
-            $stmt = $this->pdo->query($sql);
-            $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "CALL sp_listar_usuario(?, ?, ?, ?, ?)";
+        $stmt = $this->pdo->prepare($sql);
 
-            $usuarios = [];
-            foreach ($filas as $fila) {
-                $usuarios[] = new Usuario(
-                    $fila['id_usuario'],
-                    $fila['nombre'],
-                    $fila['apellido'],
-                    $fila['email'],
-                    (int)$fila['celular'],
-                    $fila['contraseña'], // Considera encriptar la contraseña al guardarla
-                    $fila['fecha_registro'],
-                    $fila['id_usuario_rol']
-                );
-            }
-            return $usuarios;
-        } catch (\Exception $e) {
-            error_log("Error al obtener los usuarios: " . $e->getMessage());
-            return [];
+        $id = $filters['id'] ?? null;
+        $nombre = $filters['nombre'] ?? null;
+        $apellido = $filters['apellido'] ?? null;
+        $email = $filters['email'] ?? null;
+        $id_rol = $filters['id_rol'] ?? null;
+
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(3, $apellido, PDO::PARAM_STR);
+        $stmt->bindParam(4, $email, PDO::PARAM_STR);
+        $stmt->bindParam(5, $id_rol, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $usuarios = [];
+        foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $usuario) {
+            $usuarios[] = new Usuario($usuario->id_usuario, $usuario->nombre, $usuario->apellido, $usuario->email, $usuario->celular, $usuario->password, $usuario->id_usuario_rol);
         }
+
+        return $usuarios;
+    }
+    public function save(Usuario $producto): bool
+    {
+        $query = "CALL sp_guardar_usuario(?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->pdo->prepare($query);
+
+        $id = $producto->getId();
+        $nombre = $producto->getNombre();
+        $apellido = $producto->getApellido();
+        $email = $producto->getEmail();
+        $celular = $producto->getCelular();
+        $password = $producto->getpassword();
+        $id_usuario_rol = $producto->getRol();
+
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(3, $apellido, PDO::PARAM_STR);
+        $stmt->bindParam(4, $email, PDO::PARAM_STR);
+        $stmt->bindParam(5, $celular, PDO::PARAM_INT);
+        $stmt->bindParam(6, $password, PDO::PARAM_STR);
+        $stmt->bindParam(7, $id_usuario_rol, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM " . self::TABLE . " WHERE id_usuario = :id_usuario";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function exists(int $id): bool
+    {
+        $sql = "SELECT COUNT(*) AS count FROM " . self::TABLE . " WHERE id_usuario = :id_usuario";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':id_usuario', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        return $row->count > 0;
     }
 
-    public function create(Usuario $usuario): bool
-    {
-        try {
-            $sql = "INSERT INTO " . self::TABLE . " (id_usuario, nombre, apellido, email, celular, contraseña, fecha_registro, id_usuario_rol)
-                    VALUES (:id_usuario, :nombre, :apellido, :email, :celular, :contraseña, :fecha_registro, :id_usuario_rol)";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam(':id_usuario', $usuario->getIdUsuario());
-            $stmt->bindParam(':nombre', $usuario->getNombre());
-            $stmt->bindParam(':apellido', $usuario->getApellido());
-            $stmt->bindParam(':email', $usuario->getEmail());
-            $stmt->bindParam(':celular', $usuario->getCelular());
-            $stmt->bindParam(':contraseña', $usuario->getContraseña());
-            $stmt->bindParam(':fecha_registro', $usuario->getFechaRegistro());
-            $stmt->bindParam(':id_usuario_rol', $usuario->getIdUsuarioRol());
-
-            return $stmt->execute();
-        } catch (\Exception $e) {
-            error_log("Error al crear el usuario: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function update(Usuario $usuario): bool
-    {
-        try {
-            $sql = "UPDATE " . self::TABLE . " SET 
-                    nombre = :nombre, 
-                    apellido = :apellido, 
-                    email = :email, 
-                    celular = :celular, 
-                    contraseña = :contraseña, 
-                    id_usuario_rol = :id_usuario_rol 
-                    WHERE id_usuario = :id_usuario";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam(':id_usuario', $usuario->getIdUsuario());
-            $stmt->bindParam(':nombre', $usuario->getNombre());
-            $stmt->bindParam(':apellido', $usuario->getApellido());
-            $stmt->bindParam(':email', $usuario->getEmail());
-            $stmt->bindParam(':celular', $usuario->getCelular());
-            $stmt->bindParam(':contraseña', $usuario->getContraseña());
-            $stmt->bindParam(':id_usuario_rol', $usuario->getIdUsuarioRol());
-
-            return $stmt->execute();
-        } catch (\Exception $e) {
-            error_log("Error al actualizar el usuario: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function delete(string $id_usuario): bool
-    {
-        try {
-            $sql = "DELETE FROM " . self::TABLE . " WHERE id_usuario = :id_usuario";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam(':id_usuario', $id_usuario);
-            return $stmt->execute();
-        } catch (\Exception $e) {
-            error_log("Error al eliminar el usuario: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function getById(string $id_usuario): ?Usuario
-    {
-        try {
-            $sql = "SELECT nombre, apellido, email, celular, contraseña, fecha_registro, id_usuario_rol
-                    FROM " . self::TABLE . " WHERE id_usuario = :id_usuario";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindParam(':id_usuario', $id_usuario);
-            $stmt->execute();
-
-            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($fila) {
-                return new Usuario(
-                    $id_usuario,
-                    $fila['nombre'],
-                    $fila['apellido'],
-                    $fila['email'],
-                    (int)$fila['celular'],
-                    $fila['contraseña'],
-                    $fila['fecha_registro'],
-                    $fila['id_usuario_rol']
-                );
-            } else {
-                return null;
-            }
-        } catch (\Exception $e) {
-            error_log("Error al obtener el usuario por ID: " . $e->getMessage());
-            return null;
-        }
-    }
 }

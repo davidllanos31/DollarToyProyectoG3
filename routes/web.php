@@ -9,27 +9,33 @@ use Grupo3\DollarToyProyectoG3\Controllers\AuthController;
 use Grupo3\DollarToyProyectoG3\Controllers\UserController;
 use Grupo3\DollarToyProyectoG3\Controllers\VentaController;
 use app\Controllers\ProductoController;
+use app\Controllers\UsuarioController;
+use Grupo3\DollarToyProyectoG3\Controllers\InicioController;
+
 // use Grupo3\DollarToyProyectoG3\Controllers\SedesController;
 
 return [
-    '/' => [AuthController::class, 'showLoginForm'],
+    '/' => [InicioController::class, 'index'],
+    '/iniciar-sesion' => [AuthController::class, 'showLoginForm'],
     '/login' => [AuthController::class, 'login'],
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],
-    '/usuarios' => [UserController::class, 'index'],
+    '/usuarios' => [UsuarioController::class, 'index'],
     '/ventas' => [VentaController::class, 'index'],
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
+    '/ventas/registrar' => [VentaController::class, 'registrarVenta'],
+    '/ventas/buscar' => [VentaController::class, 'buscar'],
     '/categorias' => [CategoriaController::class, 'index'],
-    '/categorias/buscar' => [CategoriaController::class, 'buscar'], 
+    '/categorias/buscar' => [CategoriaController::class, 'buscar'],
     '/categorias/editar' => [CategoriaController::class, 'update'],
     '/categorias/eliminar' => [CategoriaController::class, 'delete'],
-    
+
     '/sedes' => [SedesController::class, 'index'],
     '/sedes/buscar' => [SedesController::class, 'buscar'],
     '/sedes/crear' => [SedesController::class, 'create'],
-    '/roles' => [RolController::class, 'index'], 
-    '/roles/buscar' => [RolController::class, 'buscar'], 
+    '/roles' => [RolController::class, 'index'],
+    '/roles/buscar' => [RolController::class, 'buscar'],
 
     '/productos' => [ProductoController::class, 'index'],
-    // '/productos/buscar' => [ProductoController::class, 'buscar'],
+    '/productos/buscar' => [ProductoController::class, 'buscar'],
 ];

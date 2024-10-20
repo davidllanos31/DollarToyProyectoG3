@@ -9,20 +9,22 @@ use Grupo3\DollarToyProyectoG3\Controllers\AuthController;
 use Grupo3\DollarToyProyectoG3\Controllers\UserController;
 use Grupo3\DollarToyProyectoG3\Controllers\VentaController;
 use app\Controllers\ProductoController;
+use app\Controllers\UsuarioController;
 use Grupo3\DollarToyProyectoG3\Controllers\InicioController;
 
 // use Grupo3\DollarToyProyectoG3\Controllers\SedesController;
 
 return [
     '/' => [InicioController::class, 'index'],
-    '/IniciarSesion' => [AuthController::class, 'showLoginForm'],
+    '/iniciar-sesion' => [AuthController::class, 'showLoginForm'],
     '/login' => [AuthController::class, 'login'],
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],
-    '/usuarios' => [UserController::class, 'index'],
+    '/usuarios' => [UsuarioController::class, 'index'],
     '/ventas' => [VentaController::class, 'index'],
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
     '/ventas/registrar' => [VentaController::class, 'registrarVenta'],
+    '/ventas/buscar' => [VentaController::class, 'buscar'],
     '/categorias' => [CategoriaController::class, 'index'],
     '/categorias/buscar' => [CategoriaController::class, 'buscar'],
     '/categorias/editar' => [CategoriaController::class, 'update'],

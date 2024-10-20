@@ -25,7 +25,7 @@ class VentaController
 
         try {
             $getVenta = new GetVenta($this->repository);
-            $ventas = $getVenta->get();
+            $ventas = $getVenta->get([]);
             $content = __DIR__ . '/../views/pages/ventas/listarVentas.php';
             $title = 'Listado de Ventas';
             if ($this->isAjaxRequest()) {
@@ -43,13 +43,26 @@ class VentaController
         $query = $_GET['query'];
         try {
             $getVenta = new GetVenta($this->repository);
-            $ventas = $getVenta->get();
-            $content = __DIR__ . '/../views/pages/ventas/listarVentas.php';
-            $title = 'Listado de Ventas';
-            if ($this->isAjaxRequest()) {
-                include $content; // Solo el contenido para AJAX
+            $ventas = $getVenta->get(['id' => $query]);
+            if ($ventas) {
+                if ($this->isAjaxRequest()) {
+                    foreach ($ventas as $venta) {
+                        echo "<tr>
+                                <td>" . htmlspecialchars($venta->id_venta) . "</td>
+                                <td>" . htmlspecialchars($venta->nombre_usuario) . "</td>
+                                <td>" . htmlspecialchars($venta->cliente) . "</td>
+                                <td>" . htmlspecialchars($venta->fecha_venta) . "</td>
+                                <td>" . htmlspecialchars($venta->nombre_metodopago) . "</td>
+                                <td>" . htmlspecialchars($venta->total) . "</td>
+                              </tr>";
+                    }
+                } else {
+                    $content = __DIR__ . '/../views/pages/ventas/listarVentas.php';
+                    $title = 'Listado de Ventas';
+                    include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
+                }
             } else {
-                include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
+                echo "No se encontraron resultados";
             }
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();

@@ -12,11 +12,29 @@ class VentaData extends BaseData implements VentaInterface
 {
     const TABLE = 'tb_ventas';
 
-    public function get(): array
+    public function get(array $filters): array
     {
         try {
-            $sql = "CALL sp_listar_venta(NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
-            $stmt = $this->pdo->query($sql);
+            $sql = "CALL sp_listar_venta(?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            $id = $filters['id'] ?? null;
+            $id_usuario = $filters['id_usuario'] ?? null;
+            $cliente = $filters['cliente'] ?? null;
+            $fecha_venta = $filters['fecha_venta'] ?? null;
+            $id_metodo_pago = $filters['id_metodo_pago'] ?? null;
+            $total_min  = $filters['total_min'] ?? null;
+            $total_max = $filters['total_max'] ?? null;
+
+            $stmt->bindParam(1, $id, PDO::PARAM_INT);
+            $stmt->bindParam(2, $id_usuario, PDO::PARAM_STR);
+            $stmt->bindParam(3, $cliente, PDO::PARAM_STR);
+            $stmt->bindParam(4, $fecha_venta, PDO::PARAM_STR);
+            $stmt->bindParam(5, $id_metodo_pago, PDO::PARAM_STR);
+            $stmt->bindParam(6, $total_min, PDO::PARAM_STR);
+            $stmt->bindParam(7, $total_max, PDO::PARAM_STR);
+            $stmt->execute();
+
+
             $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $ventas = [];
@@ -29,6 +47,9 @@ class VentaData extends BaseData implements VentaInterface
                     $fila['nombre_metodopago'],
                     (float)$fila['total']
                 );
+            }
+            if (empty($filas)) {
+                return [];
             }
             return $ventas;
         } catch (\Exception $e) {

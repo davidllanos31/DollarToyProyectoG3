@@ -1,10 +1,10 @@
 <?php
 
-namespace app\interfaces;
+namespace app\Interfaces;
 
 use app\Models\Usuario;
 
-interface UsuarioInterface
+interface UsuariosInterface
 {
     public function find(array $filters): array;
     public function save(Usuario $usuario): bool;

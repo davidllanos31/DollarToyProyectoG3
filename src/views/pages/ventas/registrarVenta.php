@@ -1,80 +1,53 @@
 <h1>Ventas</h1>
 <div id="navbar">
     <a href="#" class="nav-ventas" data-url="<?= BASE_URI; ?>/ventas">Listar Ventas</a>
-    <a href="#" class="nav-ventas" data-url="<?= BASE_URI; ?>/ventas/crear">Registrar Nueva Venta</a>
+    <a href="#" class="nav-ventas link-nav-interno-activo" data-url="<?= BASE_URI; ?>/ventas/crear">Registrar Nueva Venta</a>
 </div>
-<h1>Registrar Nueva Venta</h1>
-<h1>Registrar Venta</h1>
-
-<form action="/crear-venta" method="POST">
-    <fieldset>
-        <legend>Datos de la Venta</legend>
-
-        <label for="usuario">ID Usuario:</label>
-        <input type="number" id="usuario" name="id_usuario" required><br>
-
-        <label for="cliente">Cliente:</label>
-        <input type="text" id="cliente" name="cliente" required><br>
-
-        <label for="fecha_venta">Fecha de Venta:</label>
-        <input type="date" id="fecha_venta" name="fecha_venta" required><br>
-
-        <label for="metodo_pago">Método de Pago:</label>
-        <select id="metodo_pago" name="id_metodopago" required>
-            <option value="1">Tarjeta</option>
-            <option value="2">Efectivo</option>
-            <option value="3">Transferencia</option>
-        </select><br>
-
-        <label for="total">Total:</label>
-        <input type="number" id="total" name="total" step="0.01" required><br>
-
-    </fieldset>
-
-    <fieldset>
-        <legend>Productos</legend>
-
-        <table id="productos">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" name="producto[]" required></td>
-                    <td><input type="number" name="cantidad[]" required></td>
-                    <td><input type="number" name="precio_unitario[]" step="0.01" required></td>
-                    <td><button type="button" onclick="eliminarProducto(this)">Eliminar</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <button type="button" onclick="agregarProducto()">Agregar Producto</button>
-
-    </fieldset>
-
+<h2>Registrar Nueva Venta</h2>
+<form id=ventaForm method="POST" action="<?= BASE_URI; ?>/ventas/registrar">
+    <div>
+        <label for="id_usuario_texto">Usuario: </label>
+        <input type="text" id="id_usuario_texto" name="id_usuario_texto" value="cajeroventa" readonly>
+        <input type="hidden" id="id_usuario" name="id_usuario" value="1">
+    </div>
+    <div>
+        <label for="cliente">Cliente: </label>
+        <input type="text" id="cliente" name="cliente" required>
+    </div>
+    <div>
+        <label for="fecha_venta">Fecha: </label>
+        <input type="date" id="fecha_venta" name="fecha_venta" value="<?php echo date('Y-m-d'); ?>" readonly>
+    </div>
+    <div>
+        <label for="id_metodopago">Método de pago: </label>
+        <select id="id_metodopago" name="id_metodopago" required>
+            <option value="">Selecione un método de pago</option>
+            <option value="1">Efectivo</option>
+            <option value="2">Tarjeta</option>
+        </select>
+    </div>
+    <div>
+        <label for="total">total: </label>
+        <input type="text" id="total" name="total" readonly>
+    </div>
+    <div id="detallesContainer">
+        <div class="detalle">
+            <label for="id_producto">ID Producto:</label>
+            <input type="text" name="detalles[id_producto][]" required>
+            <label for="cantidad_detalle">Cantidad:</label>
+            <input type="number" name="detalles[cantidad][]" required class="cantidad">
+            <label for="precio_unitario">Precio Unitario:</label>
+            <input type="number" name="detalles[precio_unitario][]" required class="precio">
+            <label for="sub_total">Sub Total:</label>
+            <input type="number" name="sub_total[]" readonly class="sub-total">
+        </div>
+    </div>
+    <button type="button" id="addDetalle">Añadir Detalle</button>
     <button type="submit">Guardar Venta</button>
-
 </form>
-<script>
-    function agregarProducto() {
-        // Crear fila para agregar nuevo producto en la tabla
-        const tablaProductos = document.getElementById('productos');
-        const nuevaFila = tablaProductos.insertRow();
 
-        nuevaFila.innerHTML = `
-                <td><input type="text" name="producto[]" required></td>
-                <td><input type="number" name="cantidad[]" required></td>
-                <td><input type="number" name="precio_unitario[]" step="0.01" required></td>
-                <td><button type="button" onclick="eliminarProducto(this)">Eliminar</button></td>
-            `;
-    }
-
-    function eliminarProducto(boton) {
-        const fila = boton.parentElement.parentElement;
-        fila.remove();
-    }
-</script>
+<div>
+    <label for="buscar_producto">Buscar Producto:</label>
+    <input type="text" id="buscar_producto" name="buscar_producto">
+    <div id="resultados_busqueda" class="dropdown"></div>
+</div>

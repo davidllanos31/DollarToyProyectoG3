@@ -6,6 +6,7 @@ use PDO;
 use app\Data\BaseData;
 use app\Models\Venta;
 use app\Interfaces\VentaInterface;
+use app\Models\VentaListado;
 
 class VentaData extends BaseData implements VentaInterface
 {
@@ -14,19 +15,18 @@ class VentaData extends BaseData implements VentaInterface
     public function get(): array
     {
         try {
-            $sql = "CALL sp_ListarVentas()";
+            $sql = "CALL sp_listar_venta(NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
             $stmt = $this->pdo->query($sql);
             $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $ventas = [];
             foreach ($filas as $fila) {
-                $ventas[] = new Venta(
-                    $fila['nombre_cliente'],
-                    $fila['nombre_vendedor'],
-                    $fila['nombre_producto'],
-                    (int)$fila['cantidad'],
+                $ventas[] = new VentaListado(
+                    $fila['id_venta'],
+                    $fila['nombre_usuario'],
+                    $fila['cliente'],
                     $fila['fecha_venta'],
-                    $fila['metodo_pago'],
+                    $fila['nombre_metodopago'],
                     (float)$fila['total']
                 );
             }
@@ -34,7 +34,7 @@ class VentaData extends BaseData implements VentaInterface
         } catch (\Exception $e) {
             // Manejo de errores, puedes registrar el error o lanzar una excepción personalizada
             error_log("Error al obtener las ventas: " . $e->getMessage());
-            return [];
+            throw $e;
         }
     }
 
@@ -42,18 +42,24 @@ class VentaData extends BaseData implements VentaInterface
     {
         try {
             $this->pdo->beginTransaction();
-            $stmt = $this->pdo->prepare('CALL sp_guardar_venta(?, ?, ?, ?, ?)');
+            $stmt = $this->pdo->prepare('CALL sp_guardar_venta(?, ?, ?, ?, ?, ?)');
             $stmt->execute([
+                0, //0 indica al procedimiento que debe crear
                 $venta->id_usuario,
                 $venta->cliente,
                 $venta->fecha_venta,
                 $venta->id_metodopago,
                 $venta->total,
             ]);
-            $id_venta = $this->pdo->lastInsertId(); //id de la venta recién insertada
+            $stmt = $this->pdo->query('SELECT LAST_INSERT_ID()'); //id de la venta recién insertada
+            $id_venta = $stmt->fetchColumn();
+            if (!$id_venta) {
+                throw new \Exception("No se pudo obtener el ID de la venta.");
+            }
             foreach ($venta->detalles as $detalle) {
-                $stmDetalle = $this->pdo->prepare('CALL sp_guardar_detalle_venta(?, ?, ?, ?)');
+                $stmDetalle = $this->pdo->prepare('CALL sp_guardar_detalle_venta(?, ?, ?, ?, ?)');
                 $stmDetalle->execute([
+                    0, // para crear
                     $id_venta,
                     $detalle->id_producto,
                     $detalle->cantidad,
@@ -65,7 +71,7 @@ class VentaData extends BaseData implements VentaInterface
         } catch (\Exception $e) {
             $this->pdo->rollBack();
             error_log("Error al crear la venta: " . $e->getMessage());
-            return false;
+            throw $e;
         }
     }
 

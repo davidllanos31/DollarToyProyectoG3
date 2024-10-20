@@ -1,7 +1,8 @@
 <?php
 
 namespace app\controllers;
-use app\Business\Producto\ProductoAdd;  
+
+use app\Business\Producto\ProductoAdd;
 use app\Business\ProductosBusiness\ProductoGet;
 use app\Business\Producto\ProductoUpdate;
 use app\Business\Producto\ProductoDelete;
@@ -11,7 +12,7 @@ use app\Data\ProductoRepository;
 use app\Data\SedeRepository;
 use app\Validators\ProductoValidator;
 
-class ProductoController 
+class ProductoController
 {
     private $validator;
     private $repository;
@@ -44,23 +45,22 @@ class ProductoController
 
     public function buscar()
     {
-        $query = $_POST['query'];
+        $query = $_GET['query'];
 
         $productos = $this->repository->find(['id_producto' => null, 'nombre' => $query]);
 
-        $productosArray = array_map(function($producto) {
+        $productosArray = array_map(function ($producto) {
             return [
-                'id' => $producto->getId(),
+                'id_producto' => $producto->getId(),
                 'nombre' => $producto->getNombre(),
                 'descripcion' => $producto->getDescripcion(),
                 'precio' => $producto->getPrecio(),
-                'categoria' => $producto->getCategoria()->getNombre(),
-                'sede' => $producto->getSede()->getNombre()
+                'imagen_url' => $producto->getImg(),
+                // 'sede' => $producto->getSede()->getNombre()
             ];
         }, $productos);
-    
+
         echo json_encode($productosArray);
-        
     }
 
     // public function store()
@@ -76,7 +76,7 @@ class ProductoController
     public function edit()
     {
         $id = $_GET['id'];
-        $producto = $this->repository->find(['id_producto' => $id, 'nombre => null']);    
+        $producto = $this->repository->find(['id_producto' => $id, 'nombre => null']);
         $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
         $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
         require_once __DIR__ . '/../views/pages/productos/edit.php';

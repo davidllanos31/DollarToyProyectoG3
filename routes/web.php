@@ -19,17 +19,18 @@ return [
     '/usuarios' => [UserController::class, 'index'],
     '/ventas' => [VentaController::class, 'index'],
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
+    '/ventas/registrar' => [VentaController::class, 'registrarVenta'],
     '/categorias' => [CategoriaController::class, 'index'],
-    '/categorias/buscar' => [CategoriaController::class, 'buscar'], 
+    '/categorias/buscar' => [CategoriaController::class, 'buscar'],
     '/categorias/editar' => [CategoriaController::class, 'update'],
     '/categorias/eliminar' => [CategoriaController::class, 'delete'],
-    
+
     '/sedes' => [SedesController::class, 'index'],
     '/sedes/buscar' => [SedesController::class, 'buscar'],
     '/sedes/crear' => [SedesController::class, 'create'],
-    '/roles' => [RolController::class, 'index'], 
-    '/roles/buscar' => [RolController::class, 'buscar'], 
+    '/roles' => [RolController::class, 'index'],
+    '/roles/buscar' => [RolController::class, 'buscar'],
 
     '/productos' => [ProductoController::class, 'index'],
-    // '/productos/buscar' => [ProductoController::class, 'buscar'],
+    '/productos/buscar' => [ProductoController::class, 'buscar'],
 ];

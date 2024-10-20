@@ -51,7 +51,7 @@ class ProductoController
 
         $productosArray = array_map(function ($producto) {
             return [
-                'id_producto' => $producto->getId(),
+                'id' => $producto->getId(),
                 'nombre' => $producto->getNombre(),
                 'descripcion' => $producto->getDescripcion(),
                 'precio' => $producto->getPrecio(),

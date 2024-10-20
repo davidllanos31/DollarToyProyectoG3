@@ -1,15 +1,17 @@
-<h1>Ventas</h1>
-<div id="navbar">
-    <a href="#" class="nav-ventas link-nav-interno-activo" data-url="<?= BASE_URI; ?>/ventas">Listar Ventas</a>
-    <a href="#" class="nav-ventas" data-url="<?= BASE_URI; ?>/ventas/crear">Registrar Nueva Venta</a>
+<h1 class="mb-4">Ventas</h1>
+<div id="navbar" class="mb-4">
+    <a href="#" class="btn btn-primary me-2 nav-ventas link-nav-interno-activo" data-url="<?= BASE_URI; ?>/ventas">Listar Ventas</a>
+    <a href="#" class="btn btn-secondary nav-ventas" data-url="<?= BASE_URI; ?>/ventas/crear">Registrar Nueva Venta</a>
 </div>
 
-<h1>Listado de Ventas</h1>
-<div><label for="buscar_venta"></label><input type="text" id="buscar_venta" name="buscar_venta" placeholder="Buscar venta"></div>
+<h3 class="mb-4">Listado de Ventas</h3>
+<div class="mb-4">
+    <input type="text" id="buscar_venta" name="buscar_venta" class="form-control" placeholder="Buscar venta">
+</div>
 
 <?php if (!empty($ventas)): ?>
-    <table border="1" cellpadding="10" cellspacing="">
-        <thead>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
             <tr>
                 <th>ID Venta</th>
                 <th>ID Usuario</th>
@@ -33,5 +35,7 @@
         </tbody>
     </table>
 <?php else: ?>
-    <p>No hay ventas disponibles.</p>
+    <div class="alert alert-warning" role="alert">
+        No hay ventas disponibles.
+    </div>
 <?php endif; ?>

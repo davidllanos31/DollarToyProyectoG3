@@ -23,6 +23,7 @@ $(document).ready(function () {
             $.ajax({
                 url: '/DollarToyProyectoG3/ventas/buscar',
                 method: 'GET',
+                data: { query: query },
                 success: function (response) {
                     $ventas = response
                 },

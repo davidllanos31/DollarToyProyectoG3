@@ -10,11 +10,13 @@ use Grupo3\DollarToyProyectoG3\Controllers\UserController;
 use Grupo3\DollarToyProyectoG3\Controllers\VentaController;
 use app\Controllers\ProductoController;
 use app\Controllers\UsuarioController;
+use Grupo3\DollarToyProyectoG3\Controllers\InicioController;
 
 // use Grupo3\DollarToyProyectoG3\Controllers\SedesController;
 
 return [
-    '/' => [AuthController::class, 'showLoginForm'],
+    '/' => [InicioController::class, 'index'],
+    '/iniciar-sesion' => [AuthController::class, 'showLoginForm'],
     '/login' => [AuthController::class, 'login'],
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],

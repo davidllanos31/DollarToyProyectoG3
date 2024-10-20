@@ -1,5 +1,15 @@
+<?php
+    require __DIR__ . '/../../../controllers/lib_props.php';
+    $lib_props = new Lib_props()
+?>
+
 <input type="text" id="buscar-productos" placeholder="Buscar productos...">
-<button><a href="<?= BASE_URI; ?>/src/controllers/lib_props.php?productos=<?= urlencode(json_encode($productos)); ?>">Excel</a></button>
+<button>
+    <a href="<?= $lib_props->generarEnlaceExcel($productos); ?>">Excel</a>
+</button>
+<select>
+    
+</select>
 <table id="productosTable" border="1" class="table table-striped">
     <thead>
         <tr>

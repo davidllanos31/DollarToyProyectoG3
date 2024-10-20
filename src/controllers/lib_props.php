@@ -9,6 +9,23 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 class Lib_props {
+    
+    function productosArray($productos) {
+        return array_map(function($producto) {
+            return [
+                'id_producto' => $producto->getId(),
+                'nombre' => $producto->getNombre(),
+                'descripcion' => $producto->getDescripcion(),
+                'precio' => $producto->getPrecio(),
+                'imagen_url' => $producto->getImg(),
+                'id_categoria_producto' => $producto->getCategoria()
+            ];
+        }, $productos);
+    }
+    function generarEnlaceExcel($productos) {
+        return BASE_URI . '/src/controllers/lib_props.php?productos=' . urlencode(json_encode($this->productosArray($productos)));
+    }
+    
     public function ProductosExcel(array $datos) {
         $excel = new Spreadsheet();
         $fecha = date("Y-m-d"); 
@@ -48,6 +65,7 @@ class Lib_props {
         
         $row = 2; 
         foreach ($datos as $producto) {
+            
             $excel->getActiveSheet()->setCellValue('A' . $row, $producto['id_producto']);
             $excel->getActiveSheet()->setCellValue('B' . $row, $producto['nombre']);
             $excel->getActiveSheet()->setCellValue('C' . $row, $producto['descripcion']);
@@ -164,15 +182,10 @@ class Lib_props {
 }
 
 if (isset($_GET['productos'])) {
-    $productos = json_decode(urldecode($_GET['productos']), true); 
+    $productos = json_decode(urldecode($_GET['productos']), true);
     $lib_props = new Lib_props();
     $lib_props->ProductosExcel($productos);
 }
 
-if (isset($_GET['categorias'])) {
-    $categorias = json_decode(urldecode($_GET['categorias']), true); 
-    $lib_props = new Lib_props();
-    $lib_props->CategoriasExcel($categorias);
-}
 
 

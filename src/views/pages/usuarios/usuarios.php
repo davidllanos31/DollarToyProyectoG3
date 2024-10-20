@@ -1,4 +1,4 @@
-<input type="text" id="buscar-usuarios" placeholder="Buscar usuarios...">
+<input type="text" id="buscar-usuarios" placeholder="Buscar usuarios..."> <button>agregar usuarios</button>
 
 <table id="usuariosTable" border="1" class="table table-striped">
     <thead>

@@ -21,6 +21,7 @@ return [
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],
     '/usuarios' => [UsuarioController::class, 'index'],
+    '/usuarios/crear' => [UsuarioController::class, 'store'], //formulario crear enlazar al botom el formulario.
     '/ventas' => [VentaController::class, 'index'],
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
     '/ventas/registrar' => [VentaController::class, 'registrarVenta'],

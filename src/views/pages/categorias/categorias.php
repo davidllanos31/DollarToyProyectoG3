@@ -22,3 +22,63 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
+<!-- Modal -->
+<div id="editarModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Categoría</h5>
+            </div>
+            <div class="modal-body">
+                <form id="editarCategoriaForm">
+                    <input type="hidden" id="categoriaId" name="id">
+                    <div class="form-group">
+                        <label for="categoriaNombre">Nombre</label>
+                        <input type="text" class="form-control" id="categoriaNombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoriaDescripcion">Descripción</label>
+                        <textarea class="form-control" id="categoriaDescripcion" name="descripcion" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="guardarCambios">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const editarModal = new bootstrap.Modal(document.getElementById('editarModal'));
+
+    document.querySelectorAll('a[href*="editar"]').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const categoriaId = this.href.split('/').pop(); 
+            const categoriaNombre = this.closest('tr').children[1].innerText;
+            const categoriaDescripcion = this.closest('tr').children[2].innerText;
+
+            document.getElementById('categoriaId').value = categoriaId;
+            document.getElementById('categoriaNombre').value = categoriaNombre;
+            document.getElementById('categoriaDescripcion').value = categoriaDescripcion;
+
+            editarModal.show();
+        });
+    });
+
+    document.getElementById('guardarCambios').addEventListener('click', function() {
+        editarModal.hide();
+    });
+    
+    $('.close, .btn-secondary').on('click', function() {
+        $('#editarModal').modal('hide');
+    });
+});
+</script>
+

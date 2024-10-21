@@ -7,7 +7,7 @@
     <div class="row mb-3">
         <div class="col-md-6">
             <label for="id_usuario_texto" class="form-label">Vendedor:</label>
-            <input type="text" id="id_usuario_texto" name="id_usuario_texto" class="form-control" value="cajeroventa" readonly>
+            <input type="text" id="id_usuario_texto" name="id_usuario_texto" class="form-control" value="Alan_Brito_cajero" readonly>
             <input type="hidden" id="id_usuario" name="id_usuario" value="1">
         </div>
         <div class="col-md-6">

@@ -23,7 +23,7 @@
         <?php include __DIR__ . '/../partials/navbar.php'; ?>
 
 
-        <main id="content" class="flex-grow-1 p-4"> <!-- Asegúrate de que main sea flexible -->
+        <main id="content" class="flex-grow-1 p-4">
             <?php
             if (isset($content)) {
                 include $content;
@@ -43,8 +43,8 @@
     <script src="/DollarToyProyectoG3/public/assets/js/contenido-jquery.js"></script>
     <script src="/DollarToyProyectoG3/public/assets/js/crudcategorias-jquery.js"></script>
     <script src="/DollarToyProyectoG3/public/assets/js/crudsedes.js"></script>
-    <script src="<?= BASE_URI;?>/public/assets/js/crudproductos-jquery.js"></script>
-
+    <script src="<?= BASE_URI; ?>/public/assets/js/crudproductos-jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>

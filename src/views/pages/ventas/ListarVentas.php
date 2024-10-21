@@ -12,7 +12,7 @@
         <thead class="thead-light">
             <tr>
                 <th>ID Venta</th>
-                <th>ID Usuario</th>
+                <th>Vendedor</th>
                 <th>Cliente</th>
                 <th>Fecha de Venta</th>
                 <th>Método de Pago</th>

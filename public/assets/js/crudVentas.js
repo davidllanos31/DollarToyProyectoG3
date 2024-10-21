@@ -46,9 +46,13 @@ $(document).ready(function () {
             method: $(this).attr('method'),
             data: formData,
             success: function (response) {
-                if (response) {
+                console.log("Respuesta del servidor:", response);
+                try {
                     var res = JSON.parse(response);
                     alert(res.message);
+                } catch (error) {
+                    console.error("Error al parsear JSON:", error);
+                    alert("Error al procesar la respuesta del servidor.");
                 }
             },
             error: function () {
@@ -100,8 +104,8 @@ $(document).ready(function () {
                     const productos = JSON.parse(response);
                     if (productos.length > 0) {
                         const resultadosHtml = productos.map(producto => `
-                            <div class="producto" data-id="${producto.id_producto}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">
-                                <span>${producto.id_producto}: ${producto.nombre} - S/.${producto.precio}</span>
+                            <div class="producto" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">
+                                <span>${producto.id}: ${producto.nombre} - S/.${producto.precio}</span>
                             </div>
                         `).join('');
 

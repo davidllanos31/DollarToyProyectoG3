@@ -18,6 +18,7 @@
                 <td><?php echo $sede->getCiudad(); ?></td>
                 <td>
                     <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>">Editar</a>
+                    <a href="<?= BASE_URI; ?>/sedes/crear">Crear</a>
                     <a href="<?= BASE_URI; ?>/sedes/eliminar/<?php echo $sede->getId(); ?>" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
                 </td>
             </tr>

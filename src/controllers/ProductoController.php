@@ -36,13 +36,6 @@ class ProductoController
         require_once __DIR__ . '/../views/pages/productos/index.php';
     }
 
-    public function create()
-    {
-        $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
-        $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
-        require_once __DIR__ . '/../views/pages/productos/create.php';
-    }
-
     public function buscar()
     {
         $query = $_GET['query'];
@@ -63,15 +56,49 @@ class ProductoController
         echo json_encode($productosArray);
     }
 
-    // public function store()
-    // {
-    //     $body = $_POST;
-    //     $producto = $this->repository->save($body);
-    //     $sedeproducto = $this->sedeRepository->save($body);
-    //     $addProducto = new ProductoAdd($this->repository, $this->validator);
-    //     $addProducto->add($producto, $sedeproducto);
-    //     header('Location: /productos');
-    // }
+    public function nuevoProducto()
+    {
+        $title = 'Nuevo Producto';
+        $content = __DIR__ . '/../views/pages/productos/create.php';
+        if ($this->isAjaxRequest()) {
+            include $content;
+        } else {
+            include __DIR__ . '/../views/layouts/main.php';
+        }
+    }
+
+    public function store()
+    {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Procesar el formulario
+                $nombre = $_POST['nombre'];
+                $descripcion = $_POST['descripcion'];
+                $precio = $_POST['precio'];
+                $id_categoria_producto = $_POST['id_categoria_producto'];
+                $id_sede = $_POST['id_sede'];
+                $img = $_FILES['img']['name']; // Obtener la imagen del formulario
+
+                // Mover la imagen a la carpeta correspondiente
+                move_uploaded_file($_FILES['img']['tmp_name'], __DIR__ . '/../uploads/' . $img);
+
+                // Agregar el producto
+                $addProducto = new ProductoAdd($this->repository, $this->validator);
+                $addProducto->add($nombre, $descripcion, $precio, $id_categoria_producto, $id_sede, $img);
+
+                // Devolver respuesta de éxito
+                echo json_encode(['message' => 'Producto guardado con éxito']);
+            } else {
+                // Obtener las categorías y sedes para el formulario
+                $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
+                $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
+                require_once __DIR__ . '/../views/pages/productos/create.php';
+            }
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            require_once __DIR__ . '/../views/pages/productos/create.php';
+        }
+    }
 
     public function edit()
     {
@@ -80,5 +107,18 @@ class ProductoController
         $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
         $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
         require_once __DIR__ . '/../views/pages/productos/edit.php';
+    }
+
+    public function delete ()
+    {
+        $id = $_GET['id'];
+        $deleteProducto = new ProductoDelete($this->repository, $this->validator);
+        $deleteProducto->delete($id);
+        header('Location: /productos');
+    }
+
+    private function isAjaxRequest()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
 }

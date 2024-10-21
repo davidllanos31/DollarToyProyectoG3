@@ -34,4 +34,27 @@ $(document).ready(function () {
         });
 
     });
+    
+    $('#productoForm').on('submit', function(e) {
+        e.preventDefault();
+    
+        var formData = new FormData(this); // Permite manejar los archivos
+    
+        $.ajax({
+            url: '/DollarToyProyectoG3/productos/store', // La URL donde se procesará el formulario
+            method: 'POST',
+            data: formData,
+            processData: false, // Necesario para el manejo de archivos
+            contentType: false, // Necesario para el manejo de archivos
+            success: function(response) {
+                var res = JSON.parse(response);
+                alert(res.message);
+                window.location.href = '/DollarToyProyectoG3/productos'; // Redirige tras guardar el producto
+            },
+            error: function() {
+                alert("Error al guardar el producto.");
+            }
+        });
+    });
+    
 });

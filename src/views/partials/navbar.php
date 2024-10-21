@@ -64,8 +64,8 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link" >
-            <img src="<?= BASE_URI; ?>/public/assets/images/logout.png" alt="" style="width: 20px; height: 20px;"> LOGOUT
+            <a href="<?= BASE_URI; ?>/iniciar-sesion" class="nav-link" >
+            <img src="<?= BASE_URI; ?>/public/assets/images/logout.png" alt="" style="width: 20px; height: 20px;">SALIR
             </a>
         </li>
     </ul>

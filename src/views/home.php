@@ -1,10 +1,12 @@
 <h2>Sistema de Ventas - DOLLARTOY</h2>
 
-<div style="width: 100%; height: 300px; max-width: 950px;">
-    <canvas id="ventasChart"></canvas>
-</div>
-<div style="width: 100%; height: 300px; max-width: 950px; ">
-    <canvas id="ingresosChart"></canvas>
+<div class="chart-container">
+    <div class="chart">
+        <canvas id="ventasChart"></canvas>
+    </div>
+    <div class="chart">
+        <canvas id="ingresosChart"></canvas>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

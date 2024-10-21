@@ -11,7 +11,7 @@ class HomeData extends BaseData
     public function getGraficosData()
     {
         try {
-            $sql = "CALL sp_obtener_cantidad_ventas_por_mes()";
+            $sql = "CALL sp_obtener_venta_ingreso_por_mes()";
             $cantidadVentasStmt = $this->pdo->prepare($sql);
             $cantidadVentasStmt->execute();
             $datos = $cantidadVentasStmt->fetchAll(PDO::FETCH_ASSOC);

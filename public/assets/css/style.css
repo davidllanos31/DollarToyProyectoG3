@@ -104,7 +104,6 @@ footer {
     margin-top: 3cqi;
     width: 100%;
     max-width: 980px; /* Máximo ancho para cada gráfico */
-    border: 1px solid red;
 }
 .chart {
     width: 100%; 

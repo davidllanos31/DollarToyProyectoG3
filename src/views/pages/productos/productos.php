@@ -40,3 +40,5 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
+<a href="<?= BASE_URI; ?>/productos/crear">Nuevo Producto</a>

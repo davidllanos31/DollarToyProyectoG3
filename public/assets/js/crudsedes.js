@@ -89,7 +89,7 @@ $(document).ready(function () {
             }
         });
     });
-
+    // CODIGO EDITAR
     $('#guardarCambios').on('click', function() {
         const formData = $('#editarsedeForm').serialize();
         console.log(formData);

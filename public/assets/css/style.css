@@ -103,11 +103,13 @@ footer {
 .chart-container {
     margin-top: 3cqi;
     width: 100%;
-    max-width: 950px; /* Máximo ancho para cada gráfico */
+    max-width: 980px; /* Máximo ancho para cada gráfico */
+    border: 1px solid red;
 }
 .chart {
     width: 100%; 
     height: 280px;
     max-width: 900px;
     margin-bottom: 20px;
+    max-height: 260px;
 }

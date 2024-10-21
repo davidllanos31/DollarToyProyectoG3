@@ -3,6 +3,9 @@
         background-color: #222222;
         flex-direction: column;
         padding: 20px;
+        min-width: 16%;
+        letter-spacing: 0.3px;
+        height: 100vh;
     }
 
     .nav-link {

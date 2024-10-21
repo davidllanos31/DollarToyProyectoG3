@@ -97,28 +97,6 @@ footer {
 }
 
 
-table {
-    font-size: 0.875rem; /* Tamaño de fuente más pequeño */
-}
-
-.table th,
-.table td {
-    padding: 0.5rem; /* Espaciado más pequeño */
-}
-
-.form-control-sm {
-    height: calc(1.4em + 0.75rem + 2px); /* Altura más pequeña para los campos de entrada */
-    font-size: 0.875rem; /* Tamaño de fuente más pequeño */
-}
-
-h3, h2 {
-    margin-bottom: 0.5rem; /* Espaciado más pequeño debajo de los encabezados */
-}
-
-label {
-    font-weight: bold; /* Negrita para los títulos de los campos */
-}
-
 /*Estilos de gráficos dashboard*/
 .chart-container {
     margin-top: 3cqi;

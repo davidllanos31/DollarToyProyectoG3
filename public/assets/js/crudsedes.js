@@ -63,4 +63,57 @@ $(document).ready(function () {
         console.log('Formulario enviado', formData);
 
     });
+
+    // CODIGO ELIMINAR
+    $(document).ready(function() {
+        $('.btnEliminar').on('click', function() {
+            var sedeId = $(this).data('id'); // Obtiene el ID de la sede del botón
+
+            if (confirm('¿Estás seguro de que deseas eliminar esta sede?')) {
+                $.ajax({
+                    url: '/DollarToyProyectoG3/sedes/eliminar?id=' + sedeId, // Ajusta la URL si es necesario
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        alert(response.message); // Muestra el mensaje
+    
+                        if (response.status === 'success') {
+                            // Recargar la página o eliminar la fila de la tabla
+                            location.reload(); // O puedes eliminar la fila directamente del DOM
+                        }
+                    },
+                    error: function() {
+                        alert('Error al eliminar la sede. Inténtalo de nuevo.');
+                    }
+                });
+            }
+        });
+    });
+
+    $('#guardarCambios').on('click', function() {
+        const formData = $('#editarsedeForm').serialize();
+        console.log(formData);
+        $.ajax({
+            url: '/DollarToyProyectoG3/sedes/editar', // Cambia esta URL según tu configuración
+            method: 'POST',
+            data: formData,
+            success: function(response) {
+                const data = JSON.parse(response);
+                alert(data.message);
+                if (data.status === 'success') {
+                    location.reload(); // Recargar la página para ver los cambios
+                }
+            },
+            error: function() {
+                alert('Error al guardar los cambios.');
+            }
+        });
+    
+        editarModal.hide(); // Cerrar el modal
+    });
+    
+
+    
+    
+    
 });

@@ -91,13 +91,21 @@ class SedesController
         // }
     }
 
-    public function edit($id)
+    public function edit()
     {
-        // $id = $_GET['id'];
-
-        // $sede = $this->repository->find(['id_sede' => $id]);
-
-        // require_once 'views/sedes/edit.php';
+        try {
+            $id = $_POST['id'];
+            $nombre = $_POST['sedenombre'];
+            $direccion = $_POST['sededireccion'];
+            $ciudad = $_POST['sedeciudad'];
+            $sede = new Sedes($id,$nombre, $direccion, $ciudad);
+            $registar_sede = $this->repository->create($sede);
+            if ($registar_sede) {
+                echo json_encode(['status' => 'success', 'message' => 'Sede Editada correctamente']);
+            }
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Error al actualizar sede' . $e->getMessage()]);
+        } 
     }
 
     public function update()
@@ -115,12 +123,16 @@ class SedesController
 
     public function delete()
     {
-        // $id = $_GET['id'];
+        $id = $_GET['id'];
 
-        // $deleteSede = new SedesDelete($this->repository, $this->validator);
-        // $deleteSede->delete($id);
+        $deleteSedes = new SedesData($this->repository, $this->validator);
+        $deleteSedes->delete($id);
+        if ($deleteSedes) {
+            echo json_encode(['status' => 'success', 'message' => 'Sede eliminada correctamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al eliminar sede']);
+        }
 
-        // header('Location: /sedes');
     }
     private function isAjaxRequest()
     {

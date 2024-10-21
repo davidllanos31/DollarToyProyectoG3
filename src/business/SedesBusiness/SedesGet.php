@@ -2,6 +2,7 @@
 
 namespace app\Business\SedesBusiness;
 
+use app\exceptions\DataException;
 use app\Interfaces\ValidatorInterfaceActual;
 use app\Interfaces\SedesInterface;
 use app\Exceptions\ValidationException;

@@ -42,7 +42,7 @@
     <script src="<?= BASE_URI; ?>/public/assets/js/crudVentas.js"></script>
     <script src="/DollarToyProyectoG3/public/assets/js/contenido-jquery.js"></script>
     <script src="/DollarToyProyectoG3/public/assets/js/crudcategorias-jquery.js"></script>
-    <script src="/DollarToyProyectoG3/public/assets/js/crudsedes.js"></script>
+    <script src="<?= BASE_URI;?>/public/assets/js/crudsedes.js"></script>
     <script src="<?= BASE_URI;?>/public/assets/js/crudproductos-jquery.js"></script>
 
 </body>

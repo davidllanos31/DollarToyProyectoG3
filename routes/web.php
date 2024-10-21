@@ -33,7 +33,8 @@ return [
 
     '/sedes' => [SedesController::class, 'index'],
     '/sedes/buscar' => [SedesController::class, 'buscar'],
-    '/sedes/crear' => [SedesController::class, 'create'],
+    '/sedes/crear' => [SedesController::class, 'nuevaSede'],
+    '/sedes/store' => [SedesController::class, 'store'],
     '/roles' => [RolController::class, 'index'],
     '/roles/buscar' => [RolController::class, 'buscar'],
 

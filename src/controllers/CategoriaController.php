@@ -93,9 +93,20 @@ class CategoriaController
     }
 
     public function delete($id)
-    {
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_method']) && $_POST['_method'] === 'DELETE') {
         $deleteCategoria = new CategoriaDelete($this->repository);
-        $deleteCategoria->deleteById($id);
-        header('Location: /categorias');
+        
+        try {
+            $deleteCategoria->deleteById($id);
+            header('Location: /categorias');
+        } catch (DataException $e) {
+            echo $e->getMessage();
+        }
+    } else {
+        
+        http_response_code(405);
+        echo "Método no permitido";
     }
+}   
 }

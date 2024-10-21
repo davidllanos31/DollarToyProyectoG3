@@ -8,14 +8,7 @@
     <link rel="stylesheet" href="<?= BASE_URI; ?>/public/assets/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URI; ?>/public/assets/css/bootstrap/css/bootstrap.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .sidebar {
-            height: 100vh;
-            min-width: 20%;
-            background-color: #f8f9fa;
-            padding: 15px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>

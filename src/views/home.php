@@ -1,4 +1,4 @@
-<h2>Sistema de Ventas - DOLLARTOY</h2>
+<h2>Dashboard</h2>
 
 <div class="chart-container">
     <div class="chart">
@@ -21,7 +21,7 @@
         data: {
             labels: meses,
             datasets: [{
-                label: 'Cantidad de Ventas',
+                label: 'Cantidad de Ventas x Mes',
                 data: ventasPorMes,
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -45,7 +45,7 @@
         data: {
             labels: meses,
             datasets: [{
-                label: 'Ingresos',
+                label: 'Ingresos x Mes',
                 data: ingresosPorMes,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',

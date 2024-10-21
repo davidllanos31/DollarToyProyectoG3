@@ -5,76 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dollar Toy - Tienda de Juguetes</title>
     <meta name="description" content="Dollar Toy es tu tienda online especializada en juguetes para todas las edades. Encuentra los mejores juguetes al mejor precio.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/DollarToyProyectoG3/public/assets/css/iniciopagina.css">
 </head>
 <body>
-
-    <!-- Encabezado -->
     <header>
         <div class="logo">
-            <img src="/DollarToyProyectoG3/public/assets/images/logodollar.png" alt="Logo de Dollar Toy - Tienda de Juguetes">
+            <img src="/DollarToyProyectoG3/public/assets/images/logodollar.png" alt="Logo de Dollar Toy">
             <div>
                 <h1>Dollar Toy</h1>
                 <p>Tienda de Juguetes</p>
             </div>
         </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar productos..." aria-label="Buscar productos">
-        </div>
         <div class="user-options">
-            <!-- Enlace al login -->
-             <p>Iniciar Sesion </p>
-            <a href="/DollarToyProyectoG3/iniciar-sesion" method="POST">
+            <a href="/DollarToyProyectoG3/iniciar-sesion" class="login-btn">
                 <img src="/DollarToyProyectoG3/public/assets/images/Usuario2.jpg" alt="Imagen de usuario">
             </a>
+            <span>Iniciar Sesión</span>
         </div>
     </header>
 
-    
-    <section class="categories">
-        <h2>Categorías</h2>
-        <div class="category-items">
-            <div class="category">
-                <img src="/DollarToyProyectoG3/public/assets/images/bebes.jpg" alt="Juguetes para bebés" class="category-image"/>
-                <p>Bebés</p>
+    <main>
+        <section id="categories" class="categories">
+            <h2>Nuestras Categorías</h2>
+            <div class="category-items">
+                <div class="category">
+                    <img src="/DollarToyProyectoG3/public/assets/images/bebes.jpg" alt="Juguetes para bebés" class="category-image"/>
+                    <h3>Bebés</h3>
+                    
+                </div>
+                <div class="category">
+                    <img src="/DollarToyProyectoG3/public/assets/images/muñeca.jpg" alt="Juguetes para niñas" class="category-image"/>
+                    <h3>Niñas</h3>
+                   
+                </div>
+                <div class="category">
+                    <img src="/DollarToyProyectoG3/public/assets/images/robot.jpg" alt="Juguetes para niños" class="category-image"/>
+                    <h3>Niños</h3>
+                    
+                </div>
+                <div class="category">
+                    <img src="/DollarToyProyectoG3/public/assets/images/xbox.png" alt="Juguetes para adolescentes" class="category-image"/>
+                    <h3>Adolescentes</h3>
+                    
+                </div>
             </div>
-            <div class="category">
-                <img src="/DollarToyProyectoG3/public/assets/images/muñeca.jpg" alt="Juguetes para niñas" class="category-image"/>
-                <p>Niñas</p>
+        </section>
+
+        <section id="bestsellers" class="best-sellers">
+            <h2>Lo Más Vendido</h2>
+            <div class="best-seller-items">
+                <div class="item">
+                    <div class="item-badge">Top 1</div>
+                    <img src="/DollarToyProyectoG3/public/assets/images/play5.jpg" alt="PlayStation 5" class="item-image"/>
+                    <h3>PlayStation 5</h3>
+                    <p class="item-price">$499.99</p>
+                    <button class="buy-btn">Añadir al carrito</button>
+                </div>
+                <div class="item">
+                    <div class="item-badge">Top 2</div>
+                    <img src="/DollarToyProyectoG3/public/assets/images/nintendo.jpg" alt="Nintendo Switch" class="item-image"/>
+                    <h3>Nintendo Switch</h3>
+                    <p class="item-price">$299.99</p>
+                    <button class="buy-btn">Añadir al carrito</button>
+                </div>
+                <div class="item">
+                    <div class="item-badge">Top 3</div>
+                    <img src="/DollarToyProyectoG3/public/assets/images/pistolanerf.jpg" alt="Pistola Nerf" class="item-image"/>
+                    <h3>Pistola Nerf</h3>
+                    <p class="item-price">$29.99</p>
+                    <button class="buy-btn">Añadir al carrito</button>
+                </div>
+                <div class="item">
+                    <div class="item-badge">Top 4</div>
+                    <img src="/DollarToyProyectoG3/public/assets/images/Balon.jpg" alt="Balón de fútbol" class="item-image"/>
+                    <h3>Balón de fútbol</h3>
+                    <p class="item-price">$19.99</p>
+                    <button class="buy-btn">Añadir al carrito</button>
+                </div>
             </div>
-            <div class="category">
-                <img src="/DollarToyProyectoG3/public/assets/images/robot.jpg" alt="Juguetes para niños" class="category-image"/>
-                <p>Niños</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contáctanos</h3>
+                <p><i class="fas fa-envelope"></i> info@dollartoy.com</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
             </div>
-            <div class="category">
-                <img src="/DollarToyProyectoG3/public/assets/images/droga.jpg" alt="Juguetes para adolescentes" class="category-image"/>
-                <p>Adolescentes</p>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
             </div>
         </div>
-    </section>
-
-    
-    <section class="best-sellers">
-        <h2>Lo Más Vendido</h2>
-        <div class="best-seller-items">
-            <div class="item">
-                <img src="ruta-del-producto-1.jpg" alt="Producto 1 - Juguete popular" class="item-image"/>
-                <p>Nombre del producto</p>
-            </div>
-            <div class="item">
-                <img src="ruta-del-producto-2.jpg" alt="Producto 2 - Juguete popular" class="item-image"/>
-                <p>Nombre del producto</p>
-            </div>
-            <div class="item">
-                <img src="ruta-del-producto-3.jpg" alt="Producto 3 - Juguete popular" class="item-image"/>
-                <p>Nombre del producto</p>
-            </div>
-            <div class="item">
-                <img src="ruta-del-producto-4.jpg" alt="Producto 4 - Juguete popular" class="item-image"/>
-                <p>Nombre del producto</p>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Dollar Toy. Todos los derechos reservados.</p>
         </div>
-    </section>
-
+    </footer>
 </body>
 </html>

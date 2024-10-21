@@ -32,7 +32,7 @@ class UsuarioController
 
     public function create()
     {
-        require_once 'views/usuario/create.php';
+        require_once __DIR__ . '/../views/pages/usuarios/index.php';
     }
 
     public function buscar()
@@ -60,16 +60,17 @@ class UsuarioController
         $body = $_POST;
 
         try {
-            $usuario = UserFactory::create(
-                null,
+            $usuario = new Usuario(
+                0,
                 $body['nombre'],
                 $body['apellido'],
                 $body['email'],
                 $body['celular'],
-                $body['fecha_registro'],
-                $body['rol']
+                $body['contraseña'],
+                $body['id_usuario_rol']
             );
-            header('Location: /usuarios');
+            $nuevousuario = $this->repository->save($usuario);
+            header('Location: /DollarToyProyectoG3/usuarios');
         } catch (ValidationException $e) {
             echo $e->getMessage();
         } catch (DataException $e) {
@@ -94,8 +95,8 @@ class UsuarioController
                 $body['apellido'],
                 $body['email'],
                 $body['celular'],
-                $body['fecha_registro'],
-                $body['rol']
+                $body['contraseña'],
+                $body['id_usuario_rol']
             );
             header('Location: /usuarios');
         } catch (ValidationException $e) {
@@ -109,6 +110,6 @@ class UsuarioController
     {
         $deleteUsuario = new UsuarioDelete($id, $this->validator);
         $deleteUsuario->deleteById($id);
-        header('Location: /usuarios');
+        header('Location: /DollarToyProyectoG3/usuarios');
     }
 }

@@ -2,22 +2,29 @@
 
 namespace Grupo3\DollarToyProyectoG3\Controllers;
 
+use app\Data\HomeData;
+
 class HomeController
 {
+
+    private $repository;
+
+    public function __construct()
+    {
+        // $this->validator = new VentaValidator();
+        $this->repository = new HomeData();
+    }
     public function index()
     {
         $title = "Dashboard";
         $content = __DIR__ . '/../views/home.php';
-        $data = [];
-
-        if ($this->isAjaxRequest()) {
-            include $content; // Solo el contenido para AJAX
-        } else {
-            include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
+        try {
+            $datosGrafico = $this->repository->getGraficosData();
+            $ventasPorMesJSON = $datosGrafico['cantidad_ventas'];
+            $ingresosPorMesJSON = $datosGrafico['suma_totales'];
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
-    }
-    private function isAjaxRequest()
-    {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        include __DIR__ . '/../views/layouts/main.php'; // Layout completo para la carga inicial
     }
 }

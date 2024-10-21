@@ -46,9 +46,13 @@ $(document).ready(function () {
             method: $(this).attr('method'),
             data: formData,
             success: function (response) {
-                if (response) {
+                console.log("Respuesta del servidor:", response);
+                try {
                     var res = JSON.parse(response);
                     alert(res.message);
+                } catch (error) {
+                    console.error("Error al parsear JSON:", error);
+                    alert("Error al procesar la respuesta del servidor.");
                 }
             },
             error: function () {
@@ -57,34 +61,8 @@ $(document).ready(function () {
         });
     });
 
-    // MANEJA AÑADIR PRODUCTOS - DETALLE VENTAS
-    $('#content').on('click', '#addDetalle', function () {
-        const detallesContainer = $('#detallesContainer');
-        const count = $('.detalle').length;
-        const detalleHtml = `
-            <div class="detalle">
-                <label for="id_producto">ID Producto:</label>
-                <input type="text" name="detalles[${count}][id_producto]" required>
-                <label for="cantidad_detalle">Cantidad:</label>
-                <input type="number" name="detalles[${count}][cantidad_detalle]" required class="cantidad">
-                <label for="precio_unitario">Precio Unitario:</label>
-                <input type="number" name="detalles[${count}][precio_unitario]" required class="precio">
-                <label for="sub_total">Sub Total:</label>
-                <input type="number" name="sub_total[${count}]" readonly class="sub-total">
-                <button type="button" class="removeDetalle">Eliminar</button>
-            </div>
-        `;
-        detallesContainer.append(detalleHtml);
-
-        // Añadir evento para eliminar detalle
-        detallesContainer.on('click', '.removeDetalle', function () {
-            $(this).parent().remove();
-            calcularTotal();
-        });
-
-    });
     // Actualiza el subtotal en tiempo real
-    $('#content').on('input', '#detallesContainer .cantidad, #detallesContainer .precio', function () {
+    $('#content').on('input', '#detallesBody .cantidad, #detallesBody .precio', function () {
         calcularSubtotal($(this).closest('.detalle'));
     });
 
@@ -107,7 +85,7 @@ $(document).ready(function () {
     }
 
     // Calcular subtotal inicial para cada detalle existente
-    $('#detallesContainer .detalle').each(function () {
+    $('#detallesBody .detalle').each(function () {
         calcularSubtotal($(this));
     });
 
@@ -126,8 +104,8 @@ $(document).ready(function () {
                     const productos = JSON.parse(response);
                     if (productos.length > 0) {
                         const resultadosHtml = productos.map(producto => `
-                            <div class="producto" data-id="${producto.id_producto}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">
-                                <span>${producto.id_producto}: ${producto.nombre} - S/.${producto.precio}</span>
+                            <div class="producto" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">
+                                <span>${producto.id}: ${producto.nombre} - S/.${producto.precio}</span>
                             </div>
                         `).join('');
 
@@ -152,17 +130,21 @@ $(document).ready(function () {
         const precioProducto = $(this).data('precio');
 
         // Añadir detalles al formulario
-        $('#detallesContainer').append(`
-            <div class="detalle">
-                <label for="id_producto">ID Producto:</label>
-                <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly>
-                <label for="cantidad_detalle">Cantidad:</label>
-                <input type="number" name="detalles[cantidad][]" required class="cantidad">
-                <label for="precio_unitario">Precio Unitario:</label>
-                <input type="number" name="detalles[precio_unitario][]" value="${precioProducto}" readonly class="precio">
-                <label for="sub_total">Sub Total:</label>
-                <input type="number" name="sub_total[]" readonly class="sub-total">
-            </div>
+        $('#detallesBody').append(`
+            <tr class="detalle">
+                <td>
+                    <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly class="form-control form-control-sm">
+                </td>
+                <td>
+                    <input type="number" name="detalles[cantidad][]" required class="form-control form-control-sm cantidad">
+                </td>
+                <td>
+                    <input type="number" name="detalles[precio_unitario][]" value="${precioProducto}" readonly class="form-control form-control-sm precio">
+                </td>
+                <td>
+                    <input type="number" name="sub_total[]" readonly class="form-control form-control-sm sub-total">
+                </td>
+            </tr>
         `);
 
         $('#resultados_busqueda').empty().hide(); // Limpia y oculta los resultados

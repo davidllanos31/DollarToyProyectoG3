@@ -7,6 +7,8 @@ use app\Business\VentaBusiness\GetVenta;
 use app\Data\VentaData;
 use app\Models\DetalleVenta;
 use app\Models\Venta;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class VentaController
 {
@@ -54,7 +56,7 @@ class VentaController
                                 <td>" . htmlspecialchars($venta->fecha_venta) . "</td>
                                 <td>" . htmlspecialchars($venta->nombre_metodopago) . "</td>
                                 <td>" . htmlspecialchars($venta->total) . "</td>
-                              </tr>";
+                                </tr>";
                     }
                 } else {
                     $content = __DIR__ . '/../views/pages/ventas/listarVentas.php';
@@ -98,6 +100,7 @@ class VentaController
             }
             $venta = new Venta($id_usuario, $cliente, $fecha_venta, $id_metodopago, $total, $detalles);
             $registrar_venta = $this->repository->create($venta);
+            $this->enviarEmail($cliente, $fecha_venta, $total, $detalles);
             if ($registrar_venta) {
                 echo json_encode(['status' => 'success', 'message' => 'Venta registrada con éxito.']);
             }
@@ -106,6 +109,43 @@ class VentaController
         }
     }
 
+    private function enviarEmail($cliente, $fecha_venta, $total, $detalles)
+    {
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'axelyurquina12@gmail.com'; 
+        $mail->Password = 'ujpjgjzfwheoqlsf'; 
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom('dollartoy@gmail.com', 'DOLLARTOY');
+        $mail->addAddress('axelyurquina12@gmail.com'); 
+
+        $mensajeHtml = "<h1>Confirmación de Venta</h1>";
+        $mensajeHtml .= "<p>Cliente: $cliente</p>";
+        $mensajeHtml .= "<p>Fecha de la venta: $fecha_venta</p>";
+        $mensajeHtml .= "<p>Total: $total</p>";
+        $mensajeHtml .= "<h2>Detalles de la compra:</h2><ul>";
+
+        $mensajeHtml .= "</ul><p>¡Gracias por tu compra!</p>";
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Confirmacion de Venta';
+        $mail->Body = $mensajeHtml;
+
+        if ($mail->send()) {
+            //echo 'El correo ha sido enviado';
+        } else {
+            //echo 'Error al enviar correo: ' . $mail->ErrorInfo;
+        }
+    } catch (\Exception $e) {
+        //echo "El correo no pudo ser enviado. Error: {$mail->ErrorInfo}";
+    }
+}
 
     private function isAjaxRequest()
     {

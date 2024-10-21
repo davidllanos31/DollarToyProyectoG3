@@ -10,6 +10,7 @@ use Grupo3\DollarToyProyectoG3\Controllers\UserController;
 use Grupo3\DollarToyProyectoG3\Controllers\VentaController;
 use app\Controllers\ProductoController;
 use app\Controllers\UsuarioController;
+use app\Models\Usuario;
 use Grupo3\DollarToyProyectoG3\Controllers\InicioController;
 
 // use Grupo3\DollarToyProyectoG3\Controllers\SedesController;
@@ -21,6 +22,9 @@ return [
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],
     '/usuarios' => [UsuarioController::class, 'index'],
+    '/usuarios/crear' => [UsuarioController::class, 'create'],
+    '/usuarios/registrar' => [UsuarioController::class, 'store'],
+    '/usuarios/eliminar' => [UsuarioController::class, 'delete'],
     '/ventas' => [VentaController::class, 'index'],
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
     '/ventas/registrar' => [VentaController::class, 'registrarVenta'],
@@ -32,10 +36,15 @@ return [
 
     '/sedes' => [SedesController::class, 'index'],
     '/sedes/buscar' => [SedesController::class, 'buscar'],
-    '/sedes/crear' => [SedesController::class, 'create'],
+    '/sedes/crear' => [SedesController::class, 'nuevaSede'],
+    '/sedes/store' => [SedesController::class, 'store'],
+    '/sedes/editar' => [SedesController::class, 'edit'],
+    '/sedes/eliminar' => [SedesController::class, 'delete'],
     '/roles' => [RolController::class, 'index'],
     '/roles/buscar' => [RolController::class, 'buscar'],
 
     '/productos' => [ProductoController::class, 'index'],
     '/productos/buscar' => [ProductoController::class, 'buscar'],
+    '/productos/crear' => [ProductoController::class, 'nuevoProducto'],
+    '/productos/store' => [ProductoController::class, 'store'],
 ];

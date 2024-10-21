@@ -30,11 +30,6 @@ class SedesController
         require_once __DIR__ . '/../views/pages/sedes/index.php';
     }
 
-    public function create()
-    {
-        require_once 'views/sedes/create.php';
-    }
-
     public function buscar()
     {
         $query = $_POST['query'];
@@ -54,28 +49,63 @@ class SedesController
         
     }
 
-    public function store()
+    public function nuevaSede()
     {
-        $body = $_POST;
-        // $addSedes = new SedesAdd($this->repository, $this->validator);
-        try {
-
-            $sedes = SedesFactory::create(null , $body['nombre'], $body['direccion'], $body['ciudad']);
-            header('Location: /sedes');
-        } catch (ValidationException $e) {
-            echo $e->getMessage();
-        } catch (DataException $e) {
-            echo $e->getMessage();
+        $title = 'Nueva Sede';
+        $content = __DIR__ . '/../views/pages/sedes/create.php';
+        if ($this->isAjaxRequest()) {
+            include $content;
+        } else {
+            include __DIR__ . '/../views/layouts/main.php';
         }
     }
-
-    public function edit($id)
+    public function store()
     {
-        // $id = $_GET['id'];
+        try {
 
-        // $sede = $this->repository->find(['id_sede' => $id]);
+            $nombre = $_POST['nombre'];
+            $direccion = $_POST['direccion'];
+            $ciudad = $_POST['ciudad'];
+            $sede = new Sedes(0,$nombre, $direccion, $ciudad);
+            $registar_sede = $this->repository->create($sede);
+            if ($registar_sede) {
+                echo json_encode(['status' => 'success', 'message' => 'Sede registrada correctamente']);
+            }
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Error al guardar sede' . $e->getMessage()]);
+        } 
+        
+    }
+    public function self()
+    {
+        // $body = $_POST;
+        // // $addSedes = new SedesAdd($this->repository, $this->validator);
+        // try {
 
-        // require_once 'views/sedes/edit.php';
+        //     $sedes = SedesFactory::create(null , $body['nombre'], $body['direccion'], $body['ciudad']);
+        //     header('Location: /sedes');
+        // } catch (ValidationException $e) {
+        //     echo $e->getMessage();
+        // } catch (DataException $e) {
+        //     echo $e->getMessage();
+        // }
+    }
+
+    public function edit()
+    {
+        try {
+            $id = $_POST['id'];
+            $nombre = $_POST['sedenombre'];
+            $direccion = $_POST['sededireccion'];
+            $ciudad = $_POST['sedeciudad'];
+            $sede = new Sedes($id,$nombre, $direccion, $ciudad);
+            $registar_sede = $this->repository->create($sede);
+            if ($registar_sede) {
+                echo json_encode(['status' => 'success', 'message' => 'Sede Editada correctamente']);
+            }
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Error al actualizar sede' . $e->getMessage()]);
+        } 
     }
 
     public function update()
@@ -93,11 +123,19 @@ class SedesController
 
     public function delete()
     {
-        // $id = $_GET['id'];
+        $id = $_GET['id'];
 
-        // $deleteSede = new SedesDelete($this->repository, $this->validator);
-        // $deleteSede->delete($id);
+        $deleteSedes = new SedesData($this->repository, $this->validator);
+        $deleteSedes->delete($id);
+        if ($deleteSedes) {
+            echo json_encode(['status' => 'success', 'message' => 'Sede eliminada correctamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al eliminar sede']);
+        }
 
-        // header('Location: /sedes');
+    }
+    private function isAjaxRequest()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
 }

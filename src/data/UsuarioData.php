@@ -5,6 +5,7 @@ namespace app\Data;
 use PDO;
 use app\Interfaces\UsuariosInterface;
 use app\Models\Usuario;
+use app\Models\UsuarioListado;
 
 class UsuarioData extends BaseData implements UsuariosInterface
 {
@@ -31,7 +32,15 @@ class UsuarioData extends BaseData implements UsuariosInterface
 
         $usuarios = [];
         foreach ($stmt->fetchAll(PDO::FETCH_OBJ) as $usuario) {
-            $usuarios[] = new Usuario($usuario->id_usuario, $usuario->nombre, $usuario->apellido, $usuario->email, $usuario->celular, $usuario->password, $usuario->id_usuario_rol);
+            $usuarios[] = new UsuarioListado(
+                $usuario->id_usuario,
+                $usuario->nombre,
+                $usuario->apellido,
+                $usuario->email,
+                $usuario->celular,
+                $usuario->fecha_registro,
+                $usuario->rol
+            );
         }
 
         return $usuarios;
@@ -41,7 +50,7 @@ class UsuarioData extends BaseData implements UsuariosInterface
         $query = "CALL sp_guardar_usuario(?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($query);
 
-        $id = $producto->getId();
+        $id = 0;
         $nombre = $producto->getNombre();
         $apellido = $producto->getApellido();
         $email = $producto->getEmail();
@@ -75,5 +84,4 @@ class UsuarioData extends BaseData implements UsuariosInterface
         $row = $stmt->fetch(PDO::FETCH_OBJ);
         return $row->count > 0;
     }
-
 }

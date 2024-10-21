@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-10-2024 a las 05:21:40
+-- Tiempo de generación: 21-10-2024 a las 05:23:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -27,7 +27,6 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-DROP PROCEDURE IF EXISTS `sp_guardar_cliente`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_cliente` (IN `p_id_cliente` INT, IN `p_nombre` VARCHAR(50), IN `p_apellido` VARCHAR(50), IN `p_email` VARCHAR(50))   BEGIN
     IF p_id_cliente = 0 THEN
         INSERT INTO tb_cliente (nombre, apellido, email, fecha_registro)
@@ -42,7 +41,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_cliente` (IN `p_id_clien
     END IF;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_guardar_detalle_venta`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_detalle_venta` (IN `p_id_detalle_venta` INT, IN `p_id_venta` INT, IN `p_id_producto` INT, IN `p_cantidad` INT, IN `p_precio_unitario` FLOAT)   BEGIN
     IF p_id_detalle_venta = 0 THEN
         INSERT INTO tb_detalle_venta (id_venta, id_producto, cantidad, precio_unitario)
@@ -57,7 +55,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_detalle_venta` (IN `p_id
     END IF;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_guardar_metodo_pago`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_metodo_pago` (IN `p_id_metodopago` INT, IN `p_nombre` VARCHAR(50))   BEGIN
     IF p_id_metodopago = 0 THEN
         INSERT INTO tb_metodo_pago (nombre)
@@ -70,7 +67,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_metodo_pago` (IN `p_id_m
     END IF;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_guardar_producto`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_producto` (IN `p_id_producto` INT, IN `p_nombre` VARCHAR(255), IN `p_descripcion` TEXT, IN `p_precio` DECIMAL(10,2), IN `p_imagen` VARCHAR(255), IN `p_id_categoria_producto` INT, IN `p_id_sede` INT, IN `p_stock_disponible` INT)   BEGIN
     DECLARE v_id_producto INT;
 
@@ -99,7 +95,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_producto` (IN `p_id_prod
     ON DUPLICATE KEY UPDATE stock_disponible = p_stock_disponible;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_guardar_rol`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_rol` (IN `p_id_rol` INT, IN `p_nombre` VARCHAR(50))   BEGIN
     IF p_id_rol = 0 THEN
         INSERT INTO tb_rol (nombre)
@@ -112,7 +107,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_rol` (IN `p_id_rol` INT,
     END IF;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_guardar_sede`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_sede` (IN `p_id_sede` INT, IN `p_nombre` VARCHAR(100), IN `p_direccion` VARCHAR(255), IN `p_ciudad` VARCHAR(100))   BEGIN
     IF p_id_sede = 0 THEN
         INSERT INTO tb_sedes (nombre, direccion, ciudad)
@@ -127,7 +121,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_sede` (IN `p_id_sede` IN
     END IF;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_guardar_usuario`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_usuario` (IN `p_id_usuario` INT, IN `p_nombre` VARCHAR(50), IN `p_apellido` VARCHAR(50), IN `p_email` VARCHAR(50), IN `p_celular` INT, IN `p_contraseña` VARCHAR(100), IN `p_id_usuario_rol` INT)   BEGIN
     IF p_id_usuario = 0 THEN
         INSERT INTO tb_usuario (nombre, apellido, email, celular, contraseña, fecha_registro, id_usuario_rol)
@@ -150,16 +143,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_usuario` (IN `p_id_usuar
     END IF;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_guardar_venta`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_venta` (IN `p_id_venta` INT, IN `p_id_usuario` INT, IN `p_id_cliente` INT, IN `p_cantidad` INT, IN `p_fecha_venta` DATETIME, IN `p_id_metodopago` INT, IN `p_total` FLOAT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_venta` (IN `p_id_venta` INT, IN `p_id_usuario` INT, IN `p_cliente` VARCHAR(255), IN `p_fecha_venta` DATETIME, IN `p_id_metodopago` INT, IN `p_total` FLOAT)   BEGIN
     IF p_id_venta = 0 THEN
-        INSERT INTO tb_venta (id_venta_usuario, id_venta_cliente, cantidad, fecha_venta, id_metodopago_venta, total)
-        VALUES (p_id_usuario, p_id_cliente, p_cantidad, p_fecha_venta, p_id_metodopago, p_total);
+        INSERT INTO tb_venta (id_venta_usuario, cliente, fecha_venta, id_metodopago_venta, total)
+        VALUES (p_id_usuario, p_cliente, p_fecha_venta, p_id_metodopago, p_total);
+        
+        SELECT LAST_INSERT_ID() INTO p_id_venta; -- Obtener el ID generado
     ELSE
         UPDATE tb_venta
         SET id_venta_usuario = p_id_usuario,
-            id_venta_cliente = p_id_cliente,
-            cantidad = p_cantidad,
+            cliente = p_cliente,
             fecha_venta = p_fecha_venta,
             id_metodopago_venta = p_id_metodopago,
             total = p_total
@@ -167,7 +160,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_guardar_venta` (IN `p_id_venta` 
     END IF;
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_listar_categoria`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_categoria` (IN `p_id_categoria` INT, IN `p_nombre` VARCHAR(255))   BEGIN
     SELECT 
         c.id_categoria,
@@ -180,7 +172,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_categoria` (IN `p_id_cate
         (p_nombre IS NULL OR c.nombre LIKE CONCAT('%', p_nombre, '%'));
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_listar_cliente`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_cliente` (IN `p_id_cliente` INT, IN `p_nombre` VARCHAR(255), IN `p_apellido` VARCHAR(255), IN `p_email` VARCHAR(255))   BEGIN
     SELECT 
         c.id_cliente,
@@ -197,7 +188,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_cliente` (IN `p_id_client
         (p_email IS NULL OR c.email LIKE CONCAT('%', p_email, '%'));
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_listar_detalle_venta`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_detalle_venta` (IN `p_id_detalle_venta` INT, IN `p_id_venta` INT, IN `p_id_producto` INT, IN `p_cantidad_min` INT, IN `p_cantidad_max` INT, IN `p_precio_unitario_min` FLOAT, IN `p_precio_unitario_max` FLOAT)   BEGIN
     SELECT 
         dv.id_detalle_venta,
@@ -217,7 +207,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_detalle_venta` (IN `p_id_
         (p_precio_unitario_max IS NULL OR dv.precio_unitario <= p_precio_unitario_max);
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_listar_producto`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_producto` (IN `p_id_producto` INT, IN `p_nombre` VARCHAR(255), IN `p_id_categoria_producto` INT, IN `p_id_sede` INT, IN `p_precio_min` DECIMAL(10,2), IN `p_precio_max` DECIMAL(10,2))   BEGIN
     SELECT 
         p.id_producto,
@@ -241,7 +230,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_producto` (IN `p_id_produ
         (p_precio_max IS NULL OR p.precio <= p_precio_max);
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_listar_rol`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_rol` (IN `p_id_rol` INT, IN `p_nombre` VARCHAR(50))   BEGIN
     SELECT 
         r.id_rol,
@@ -253,7 +241,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_rol` (IN `p_id_rol` INT, 
         (p_nombre IS NULL OR r.nombre LIKE CONCAT('%', p_nombre, '%'));
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_listar_sede`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_sede` (IN `p_id_sede` INT, IN `p_nombre` VARCHAR(100))   BEGIN
     SELECT 
         s.id_sede,
@@ -267,7 +254,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_sede` (IN `p_id_sede` INT
         (p_nombre IS NULL OR s.nombre LIKE CONCAT('%', p_nombre, '%'));
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_listar_usuario`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_usuario` (IN `p_id_usuario` INT, IN `p_nombre` VARCHAR(255), IN `p_apellido` VARCHAR(255), IN `p_email` VARCHAR(255), IN `p_id_rol` INT)   BEGIN
     SELECT 
         u.id_usuario,
@@ -289,26 +275,41 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_usuario` (IN `p_id_usuari
         (p_id_rol IS NULL OR u.id_usuario_rol = p_id_rol);
 END$$
 
-DROP PROCEDURE IF EXISTS `sp_listar_venta`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_venta` (IN `p_id_venta` INT, IN `p_id_usuario` INT, IN `p_id_cliente` INT, IN `p_fecha_venta` DATETIME, IN `p_id_metodopago` INT, IN `p_total_min` FLOAT, IN `p_total_max` FLOAT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_venta` (IN `p_id_venta` INT, IN `p_id_usuario` INT, IN `p_id_cliente` INT, IN `p_fecha_venta` DATETIME, IN `p_id_metodo_pago` INT, IN `p_total_min` FLOAT, IN `p_total_max` FLOAT)   BEGIN
     SELECT 
         v.id_venta,
-        v.id_venta_usuario,
-        v.id_venta_cliente,
-        v.cantidad,
+        CONCAT(u.nombre, ' ', u.apellido) AS nombre_usuario,
+        v.cliente,           
         v.fecha_venta,
-        v.id_metodopago_venta,
+        mp.nombre AS nombre_metodopago,
         v.total
     FROM 
         tb_venta v
+    LEFT JOIN 
+        tb_usuario u ON v.id_venta_usuario = u.id_usuario
+    LEFT JOIN 
+        tb_metodo_pago mp ON v.id_metodopago_venta = mp.id_metodopago
     WHERE
         (p_id_venta IS NULL OR v.id_venta = p_id_venta) AND
         (p_id_usuario IS NULL OR v.id_venta_usuario = p_id_usuario) AND
-        (p_id_cliente IS NULL OR v.id_venta_cliente = p_id_cliente) AND
+        (p_id_cliente IS NULL OR v.cliente = p_id_cliente) AND
         (p_fecha_venta IS NULL OR v.fecha_venta = p_fecha_venta) AND
-        (p_id_metodopago IS NULL OR v.id_metodopago_venta = p_id_metodopago) AND
+        (p_id_metodo_pago IS NULL OR v.id_metodopago_venta = p_id_metodo_pago) AND
         (p_total_min IS NULL OR v.total >= p_total_min) AND
         (p_total_max IS NULL OR v.total <= p_total_max);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_obtener_venta_ingreso_por_mes` ()   BEGIN
+    SELECT 
+        DATE_FORMAT(fecha_venta, '%Y-%m') AS mes,
+        COUNT(*) AS cantidad_ventas,
+        SUM(total) AS ingresos_totales
+    FROM 
+        tb_venta
+    GROUP BY 
+        mes
+    ORDER BY 
+        mes;
 END$$
 
 DELIMITER ;
@@ -319,7 +320,6 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `tb_categoria`
 --
 
-DROP TABLE IF EXISTS `tb_categoria`;
 CREATE TABLE `tb_categoria` (
   `id_categoria` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL,
@@ -344,7 +344,6 @@ INSERT INTO `tb_categoria` (`id_categoria`, `nombre`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `tb_cliente`
 --
 
-DROP TABLE IF EXISTS `tb_cliente`;
 CREATE TABLE `tb_cliente` (
   `id_cliente` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
@@ -359,7 +358,6 @@ CREATE TABLE `tb_cliente` (
 -- Estructura de tabla para la tabla `tb_detalle_venta`
 --
 
-DROP TABLE IF EXISTS `tb_detalle_venta`;
 CREATE TABLE `tb_detalle_venta` (
   `id_detalle_venta` int(11) NOT NULL,
   `id_venta` int(11) NOT NULL,
@@ -368,17 +366,45 @@ CREATE TABLE `tb_detalle_venta` (
   `precio_unitario` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `tb_detalle_venta`
+--
+
+INSERT INTO `tb_detalle_venta` (`id_detalle_venta`, `id_venta`, `id_producto`, `cantidad`, `precio_unitario`) VALUES
+(1, 4, 5, 3, 49.99),
+(2, 4, 1, 1, 100),
+(3, 5, 5, 1, 49.99),
+(4, 5, 1, 2, 100),
+(5, 6, 5, 2, 49.99),
+(6, 6, 1, 2, 100),
+(7, 7, 2, 3, 49.99),
+(8, 8, 5, 3, 49.99),
+(9, 9, 5, 3, 49.99),
+(10, 9, 1, 1, 100),
+(11, 10, 5, 3, 49.99),
+(12, 10, 1, 1, 100),
+(13, 11, 2, 2, 49.99),
+(14, 12, 2, 2, 49.99),
+(15, 13, 2, 1, 49.99);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_metodo_pago`
 --
 
-DROP TABLE IF EXISTS `tb_metodo_pago`;
 CREATE TABLE `tb_metodo_pago` (
   `id_metodopago` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tb_metodo_pago`
+--
+
+INSERT INTO `tb_metodo_pago` (`id_metodopago`, `nombre`) VALUES
+(1, 'efectivo'),
+(2, 'tarjeta');
 
 -- --------------------------------------------------------
 
@@ -386,7 +412,6 @@ CREATE TABLE `tb_metodo_pago` (
 -- Estructura de tabla para la tabla `tb_producto`
 --
 
-DROP TABLE IF EXISTS `tb_producto`;
 CREATE TABLE `tb_producto` (
   `id_producto` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL,
@@ -415,7 +440,6 @@ INSERT INTO `tb_producto` (`id_producto`, `nombre`, `descripcion`, `precio`, `id
 -- Estructura de tabla para la tabla `tb_rol`
 --
 
-DROP TABLE IF EXISTS `tb_rol`;
 CREATE TABLE `tb_rol` (
   `id_rol` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL
@@ -437,7 +461,6 @@ INSERT INTO `tb_rol` (`id_rol`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `tb_sedeproducto`
 --
 
-DROP TABLE IF EXISTS `tb_sedeproducto`;
 CREATE TABLE `tb_sedeproducto` (
   `id_sedeproducto` int(11) NOT NULL,
   `id_sede` int(11) NOT NULL,
@@ -462,7 +485,6 @@ INSERT INTO `tb_sedeproducto` (`id_sedeproducto`, `id_sede`, `id_producto`, `sto
 -- Estructura de tabla para la tabla `tb_sedes`
 --
 
-DROP TABLE IF EXISTS `tb_sedes`;
 CREATE TABLE `tb_sedes` (
   `id_sede` int(11) NOT NULL,
   `nombre` varchar(100) DEFAULT NULL,
@@ -484,7 +506,6 @@ INSERT INTO `tb_sedes` (`id_sede`, `nombre`, `direccion`, `ciudad`) VALUES
 -- Estructura de tabla para la tabla `tb_usuario`
 --
 
-DROP TABLE IF EXISTS `tb_usuario`;
 CREATE TABLE `tb_usuario` (
   `id_usuario` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
@@ -496,22 +517,43 @@ CREATE TABLE `tb_usuario` (
   `id_usuario_rol` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `tb_usuario`
+--
+
+INSERT INTO `tb_usuario` (`id_usuario`, `nombre`, `apellido`, `email`, `celular`, `contraseña`, `fecha_registro`, `id_usuario_rol`) VALUES
+(1, 'Alan', 'Brito', 'alan@gmail.com', 987654321, '12345678', '2024-10-20 19:04:54', 3);
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `tb_venta`
 --
 
-DROP TABLE IF EXISTS `tb_venta`;
 CREATE TABLE `tb_venta` (
   `id_venta` int(11) NOT NULL,
   `id_venta_usuario` int(11) DEFAULT NULL,
-  `id_venta_cliente` int(11) DEFAULT NULL,
-  `cantidad` int(11) DEFAULT NULL,
+  `cliente` varchar(255) DEFAULT NULL,
   `fecha_venta` datetime DEFAULT NULL,
   `id_metodopago_venta` int(11) DEFAULT NULL,
   `total` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tb_venta`
+--
+
+INSERT INTO `tb_venta` (`id_venta`, `id_venta_usuario`, `cliente`, `fecha_venta`, `id_metodopago_venta`, `total`) VALUES
+(4, 1, '0', '2024-10-20 00:00:00', 1, 249.97),
+(5, 1, '0', '2024-10-20 00:00:00', 2, 249.99),
+(6, 1, '0', '2024-10-20 00:00:00', 1, 299.98),
+(7, 1, 'Ricardo Gareca', '2024-10-20 00:00:00', 1, 149.97),
+(8, 1, 'Samuel', '2024-10-20 00:00:00', 2, 149.97),
+(9, 1, 'Armando Torres', '2024-10-20 00:00:00', 1, 249.97),
+(10, 1, 'Francisco', '2024-10-20 00:00:00', 1, 249.97),
+(11, 1, 'Leon', '2024-10-20 00:00:00', 1, 99.98),
+(12, 1, 'Leon', '2024-10-20 00:00:00', 1, 99.98),
+(13, 1, 'Saul', '2024-10-20 00:00:00', 1, 49.99);
 
 --
 -- Índices para tablas volcadas
@@ -582,7 +624,6 @@ ALTER TABLE `tb_usuario`
 --
 ALTER TABLE `tb_venta`
   ADD PRIMARY KEY (`id_venta`),
-  ADD KEY `id_venta_cliente` (`id_venta_cliente`),
   ADD KEY `id_metodopago_venta` (`id_metodopago_venta`),
   ADD KEY `id_venta_usuario` (`id_venta_usuario`);
 
@@ -606,13 +647,13 @@ ALTER TABLE `tb_cliente`
 -- AUTO_INCREMENT de la tabla `tb_detalle_venta`
 --
 ALTER TABLE `tb_detalle_venta`
-  MODIFY `id_detalle_venta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_metodo_pago`
 --
 ALTER TABLE `tb_metodo_pago`
-  MODIFY `id_metodopago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_metodopago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_producto`
@@ -642,13 +683,13 @@ ALTER TABLE `tb_sedes`
 -- AUTO_INCREMENT de la tabla `tb_usuario`
 --
 ALTER TABLE `tb_usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tb_venta`
 --
 ALTER TABLE `tb_venta`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restricciones para tablas volcadas
@@ -684,7 +725,6 @@ ALTER TABLE `tb_usuario`
 -- Filtros para la tabla `tb_venta`
 --
 ALTER TABLE `tb_venta`
-  ADD CONSTRAINT `tb_venta_ibfk_1` FOREIGN KEY (`id_venta_cliente`) REFERENCES `tb_cliente` (`id_cliente`) ON DELETE CASCADE,
   ADD CONSTRAINT `tb_venta_ibfk_2` FOREIGN KEY (`id_metodopago_venta`) REFERENCES `tb_metodo_pago` (`id_metodopago`) ON DELETE CASCADE,
   ADD CONSTRAINT `tb_venta_ibfk_3` FOREIGN KEY (`id_venta_usuario`) REFERENCES `tb_usuario` (`id_usuario`) ON DELETE CASCADE;
 COMMIT;

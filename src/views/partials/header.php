@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/DollarToyProyectoG3/public/assets/css/style.css">
     <link rel="stylesheet" href="<?= BASE_URI; ?>/css/bootstrap/css/bootstrap.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
     <style>
         .sidebar {
             height: 100vh;

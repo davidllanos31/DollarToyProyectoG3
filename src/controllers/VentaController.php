@@ -99,7 +99,7 @@ class VentaController
             }
             $venta = new Venta($id_usuario, $cliente, $fecha_venta, $id_metodopago, $total, $detalles);
             $registrar_venta = $this->repository->create($venta);
-            $this->enviarEmail();
+            $this->enviarEmail($cliente, $fecha_venta, $total, $detalles);
             if ($registrar_venta) {
                 echo json_encode(['status' => 'success', 'message' => 'Venta registrada con éxito.']);
             }
@@ -108,7 +108,7 @@ class VentaController
         }
     }
 
-    private function enviarEmail()
+    private function enviarEmail($cliente, $fecha_venta, $total, $detalles)
     {
     $mail = new PHPMailer(true);
 
@@ -121,13 +121,25 @@ class VentaController
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->setFrom('axelyurquina12@gmail.com', 'Axel');
+        $mail->setFrom('dollartoy@gmail.com', 'Axel');
         $mail->addAddress('axelyurquina12@gmail.com'); 
 
+        $mensajeHtml = "<h1>Confirmación de Venta</h1>";
+        $mensajeHtml .= "<p>Cliente: $cliente</p>";
+        $mensajeHtml .= "<p>Fecha de la venta: $fecha_venta</p>";
+        $mensajeHtml .= "<p>Total: $total</p>";
+        $mensajeHtml .= "<h2>Detalles de la compra:</h2><ul>";
+
+        foreach ($detalles as $detalle) {
+            $mensajeHtml .= "<li>Producto: {$detalle->getProducto()}, Cantidad: {$detalle->getCantidad()}, Precio: {$detalle->getPrecioUnitario()}</li>";
+        }
+
+        $mensajeHtml .= "</ul><p>¡Gracias por tu compra!</p>";
+
         $mail->isHTML(true);
-        $mail->Subject = 'Correo de Prueba';
-        $mail->Body = '<h1>Este es un correo de prueba</h1><p>Hola, este es un correo enviado desde PHPMailer!</p>';
-        $mail->AltBody = 'Este es un correo de prueba.';
+        $mail->Subject = 'Confirmación de Venta';
+        $mail->Body = $mensajeHtml;
+        $mail->AltBody = 'Este es el resumen de tu compra.';
 
         if ($mail->send()) {
             //echo 'El correo ha sido enviado';

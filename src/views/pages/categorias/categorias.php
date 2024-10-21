@@ -1,3 +1,5 @@
+
+
 <input type="text" id="buscar-categorias" placeholder="Buscar categorias...">
 <!--<button><a href="<?= BASE_URI; ?>/src/controllers/lib_props.php?categorias=<?= urlencode(json_encode($categorias)); ?>">Excel</a></button>-->
 <table id="categoriasTable" border="1" class="table table-striped">
@@ -16,7 +18,7 @@
                 <td><?php echo $categoria->getDescripcion(); ?></td>
                 <td>
                     <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria->getId(); ?>">Editar</a>
-                    <a href="<?= BASE_URI; ?>/categorias/eliminar/<?php echo $categoria->getId(); ?>" onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                    <a href="#" onclick="$controller->delete(<?= $categoria->getId(); ?>)">Eliminar</a>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -52,33 +54,4 @@
 </div>
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const editarModal = new bootstrap.Modal(document.getElementById('editarModal'));
-
-    document.querySelectorAll('a[href*="editar"]').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const categoriaId = this.href.split('/').pop(); 
-            const categoriaNombre = this.closest('tr').children[1].innerText;
-            const categoriaDescripcion = this.closest('tr').children[2].innerText;
-
-            document.getElementById('categoriaId').value = categoriaId;
-            document.getElementById('categoriaNombre').value = categoriaNombre;
-            document.getElementById('categoriaDescripcion').value = categoriaDescripcion;
-
-            editarModal.show();
-        });
-    });
-
-    document.getElementById('guardarCambios').addEventListener('click', function() {
-        editarModal.hide();
-    });
-    
-    $('.close, .btn-secondary').on('click', function() {
-        $('#editarModal').modal('hide');
-    });
-});
-</script>
 

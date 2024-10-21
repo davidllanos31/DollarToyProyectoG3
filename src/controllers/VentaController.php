@@ -8,6 +8,7 @@ use app\Data\VentaData;
 use app\Models\DetalleVenta;
 use app\Models\Venta;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class VentaController
 {
@@ -121,7 +122,7 @@ class VentaController
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        $mail->setFrom('dollartoy@gmail.com', 'Axel');
+        $mail->setFrom('dollartoy@gmail.com', 'DOLLARTOY');
         $mail->addAddress('axelyurquina12@gmail.com'); 
 
         $mensajeHtml = "<h1>Confirmación de Venta</h1>";
@@ -130,16 +131,11 @@ class VentaController
         $mensajeHtml .= "<p>Total: $total</p>";
         $mensajeHtml .= "<h2>Detalles de la compra:</h2><ul>";
 
-        foreach ($detalles as $detalle) {
-            $mensajeHtml .= "<li>Producto: {$detalle->getProducto()}, Cantidad: {$detalle->getCantidad()}, Precio: {$detalle->getPrecioUnitario()}</li>";
-        }
-
         $mensajeHtml .= "</ul><p>¡Gracias por tu compra!</p>";
 
         $mail->isHTML(true);
-        $mail->Subject = 'Confirmación de Venta';
+        $mail->Subject = 'Confirmacion de Venta';
         $mail->Body = $mensajeHtml;
-        $mail->AltBody = 'Este es el resumen de tu compra.';
 
         if ($mail->send()) {
             //echo 'El correo ha sido enviado';

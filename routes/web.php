@@ -10,6 +10,7 @@ use Grupo3\DollarToyProyectoG3\Controllers\UserController;
 use Grupo3\DollarToyProyectoG3\Controllers\VentaController;
 use app\Controllers\ProductoController;
 use app\Controllers\UsuarioController;
+use app\Models\Usuario;
 use Grupo3\DollarToyProyectoG3\Controllers\InicioController;
 
 // use Grupo3\DollarToyProyectoG3\Controllers\SedesController;
@@ -21,7 +22,9 @@ return [
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],
     '/usuarios' => [UsuarioController::class, 'index'],
-    '/usuarios/crear' => [UsuarioController::class, 'store'], //formulario crear enlazar al botom el formulario.
+    '/usuarios/crear' => [UsuarioController::class, 'create'],
+    '/usuarios/registrar' => [UsuarioController::class, 'store'],
+    '/usuarios/eliminar' => [UsuarioController::class, 'delete'],
     '/ventas' => [VentaController::class, 'index'],
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
     '/ventas/registrar' => [VentaController::class, 'registrarVenta'],

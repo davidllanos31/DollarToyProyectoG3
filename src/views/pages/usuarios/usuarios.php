@@ -1,4 +1,6 @@
-<input type="text" id="buscar-usuarios" placeholder="Buscar usuarios..."> <button>agregar usuarios</button>
+<input type="text" id="buscar-usuarios" placeholder="Buscar usuarios...">
+<button onclick="window.location.href='<?= BASE_URI; ?>/usuarios/crear'" class="btn btn-primary">Agregar Usuarios</button>
+
 
 <table id="usuariosTable" border="1" class="table table-striped">
     <thead>

@@ -60,15 +60,16 @@ class UsuarioController
         $body = $_POST;
 
         try {
-            $usuario = UserFactory::create(
-                null,
+            $usuario = new Usuario(
+                0,
                 $body['nombre'],
                 $body['apellido'],
                 $body['email'],
                 $body['celular'],
-                $body['fecha_registro'],
-                $body['rol']
+                $body['contraseña'],
+                $body['id_usuario_rol']
             );
+            $nuevousuario = $this->repository->save($usuario);
             header('Location: /usuarios');
         } catch (ValidationException $e) {
             echo $e->getMessage();

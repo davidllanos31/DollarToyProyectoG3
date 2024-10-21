@@ -1,10 +1,8 @@
-<h1 class="mb-4">Ventas</h1>
+<h2 class="mb-4">Ventas</h2>
 <div id="navbar" class="mb-4">
     <a href="#" class="btn btn-primary me-2 nav-ventas link-nav-interno-activo" data-url="<?= BASE_URI; ?>/ventas">Listar Ventas</a>
     <a href="#" class="btn btn-secondary nav-ventas" data-url="<?= BASE_URI; ?>/ventas/crear">Registrar Nueva Venta</a>
 </div>
-
-<h3 class="mb-4">Listado de Ventas</h3>
 <div class="mb-4">
     <input type="text" id="buscar_venta" name="buscar_venta" class="form-control" placeholder="Buscar venta">
 </div>
@@ -14,7 +12,7 @@
         <thead class="thead-light">
             <tr>
                 <th>ID Venta</th>
-                <th>ID Usuario</th>
+                <th>Vendedor</th>
                 <th>Cliente</th>
                 <th>Fecha de Venta</th>
                 <th>Método de Pago</th>

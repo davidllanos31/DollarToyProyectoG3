@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // CODIGO BUSQUEDA 
     $('#buscar-sedes').on('keyup', function () {
         var query = $(this).val();
         // if (query.length > 0) {
@@ -33,6 +34,33 @@ $(document).ready(function () {
                 $('#sedesTable tbody').html(resultado);
             }
         });
+
+    });
+    // CODIGO CREAR
+    $('#sedeForm').on('submit',function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        console.log(formData);
+        $.ajax({
+            url: '/DollarToyProyectoG3/sedes/store',
+            method: 'POST',         
+            data: formData,
+            success: function (response) {
+                if (response) {
+                    var res = JSON.parse(response);
+                    alert(res.message);
+                    window.location.href = '/DollarToyProyectoG3/sedes';
+                    console.log(response);
+                    console.log(res);
+                }
+            },
+            
+            error: function () {
+                alert("Error al guardar la sede.");
+                
+            }
+        });
+        console.log('Formulario enviado', formData);
 
     });
 });

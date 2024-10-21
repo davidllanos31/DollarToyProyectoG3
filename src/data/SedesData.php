@@ -13,38 +13,45 @@ class SedesData extends BaseData implements SedesInterface
 
     public function find(array $filters): array
     {
-        $sql = "CALL sp_listar_sede";
-        $stmt = $this->pdo->prepare($sql);
-        
+        $query = "CALL sp_listar_sede(?, ?)";
+        $stmt = $this->pdo->prepare($query);
+
+        $id = $filters['id'] ?? null;
+        $nombre = $filters['nombre'] ?? null;
+
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
+
         $stmt->execute();
 
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
- 
-        $sedes = [];
-        foreach ($result as $row) { 
-            $sedes[] = new Sedes($row['id_sede'], $row['nombre'], $row['direccion'], $row['ciudad']);
+        $sedes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sedesArray = [];
+        foreach ($sedes as $sede) {
+            $sedesArray[] = new Sedes($sede['id_sede'], $sede['nombre'], $sede['direccion'], $sede['ciudad']);
         }
-        return $sedes;
+
+        return $sedesArray;
     }
     
-    public function save(Sedes $sede): bool
+    public function create(Sedes $sede): bool
     {
-        // $sql = "CALL sp_guardar_sede(?, ?, ?, ?, ?)";
-        // $stmt = $this->pdo->prepare($sql);
-        
-        // $nombre = $sede->getNombre();
-        // $direccion = $sede->getDireccion();
-        // $telefono = $sede->getTelefono();
-        // $id_ciudad = $sede->getIdCiudad();
-        
-        // $stmt->bindParam(1, $nombre, PDO::PARAM_STR);
-        // $stmt->bindParam(2, $direccion, PDO::PARAM_STR);
-        // $stmt->bindParam(3, $telefono, PDO::PARAM_STR);
-        // $stmt->bindParam(4, $id_ciudad, PDO::PARAM_INT);
-        // $stmt->bindParam(5, $id, PDO::PARAM_INT);
-        
-        // $stmt->execute();
-        
+        $sql = "CALL sp_guardar_sede(?, ?, ?, ?)";
+        $stmt = $this->pdo->prepare($sql);
+        $id = $sede->getId();
+        $nombre = $sede->getNombre();
+        $direccion = $sede->getDireccion();
+        $ciudad = $sede->getCiudad();
+
+
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->bindParam(2, $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(3, $direccion, PDO::PARAM_STR);
+        $stmt->bindParam(4, $ciudad, PDO::PARAM_STR);
+
+
+        $stmt->execute();
+
         return true;
     }
 

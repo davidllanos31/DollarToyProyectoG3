@@ -72,11 +72,11 @@ footer {
 }
 
 /* Usado para los links internos de Ventas */
-.link-nav-interno-activo{
+/* .link-nav-interno-activo{
     background-color: #ac2626; 
     font-weight: bold;       
     color: #000;  
-}
+} */
 
 /*Usado para la barra de busqueda de productos en ventas*/
 .dropdown {
@@ -94,4 +94,18 @@ footer {
 
 .dropdown div:hover {
     background-color: #f0f0f0; /* Cambia el color al pasar el mouse */
+}
+
+
+/*Estilos de gráficos dashboard*/
+.chart-container {
+    margin-top: 3cqi;
+    width: 100%;
+    max-width: 950px; /* Máximo ancho para cada gráfico */
+}
+.chart {
+    width: 100%; 
+    height: 280px;
+    max-width: 950px;
+    margin-bottom: 20px;
 }

@@ -21,6 +21,7 @@ return [
     // '/logout' => [AuthController::class, 'logout'],
     '/home' => [HomeController::class, 'index'],
     '/usuarios' => [UsuarioController::class, 'index'],
+    '/usuarios/crear' => [UsuarioController::class, 'store'], //formulario crear enlazar al botom el formulario.
     '/ventas' => [VentaController::class, 'index'],
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
     '/ventas/registrar' => [VentaController::class, 'registrarVenta'],
@@ -32,7 +33,8 @@ return [
 
     '/sedes' => [SedesController::class, 'index'],
     '/sedes/buscar' => [SedesController::class, 'buscar'],
-    '/sedes/crear' => [SedesController::class, 'create'],
+    '/sedes/crear' => [SedesController::class, 'nuevaSede'],
+    '/sedes/store' => [SedesController::class, 'store'],
     '/roles' => [RolController::class, 'index'],
     '/roles/buscar' => [RolController::class, 'buscar'],
 

@@ -7,6 +7,7 @@ use app\Business\VentaBusiness\GetVenta;
 use app\Data\VentaData;
 use app\Models\DetalleVenta;
 use app\Models\Venta;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class VentaController
 {
@@ -54,7 +55,7 @@ class VentaController
                                 <td>" . htmlspecialchars($venta->fecha_venta) . "</td>
                                 <td>" . htmlspecialchars($venta->nombre_metodopago) . "</td>
                                 <td>" . htmlspecialchars($venta->total) . "</td>
-                              </tr>";
+                                </tr>";
                     }
                 } else {
                     $content = __DIR__ . '/../views/pages/ventas/listarVentas.php';
@@ -98,6 +99,7 @@ class VentaController
             }
             $venta = new Venta($id_usuario, $cliente, $fecha_venta, $id_metodopago, $total, $detalles);
             $registrar_venta = $this->repository->create($venta);
+            $this->enviarEmail();
             if ($registrar_venta) {
                 echo json_encode(['status' => 'success', 'message' => 'Venta registrada con éxito.']);
             }
@@ -106,6 +108,36 @@ class VentaController
         }
     }
 
+    private function enviarEmail()
+    {
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'axelyurquina12@gmail.com'; 
+        $mail->Password = 'ujpjgjzfwheoqlsf'; 
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        $mail->setFrom('axelyurquina12@gmail.com', 'Axel');
+        $mail->addAddress('axelyurquina12@gmail.com'); 
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Correo de Prueba';
+        $mail->Body = '<h1>Este es un correo de prueba</h1><p>Hola, este es un correo enviado desde PHPMailer!</p>';
+        $mail->AltBody = 'Este es un correo de prueba.';
+
+        if ($mail->send()) {
+            //echo 'El correo ha sido enviado';
+        } else {
+            //echo 'Error al enviar correo: ' . $mail->ErrorInfo;
+        }
+    } catch (\Exception $e) {
+        //echo "El correo no pudo ser enviado. Error: {$mail->ErrorInfo}";
+    }
+}
 
     private function isAjaxRequest()
     {

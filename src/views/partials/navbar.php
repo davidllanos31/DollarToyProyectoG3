@@ -1,9 +1,6 @@
 <style>    
 .sidebar {
     background-color: #222222; 
-    height: 100vh; 
-    width: 250px; 
-    display: flex; 
     flex-direction: column; 
     padding: 20px;
 }
@@ -13,8 +10,7 @@
     align-items: center;
     color: white; 
     padding: 10px 15px; 
-    border-radius: 5px; 
-    text-decoration: none; 
+    border-radius: 10px; 
     margin-bottom: 15px;
     transition: background-color 0.3s; 
 }

@@ -70,13 +70,11 @@ class ProductoData extends BaseData implements ProductoInterface
 
     public function delete(int $id): bool
     {
-        $sql = "CALL sp_eliminar_producto(?)";
+        $sql = "delete from tb_producto where id_producto = ?";
         $stmt = $this->pdo->prepare($sql);
-
         $stmt->bindParam(1, $id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return true;
+        
+        return $stmt->execute();
     }
 
     public function exists(int $id): bool

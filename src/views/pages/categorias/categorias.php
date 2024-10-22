@@ -45,7 +45,7 @@
 </table>
 
 <!-- Modal -->
-<div id="editarModal" class="modal" tabindex="-1" role="dialog">
+<div id="editarModalC" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,11 +59,11 @@
                     <input type="hidden" id="categoriaId" name="id">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        <input type="text" class="form-control" id="categoriaNombre" name="nombre" required>
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripción</label>
-                        <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+                        <textarea class="form-control" id="categoriaDescripcion" name="descripcion" required></textarea>
                     </div>
                 </form>
             </div>
@@ -78,7 +78,7 @@
 <script> 
     document.addEventListener('DOMContentLoaded', function() {
     
-    const editarModal = new bootstrap.Modal(document.getElementById('editarModal'));
+    const editarModal = new bootstrap.Modal(document.getElementById('editarModalC'));
 
     document.querySelectorAll('a[href*="editar"]').forEach(link => {
         link.addEventListener('click', function(event) {

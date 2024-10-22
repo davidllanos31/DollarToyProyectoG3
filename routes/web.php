@@ -51,4 +51,5 @@ return [
     '/productos/crear' => [ProductoController::class, 'nuevoProducto'],
     '/productos/editar' => [ProductoController::class, 'edit'],
     '/productos/store' => [ProductoController::class, 'store'],
+    '/productos/eliminar' => [ProductoController::class, 'delete'],
 ];

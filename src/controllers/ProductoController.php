@@ -30,26 +30,18 @@ class ProductoController
 
     public function index()
     {
-        $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
-        $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
+            $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
+            $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
+            
+            $categorias = array_map(function ($categoria) {
+                return [
+                    'id' => $categoria->getId(),
+                    'nombre' => $categoria->getNombre(),
+                    'descripcion' => $categoria->getDescripcion()
+                ];
+            }, $categorias);
         
-        $categorias = array_map(function ($categoria) {
-            return [
-                'id' => $categoria->getId(),
-                'nombre' => $categoria->getNombre(),
-                'descripcion' => $categoria->getDescripcion()
-            ];
-        }, $categorias);
-
-        $sedes = array_map(function ($sede) {
-            return [
-                'id' => $sede->getId(),
-                'nombre' => $sede->getNombre(),
-                'direccion' => $sede->getDireccion(),
-                'ciudad' => $sede->getCiudad()
-            ];
-        }, $sedes);
-
+        
         $getProducto = new ProductoGet($this->repository, $this->validator);
         $productos = $getProducto->find(['id_producto' => null, 'nombre' => null, 'id_categoria_producto' => null, 'id_sede' => null, 'precio_min' => null, 'precio_max' => null]);
         $title = 'Lista de Productos';
@@ -172,10 +164,21 @@ class ProductoController
 
     public function delete()
     {
-        // $id = $_GET['id'];
-        // $deleteProducto = new ProductoDelete($this->repository, $this->validator);
-        // $deleteProducto->delete($id);
-        // header('Location: /productos');
+        $id = $_GET['id'];
+        try {
+            $deleted = $this->repository->delete($id);
+    
+            if ($deleted) {
+                header('Location: /productos?message=Producto eliminada correctamente');
+            } else {
+                // Si no se pudo eliminar, manejar el error
+                echo json_encode(['status' => 'error', 'message' => 'No se pudo eliminar el producto']);
+            }
+        } catch (DataException $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Error al eliminar el producto: ' . $e->getMessage()]);
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Ocurrió un error inesperado: ' . $e->getMessage()]);
+        }
     }
 
     private function isAjaxRequest()

@@ -36,11 +36,14 @@ $lib_props = new Lib_props()
                 <td id="descripcion"><?php echo $producto->getDescripcion(); ?></td>
                 <td id="precio"><?php echo $producto->getPrecio(); ?></td>
                 <td id="img"><?php echo $producto->getImg(); ?></td>
-                <td id="categoria"><?php echo $producto->getCategoria(); ?></td>
-
+                <td id="categoria"><?php foreach ($categorias as $categoria){
+                                    if($producto->getCategoria() == $categoria['id']){
+                                        echo $categoria['nombre'];
+                                    }
+                                }?></td>
                 <td>
                     <a href="<?= BASE_URI; ?>/productos/editar/<?= $producto->getId(); ?>" class="btn btn-success btnEditar" data-id="<?= $producto->getId(); ?>" data-nombre="<?= $producto->getNombre(); ?>">Editar</a>
-                    <button class="btn btn-danger btnEliminar" data-id="<?= $producto->getId(); ?>" data-nombre="<?= $producto->getNombre(); ?>">Eliminar</button>
+                    <a href="#" class="btn btn-danger" onclick="confirmarEliminacion(<?= $producto->getId(); ?>)">Eliminar</a>
                 </td>
 
             </tr>
@@ -53,9 +56,6 @@ $lib_props = new Lib_props()
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 <form id="productoForm" method="post" action="<?= BASE_URI; ?>/productos/actualizar">
@@ -153,8 +153,7 @@ $lib_props = new Lib_props()
             });
         });
 
-        // Cerrar el modal al hacer clic en el botón 'Cerrar'
-        document.getElementById('cerrarC').addEventListener('click', function() {
+        $('.close, .btn-secondary').on('click', function() {
             $('#editarModal').modal('hide');
         });
     });

@@ -1,4 +1,7 @@
-<input type="text" id="buscar-sedes" placeholder="Buscar Sedes...">
+<h2 class="mb-4">Sedes</h2>
+<div class="mb-4">
+    <input type="text" id="buscar_sede" name="buscar_sede" class="form-control" placeholder="Buscar sede">
+</div>
 
 <table id="sedesTable" border="1" class="table table-striped">
     <thead> 
@@ -7,6 +10,7 @@
             <th>Nombre</th>
             <th>Dirección</th>
             <th>Ciudad</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -17,9 +21,9 @@
                 <td><?php echo $sede->getDireccion(); ?></td>
                 <td><?php echo $sede->getCiudad(); ?></td>
                 <td>
-                    <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>">Editar</a>
-                    <a href="<?= BASE_URI; ?>/sedes/crear">Crear</a>
-                    <button class="btnEliminar" data-id="<?php echo $sede->getId(); ?>">Eliminar</button>
+                <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>
+                <a href="<?= BASE_URI; ?>/sedes/crear" class="btn btn-success">Crear</a>
+                <button class="btn btn-danger" data-id="<?php echo $sede->getId(); ?>">Eliminar</button>
                 </td>
             </tr>
         <?php endforeach; ?>

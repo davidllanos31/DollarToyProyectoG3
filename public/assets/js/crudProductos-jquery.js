@@ -23,8 +23,8 @@ $(document).ready(function () {
                         resultado += '<td>' + producto.descripcion + '</td>';
                         resultado += '<td>' + producto.precio + '</td>';
                         resultado += '<td>';
-                        resultado += '<a href="/productos/edit/' + producto.id + '">Editar</a>';
-                        resultado += ' <a href="/productos/delete/' + producto.id + '" onclick="return confirm(\'¿Estás seguro?\')">Eliminar</a>';
+                        resultado += '<a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>';
+                        resultado += '<button class="btn btn-danger" onclick="confirmarEliminacionSede(<?= $sede->getId(); ?>)">Eliminar</button>';
                         resultado += '</td>';
                         resultado += '</tr>';
                     });

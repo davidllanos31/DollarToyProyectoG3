@@ -3,13 +3,13 @@
 namespace app\Business\UsuarioBusiness;
 
 use app\Exceptions\DataException;
-use app\Interfaces\UsuarioInterface;
+use app\Interfaces\UsuariosInterface;
 
 class UsuarioDelete
 {
-    private UsuarioInterface $usuario;
+    private UsuariosInterface $usuario;
 
-    public function __construct(UsuarioInterface $usuario)
+    public function __construct(UsuariosInterface $usuario)
     {
         $this->usuario = $usuario;
     }

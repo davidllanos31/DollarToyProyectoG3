@@ -33,7 +33,7 @@ class ProductoController
         $getProducto = new ProductoGet($this->repository, $this->validator);
         $productos = $getProducto->find(['id_producto' => null, 'nombre' => null, 'id_categoria_producto' => null, 'id_sede' => null, 'precio_min' => null, 'precio_max' => null]);
         $title = 'Lista de Productos';
-        // var_dump($productos);
+        var_dump($productos);
         require_once __DIR__ . '/../views/pages/productos/index.php';
     }
 

@@ -150,7 +150,7 @@ $(document).ready(function () {
         $('#detallesBody').append(`
             <tr class="detalle">
                 <td>
-                    <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly hidden class="form-control form-control-sm">
+                    <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly class="form-control form-control-sm">
                 </td>
                 <td>
                     <input type="text" name="detalles[cantidad][]" required class="form-control form-control-sm cantidad">

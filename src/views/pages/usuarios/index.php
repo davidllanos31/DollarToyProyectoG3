@@ -3,7 +3,6 @@ $url = explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 $method = $_SERVER['REQUEST_METHOD'];
 
 require_once __DIR__ . '/../../partials/header.php';
-var_dump($url);
 
 switch ($url[0]) {
     default:

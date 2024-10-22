@@ -52,12 +52,12 @@ class SedesController
     public function nuevaSede()
     {
         $title = 'Nueva Sede';
-        $content = __DIR__ . '/../views/pages/sedes/create.php';
-        if ($this->isAjaxRequest()) {
-            include $content;
-        } else {
-            include __DIR__ . '/../views/layouts/main.php';
-        }
+        require_once __DIR__ . '/../views/pages/sedes/index.php';
+        // if ($this->isAjaxRequest()) {
+        //     include $content;
+        // } else {
+        //     include __DIR__ . '/../views/layouts/main.php';
+        // }
     }
     public function store()
     {

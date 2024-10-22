@@ -15,8 +15,8 @@
 </style>
 <h2 class="mb-4">Sedes</h2>
 <div id="navbar" class="mb-4">
-    <a href="<?= BASE_URI; ?>/sedes" class="nav-ventas btn btn-secondary">Listar Sedes</a>
-    <a href="<?= BASE_URI; ?>/sedes/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nueva Sede</a>
+    <a href="<?= BASE_URI; ?>/sedes" class="btn btn-secondary">Listar Sedes</a>
+    <a href="<?= BASE_URI; ?>/sedes/crear" class=" btn btn-primary me-2 link-nav-interno-activo">Registrar Nueva Sede</a>
 </div>
 
 

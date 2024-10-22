@@ -1,3 +1,18 @@
+<style>
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none; 
+    font-size: 24px; 
+    color: red; 
+}
+
+.close:hover {
+    color: darkred;
+}
+</style>
 <h2 class="mb-4">Categorias</h2>
 <div id="navbar" class="mb-4">
     <a href="<?= BASE_URI; ?>/categorias" class="nav-ventas btn btn-secondary">Listar Categorias</a>
@@ -36,6 +51,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar Categoría</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form id="editarCategoriaForm">

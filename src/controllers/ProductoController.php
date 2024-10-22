@@ -2,19 +2,13 @@
 
 namespace app\controllers;
 
-use app\Business\Producto\ProductoAdd;
+use app\Business\ProductosBusiness\ProductoAdd;
 use app\Business\ProductosBusiness\ProductoGet;
-use app\Business\Producto\ProductoUpdate;
-use app\Business\Producto\ProductoDelete;
 use app\Data\CategoriaData;
-use app\Data\CategoriaRepository;
 use app\Data\ProductoData;
-use app\Data\ProductoRepository;
-use app\Data\SedeRepository;
 use app\Data\SedesData;
 use app\exceptions\DataException;
 use app\exceptions\ValidationException;
-use app\Factories\ProductoFactory;
 use app\Validators\ProductoValidator;
 
 class ProductoController
@@ -97,6 +91,11 @@ class ProductoController
     public function store()
     {
         $body = $_POST;
+        $body['id_categoria'] = (int)$_POST['id_categoria_producto'];
+        $img = $_POST['img'];
+        //guardar el nombre del archivo de la imagen con el filename
+        $body['imagen_url'] = $img['name'] ?? 'imagen.jpg';
+        var_dump($body);
         try {
             $addProducto = new ProductoAdd($this->repository, $this->validator, $this->categoriaRepository, $this->sedeRepository);
 

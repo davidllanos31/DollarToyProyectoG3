@@ -18,12 +18,7 @@
     <a href="<?= BASE_URI; ?>/categorias" class="nav-ventas btn btn-secondary">Listar Categorias</a>
     <a href="<?= BASE_URI; ?>/categorias/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nueva Categoria</a>
 </div>
-
-
-<div class="mb-4">
-    <input type="text" id="buscar-categorias" class="form-control" placeholder="Buscar Categorias...">
-</div>
-<!--<button><a href="<?= BASE_URI; ?>/src/controllers/lib_props.php?categorias=<?= urlencode(json_encode($categorias)); ?>">Excel</a></button>-->
+<input type="text" id="buscar-categorias" placeholder="Buscar categorias...">
 <table id="categoriasTable" border="1" class="table table-striped">
     <thead>
         <tr>

@@ -1,4 +1,4 @@
-<h1 class="mb-4">Nueva Categoria</h1>
+<h2 class="mb-4">Categorias</h2>
 <div id="navbar" class="mb-4">
     <a href="<?= BASE_URI; ?>/categorias" class="nav-ventas btn btn-secondary">Listar Categorias</a>
     <a href="<?= BASE_URI; ?>/categorias/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nueva Categoria</a>

@@ -35,7 +35,7 @@
 </style>
 
 <div class="sidebar">
-    <div class="logo"><img src="/DollarToyProyectoG3/public/assets/images/logodollar-horizontal.png" width="150px"></div>
+    <div class="logo"><img src="/DollarToyProyectoG3/public/assets/images/logodollar-horizontal.png" width="250px"></div>
     <ul class="nav flex-column">
         <li class="nav-item">
             <a href="<?= BASE_URI; ?>/home" class="nav-link active">

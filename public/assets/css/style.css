@@ -105,11 +105,12 @@ footer {
     width: 100%;
     height: 75vh;
     max-width: 1400px; /* Máximo ancho para cada gráfico */
-  
+    border: 1px solid blue;
 }
 .chart {
-    width: 100%; 
-    height: 50%;
+    border: 1px solid red;
+    width: 98%; 
+    height: 48%;
     max-width: 1400px;
     margin-bottom: 20px;
     max-height: 500px;

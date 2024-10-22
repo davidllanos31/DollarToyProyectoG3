@@ -30,18 +30,26 @@ class ProductoController
 
     public function index()
     {
-            $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
-            $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
-            
-            $categorias = array_map(function ($categoria) {
-                return [
-                    'id' => $categoria->getId(),
-                    'nombre' => $categoria->getNombre(),
-                    'descripcion' => $categoria->getDescripcion()
-                ];
-            }, $categorias);
+        $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
+        $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
         
-        
+        $categorias = array_map(function ($categoria) {
+            return [
+                'id' => $categoria->getId(),
+                'nombre' => $categoria->getNombre(),
+                'descripcion' => $categoria->getDescripcion()
+            ];
+        }, $categorias);
+
+        $sedes = array_map(function ($sede) {
+            return [
+                'id' => $sede->getId(),
+                'nombre' => $sede->getNombre(),
+                'direccion' => $sede->getDireccion(),
+                'ciudad' => $sede->getCiudad()
+            ];
+        }, $sedes);
+
         $getProducto = new ProductoGet($this->repository, $this->validator);
         $productos = $getProducto->find(['id_producto' => null, 'nombre' => null, 'id_categoria_producto' => null, 'id_sede' => null, 'precio_min' => null, 'precio_max' => null]);
         $title = 'Lista de Productos';
@@ -106,6 +114,7 @@ class ProductoController
     public function store()
     {
         $body = $_POST;
+        $body['id_categoria'] = (int)$_POST['id_categoria_producto'];
         $img = $_POST['img'] ?? null;
         //guardar el nombre del archivo de la imagen con el filename
         $body['imagen_url'] = $img['name'] ?? 'imagen.jpg';
@@ -121,7 +130,7 @@ class ProductoController
             $addProducto = new ProductoAdd($this->repository, $this->validator, $this->categoriaRepository, $this->sedeRepository);
 
             $addProducto->add($body);
-            $res = json_encode(['status' => 'success', 'message' => 'Producto '.'agregado correctamente' ]);
+            $res = json_encode(['status' => 'success', 'message' => 'Producto '. $body['id_producto'] === null ? 'agregado correctamente' : 'actualizado correctamente']);
             echo $res;
         } catch (ValidationException $e) {
             echo $e->getMessage();

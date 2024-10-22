@@ -22,9 +22,11 @@ $(document).ready(function () {
                         resultado += '<td>' + producto.nombre + '</td>';
                         resultado += '<td>' + producto.descripcion + '</td>';
                         resultado += '<td>' + producto.precio + '</td>';
+                        resultado += '<td>' + producto.imagen_url + '</td>';
+                        resultado += '<td>' + producto.id_categoria_producto + '</td>';
                         resultado += '<td>';
-                        resultado += '<a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>';
-                        resultado += '<button class="btn btn-danger" onclick="confirmarEliminacionSede(<?= $sede->getId(); ?>)">Eliminar</button>';
+                        resultado += '<a href="/categorias/editar/" class="btn btn-success">Editar</a>';
+                        resultado += '<a href="#" class="btn btn-danger" onclick="">Eliminar</a>';
                         resultado += '</td>';
                         resultado += '</tr>';
                     });

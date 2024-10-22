@@ -41,7 +41,7 @@ class ProductoController
         $query = $_GET['query'];
 
         $productos = $this->repository->find(['id_producto' => null, 'nombre' => $query]);
-
+        
         $productosArray = array_map(function ($producto) {
             return [
                 'id' => $producto->getId(),
@@ -49,7 +49,8 @@ class ProductoController
                 'descripcion' => $producto->getDescripcion(),
                 'precio' => $producto->getPrecio(),
                 'imagen_url' => $producto->getImg(),
-                // 'sede' => $producto->getSede()->getNombre()
+                'id_categoria_producto' => $producto->getCategoria(),
+                //'sede' => $producto->getSede()->getNombre()
             ];
         }, $productos);
 

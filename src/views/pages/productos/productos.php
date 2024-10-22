@@ -1,6 +1,6 @@
 <?php
-    require __DIR__ . '/../../../controllers/lib_props.php';
-    $lib_props = new Lib_props()
+require __DIR__ . '/../../../controllers/lib_props.php';
+$lib_props = new Lib_props()
 ?>
 
 <h2 class="mb-4">Productos</h2>
@@ -15,8 +15,8 @@
 <div class="mb-4">
     <input type="text" id="buscar-productos" class="form-control" placeholder="Buscar Productos">
 </div>
-<table id="productosTable"  class="table">
-  <thead class="table-dark">
+<table id="productosTable" class="table">
+    <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>Nombre</th>
@@ -27,8 +27,8 @@
             <th>Acciones</th>
 
         </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
         <?php foreach ($productos as $producto): ?>
             <tr>
                 <td><?php echo $producto->getId(); ?></td>
@@ -37,11 +37,14 @@
                 <td><?php echo $producto->getPrecio(); ?></td>
                 <td><?php echo $producto->getImg(); ?></td>
                 <td><?php echo $producto->getCategoria(); ?></td>
+                
                 <td>
-                    <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>
-                    <button class="btn btn-danger" onclick="confirmarEliminacionSede(<?= $sede->getId(); ?>)">Eliminar</button>
+                    <a href="/categorias/editar/" class="btn btn-success">Editar</a>
+
+                    <a href="#" class="btn btn-danger" onclick="">Eliminar</a>
                 </td>
+                
             </tr>
         <?php endforeach; ?>
-  </tbody>
+    </tbody>
 </table>

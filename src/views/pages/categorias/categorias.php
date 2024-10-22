@@ -50,7 +50,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Editar Categoría</h5>
+                <h5 class="modal-title">Editar Productos</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -59,12 +59,12 @@
                 <form id="editarCategoriaForm">
                     <input type="hidden" id="categoriaId" name="id">
                     <div class="form-group">
-                        <label for="categoriaNombre">Nombre</label>
-                        <input type="text" class="form-control" id="categoriaNombre" name="nombre" required>
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
                     </div>
                     <div class="form-group">
-                        <label for="categoriaDescripcion">Descripción</label>
-                        <textarea class="form-control" id="categoriaDescripcion" name="descripcion" required></textarea>
+                        <label for="descripcion">Descripción</label>
+                        <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
                     </div>
                 </form>
             </div>
@@ -100,8 +100,6 @@
         });
     });
 });
-
-
 </script>
 
 

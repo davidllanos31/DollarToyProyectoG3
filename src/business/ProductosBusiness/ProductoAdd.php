@@ -42,7 +42,7 @@ class ProductoAdd
         // private float $precio,
         // private string $imagen_url,
         // private int $id_categoria_producto,
-        $producto = new Producto(0, $data['nombre'], $data['descripcion'], $data['precio'], $data['imagen_url'], $data['id_categoria_producto']);
+        $producto = new Producto($data['id_producto'] ?? 0, $data['nombre'], $data['descripcion'], $data['precio'], $data['imagen_url'], $data['id_categoria_producto']);
 
         $sedeProducto = new SedeProducto($data['id_sede'], 0, $data['stock_disponible']);
 

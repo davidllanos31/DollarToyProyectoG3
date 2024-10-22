@@ -30,6 +30,26 @@ class ProductoController
 
     public function index()
     {
+        $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
+        $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
+        
+        $categorias = array_map(function ($categoria) {
+            return [
+                'id' => $categoria->getId(),
+                'nombre' => $categoria->getNombre(),
+                'descripcion' => $categoria->getDescripcion()
+            ];
+        }, $categorias);
+
+        $sedes = array_map(function ($sede) {
+            return [
+                'id' => $sede->getId(),
+                'nombre' => $sede->getNombre(),
+                'direccion' => $sede->getDireccion(),
+                'ciudad' => $sede->getCiudad()
+            ];
+        }, $sedes);
+
         $getProducto = new ProductoGet($this->repository, $this->validator);
         $productos = $getProducto->find(['id_producto' => null, 'nombre' => null, 'id_categoria_producto' => null, 'id_sede' => null, 'precio_min' => null, 'precio_max' => null]);
         $title = 'Lista de Productos';
@@ -40,8 +60,10 @@ class ProductoController
     {
         $query = $_GET['query'];
 
-        $productos = $this->repository->find(['id_producto' => null, 'nombre' => $query]);
-        
+        $id = $_GET['id'] ?? null;
+        // var_dump($_GET);
+        $productos = $this->repository->find(['id' => $id, 'nombre' => $query]);
+        // var_dump($productos);
         $productosArray = array_map(function ($producto) {
             return [
                 'id' => $producto->getId(),
@@ -108,7 +130,7 @@ class ProductoController
             $addProducto = new ProductoAdd($this->repository, $this->validator, $this->categoriaRepository, $this->sedeRepository);
 
             $addProducto->add($body);
-            $res = json_encode(['status' => 'success', 'message' => 'Producto agregado correctamente']);
+            $res = json_encode(['status' => 'success', 'message' => 'Producto '. $body['id_producto'] === null ? 'agregado correctamente' : 'actualizado correctamente']);
             echo $res;
         } catch (ValidationException $e) {
             echo $e->getMessage();

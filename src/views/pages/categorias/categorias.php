@@ -1,4 +1,4 @@
-
+<h2 class="mb-4">Categorias</h2>
 
 <input type="text" id="buscar-categorias" placeholder="Buscar categorias...">
 <!--<button><a href="<?= BASE_URI; ?>/src/controllers/lib_props.php?categorias=<?= urlencode(json_encode($categorias)); ?>">Excel</a></button>-->
@@ -8,6 +8,7 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Descripción</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -17,9 +18,10 @@
                 <td><?php echo $categoria->getNombre(); ?></td>
                 <td><?php echo $categoria->getDescripcion(); ?></td>
                 <td>
-                    <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria->getId(); ?>">Editar</a>
-                    <a href="<?= BASE_URI; ?>/categorias/crear">Crear</a>
-                    <a href="#" onclick="confirmarEliminacion(<?= $categoria->getId(); ?>)">Eliminar</a>
+                <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria->getId(); ?>" class="btn btn-success">Editar</a>
+                <a href="<?= BASE_URI; ?>/categorias/crear" class="btn btn-primary">Crear</a>
+                <a href="#" class="btn btn-danger" onclick="confirmarEliminacion(<?= $categoria->getId(); ?>)">Eliminar</a>
+
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -74,3 +74,17 @@
         </li>
     </ul>
 </div>
+
+<script>
+
+window.onload = function() {
+    const rol = localStorage.getItem('rol');
+
+    if (rol === 'Vendedor') { // Suponiendo que 6 es el rol que debe ocultar los módulos
+        const elementosAHacerOcultar = document.querySelectorAll('.nav-item:nth-child(2), .nav-item:nth-child(3), .nav-item:nth-child(5)'); // Usuarios, Categorías, Sedes
+        elementosAHacerOcultar.forEach(elemento => {
+            elemento.style.display = 'none'; // Ocultar elementos
+        });
+    }
+};
+</script>

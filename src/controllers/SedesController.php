@@ -62,7 +62,6 @@ class SedesController
     public function store()
     {
         try {
-
             $nombre = $_POST['nombre'];
             $direccion = $_POST['direccion'];
             $ciudad = $_POST['ciudad'];

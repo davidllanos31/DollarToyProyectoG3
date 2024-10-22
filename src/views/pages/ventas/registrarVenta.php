@@ -36,19 +36,20 @@
         <div id="resultados_busqueda" class="dropdown mt-2"></div>
     </div>
     <div id="detallesContainer" class="mb-3">
-        <table class="table table-sm">
-            <thead>
-                <tr>
-                    <th>ID Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unitario</th>
-                    <th>Sub Total</th>
-                </tr>
-            </thead>
-            <tbody id="detallesBody"><!-- Las filas de detalles -->
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>ID Producto</th>
+                <th>Nombre Producto</th> <!-- Nueva columna -->
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Sub Total</th>
+            </tr>
+        </thead>
+        <tbody id="detallesBody"><!-- Las filas de detalles -->
+        </tbody>
+    </table>
+</div>
     </div>
     <div class="row mb-3 align-items-end">
         <div class="col-md-6">

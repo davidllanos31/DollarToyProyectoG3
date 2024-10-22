@@ -37,16 +37,16 @@ $(document).ready(function () {
 
     $('#content').on('submit', '#ventaForm', function (e) {
         e.preventDefault();
-    
+
         // Bloquear el botón de guardar
         var saveButton = $(this).find('button[type="submit"]');
         saveButton.prop('disabled', true);
-    
+
         // Mostrar el modal de carga
         $('#loadingModal').modal('show');
-    
+
         var formData = $(this).serialize();
-    
+
         $.ajax({
             url: $(this).attr('action'),
             method: $(this).attr('method'),
@@ -57,12 +57,12 @@ $(document).ready(function () {
                     var res = JSON.parse(response);
                     // Mostrar modal de éxito
                     $('#successModal').modal('show');
-                    
+
                     // Redirigir
                     $('#closeSuccessModal').off('click').on('click', function () {
                         window.location.href = "/DollarToyProyectoG3/ventas";
                     });
-                    
+
                 } catch (error) {
                     console.error("Error al parsear JSON:", error);
                     alert("Error al procesar la respuesta del servidor.");
@@ -150,8 +150,12 @@ $(document).ready(function () {
         $('#detallesBody').append(`
             <tr class="detalle">
                 <td>
-                    <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly class="form-control form-control-sm">
-                </td>
+                <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly hidden class="form-control form-control-sm">
+                ${idProducto} <!-- Muestra el ID del producto -->
+                 </td>
+                 <td>
+                 ${nombreProducto} <!-- Muestra el nombre del producto -->
+             </td>
                 <td>
                     <input type="text" name="detalles[cantidad][]" required class="form-control form-control-sm cantidad">
                 </td>

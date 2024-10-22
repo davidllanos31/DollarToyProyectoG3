@@ -68,13 +68,12 @@ class CategoriaController
     public function store()
     {
         try {
-            $id = $_POST['id'];
             $nombre = $_POST['nombre'];
             $descripcion = $_POST['descripcion'];
-            $categoria = new Categoria($id,$nombre, $descripcion);
+            $categoria = new Categoria(0,$nombre, $descripcion);
             $registrar_categoria = $this->repository->create($categoria);
             if ($registrar_categoria) {
-                echo json_encode(['status' => 'success', 'message' => 'Categoria editada correctamente']);
+                echo json_encode(['status' => 'success', 'message' => 'Categoria creada correctamente']);
             }
         } catch (\Exception $e) {
             echo json_encode(['status' => 'error', 'message' => 'Error al actualizar sede' . $e->getMessage()]);

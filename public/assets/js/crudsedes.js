@@ -89,6 +89,8 @@ $(document).ready(function () {
             }
         });
     });
+
+    
     // CODIGO EDITAR
     $('#guardarCambios').on('click', function() {
         const formData = $('#editarsedeForm').serialize();
@@ -117,3 +119,34 @@ $(document).ready(function () {
     
     
 });
+
+function confirmarEliminacionSede(sedeId) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás deshacer esta acción.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/DollarToyProyectoG3/sedes/eliminar?id=' + sedeId,
+                type: 'POST',
+                data: 'json',
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    alert(data.message);
+                    if (data.status === 'success') {
+                        location.reload(); // Recargar la página para ver los cambios
+                    }
+                },
+                error: function() {
+                    location.reload();
+                }
+             });
+        }
+    });
+}

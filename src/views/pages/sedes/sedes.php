@@ -1,4 +1,18 @@
+<style>
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none; 
+    font-size: 24px; 
+    color: red; 
+}
 
+.close:hover {
+    color: darkred;
+}
+</style>
 <h2 class="mb-4">Sedes</h2>
 <div id="navbar" class="mb-4">
     <a href="<?= BASE_URI; ?>/sedes" class="nav-ventas btn btn-secondary">Listar Sedes</a>
@@ -30,7 +44,7 @@
                 <td><?php echo $sede->getCiudad(); ?></td>
                 <td>
                 <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>
-                <button class="btn btn-danger" data-id="<?php echo $sede->getId(); ?>">Eliminar</button>
+                <button class="btnEliminar btn btn-danger" data-id="<?php echo $sede->getId(); ?>">Eliminar</button>
                 </td>
             </tr>
         <?php endforeach; ?>

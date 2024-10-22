@@ -3,15 +3,20 @@
     <a href="<?= BASE_URI; ?>/sedes" class="nav-ventas btn btn-secondary">Listar Sedes</a>
     <a href="<?= BASE_URI; ?>/sedes/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nueva Sede</a>
 </div>
+
+
 <form id="sedeForm" action="<?= BASE_URI; ?>/sedes/crear" method="POST">
-    <label for="nombre">Nombre</label>
-    <input type="text" name="nombre" id="nombre" required>
-
-    <label for="direccion">Direccion</label>
-    <input type="text" name="direccion" id="direccion" required>
-
-    <label for="ciudad">Ciudad</label>
-    <input type="text" name="ciudad" id="ciudad" required>
-
-    <button type="submit">Guardar</button>
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre </label>
+    <input type="text" name="nombre" class="form-control" id="nombre" required>
+  </div>
+  <div class="mb-3">
+    <label for="direccion" class="form-label">Direccion</label>
+    <input type="text" name="direccion" class="form-control" id="direccion" required>
+  </div>
+  <div class="mb-3">
+    <label for="ciudad" class="form-label">Ciudad</label>
+    <input type="text" name="ciudad" class="form-control" id="ciudad" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Guardar</button>
 </form>

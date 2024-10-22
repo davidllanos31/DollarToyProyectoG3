@@ -22,8 +22,8 @@ $(document).ready(function () {
                         resultado += '<td>' + categoria.nombre + '</td>';
                         resultado += '<td>' + categoria.descripcion + '</td>';
                         resultado += '<td>';
-                        resultado += '<a href="/categorias/edit/' + categoria.id + '">Editar</a>';
-                        resultado += ' <a href="/categorias/delete/' + categoria.id + '" onclick="return confirm(\'¿Estás seguro?\')">Eliminar</a>';
+                        resultado += '<a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria->getId(); ?>" class="btn btn-success">Editar</a>';
+                        resultado += '<a href="#" class="btn btn-danger" onclick="confirmarEliminacion(<?= $categoria->getId(); ?>)">Eliminar</a>';
                         resultado += '</td>';
                         resultado += '</tr>';
                     });

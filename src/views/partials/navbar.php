@@ -5,7 +5,7 @@
         padding: 20px;
         min-width: 16%;
         letter-spacing: 0.3px;
-        height: 100vh;
+        height: 110vh;
     }
 
     .nav-link {

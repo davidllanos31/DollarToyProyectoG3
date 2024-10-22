@@ -40,7 +40,7 @@
         const formData = new FormData(this.form);
         console.log(formData);
         $.ajax({
-            url: '/DollarToyProyectoG3/productos/crear',
+            url: '/DollarToyProyectoG3/productos/store',
             method: 'POST',
             data: formData,
             success: function (response) {

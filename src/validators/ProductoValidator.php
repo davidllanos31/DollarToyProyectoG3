@@ -22,12 +22,12 @@ class ProductoValidator implements ValidatorInterfaceActual
         }
 
         if (isset($filters['id_producto']) && !is_int($filters['id_producto'])) {
-            $this->error = 'El ID del producto debe ser un número entero';
+            $this->error = 'El ID del producto debe ser un número entero ' . $filters['id_producto'];
             return false;
         }
 
         if (isset($filters['id_categoria']) && !is_int($filters['id_categoria'])) {
-            $this->error = 'El ID de la categoría debe ser un número entero';
+            $this->error = 'El ID de la categoría debe ser un número entero ' . $filters['id_categoria'];
             return false;
         }
 
@@ -61,8 +61,9 @@ class ProductoValidator implements ValidatorInterfaceActual
             return false;
         }
 
+        $data['id_categoria_producto'] = intval($data['id_categoria_producto']);
         if (empty($data['id_categoria_producto']) || !is_int($data['id_categoria_producto'])) {
-            $this->error = 'El campo id_categoria es requerido y debe ser un número entero';
+            $this->error = 'El campo id_categoria es requerido y debe ser un número entero ' . $data['id_categoria_producto'];
             return false;
         }
 

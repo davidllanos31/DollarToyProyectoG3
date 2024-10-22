@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Business\Producto;
+namespace app\Business\ProductosBusiness;
 
 use app\exceptions\DataException;
 use app\Interfaces\CategoriaInterface;
@@ -34,14 +34,10 @@ class ProductoAdd
             throw new DataException('Categoria no existe');
         }
 
-        if (!$this->validator->validateId($data['id'])) {
-            throw new DataException('Producto no existe');
-        }
-
         $categoria = $this->categoria->find(['id_categoria' => $data['id_categoria_producto']]);
         $sede = $this->sede->find(['id_sede' => $data['id_sede']]);
 
-        $producto = new Producto($data['id'], $data['nombre'], $data['descripcion'], $data['precio'], $data['imagen_url'], $categoria[0]);
+        $producto = new Producto(0, $data['nombre'], $data['descripcion'], $data['precio'], $data['imagen_url'], $categoria[0]);
 
         $sedeProducto = new SedeProducto($data['id_sede'], 0, $data['stock_disponible']);
 

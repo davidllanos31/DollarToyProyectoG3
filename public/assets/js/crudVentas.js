@@ -35,12 +35,18 @@ $(document).ready(function () {
     });
 
 
-
-    // MANEJA ENVÍO DEL FORM
     $('#content').on('submit', '#ventaForm', function (e) {
         e.preventDefault();
+    
+        // Bloquear el botón de guardar
+        var saveButton = $(this).find('button[type="submit"]');
+        saveButton.prop('disabled', true);
+    
+        // Mostrar el modal de carga
+        $('#loadingModal').modal('show');
+    
         var formData = $(this).serialize();
-
+    
         $.ajax({
             url: $(this).attr('action'),
             method: $(this).attr('method'),
@@ -49,7 +55,14 @@ $(document).ready(function () {
                 console.log("Respuesta del servidor:", response);
                 try {
                     var res = JSON.parse(response);
-                    alert(res.message);
+                    // Mostrar modal de éxito
+                    $('#successModal').modal('show');
+                    
+                    // Redirigir
+                    $('#closeSuccessModal').off('click').on('click', function () {
+                        window.location.href = "/DollarToyProyectoG3/ventas";
+                    });
+                    
                 } catch (error) {
                     console.error("Error al parsear JSON:", error);
                     alert("Error al procesar la respuesta del servidor.");
@@ -57,10 +70,14 @@ $(document).ready(function () {
             },
             error: function () {
                 alert("Error al guardar la venta.");
+            },
+            complete: function () {
+                // Ocultar el modal de carga y habilitar nuevamente el botón de guardar
+                $('#loadingModal').modal('hide');
+                saveButton.prop('disabled', false);
             }
         });
     });
-
     // Actualiza el subtotal en tiempo real
     $('#content').on('input', '#detallesBody .cantidad, #detallesBody .precio', function () {
         calcularSubtotal($(this).closest('.detalle'));
@@ -136,13 +153,13 @@ $(document).ready(function () {
                     <input type="text" name="detalles[id_producto][]" value="${idProducto}" readonly class="form-control form-control-sm">
                 </td>
                 <td>
-                    <input type="number" name="detalles[cantidad][]" required class="form-control form-control-sm cantidad">
+                    <input type="text" name="detalles[cantidad][]" required class="form-control form-control-sm cantidad">
                 </td>
                 <td>
-                    <input type="number" name="detalles[precio_unitario][]" value="${precioProducto}" readonly class="form-control form-control-sm precio">
+                    <input type="text" name="detalles[precio_unitario][]" value="${precioProducto}" readonly class="form-control form-control-sm precio">
                 </td>
                 <td>
-                    <input type="number" name="sub_total[]" readonly class="form-control form-control-sm sub-total">
+                    <input type="text" name="sub_total[]" readonly class="form-control form-control-sm sub-total">
                 </td>
             </tr>
         `);

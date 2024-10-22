@@ -1,3 +1,4 @@
+
 <h2 class="mb-4">Ventas</h2>
 <div id="navbar" class="mb-4">
     <a href="#" class="nav-ventas btn btn-secondary" data-url="<?= BASE_URI; ?>/ventas">Listar Ventas</a>
@@ -59,3 +60,35 @@
         </div>
     </div>
 </form>
+
+
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                La venta se ha guardado exitosamente.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeSuccessModal" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Carga -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p>Cargando...</p>
+            </div>
+        </div>
+    </div>
+</div>

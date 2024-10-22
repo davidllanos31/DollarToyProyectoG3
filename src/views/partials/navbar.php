@@ -5,7 +5,7 @@
         padding: 20px;
         min-width: 16%;
         letter-spacing: 0.3px;
-        height: 100vh;
+        height: 110vh;
     }
 
     .nav-link {
@@ -35,7 +35,7 @@
 </style>
 
 <div class="sidebar">
-    <div class="logo"><img src="public/assets/images/logodollar-horizontal.png" width="150px"></div>
+    <div class="logo"><img src="/DollarToyProyectoG3/public/assets/images/logodollar-horizontal.png" width="150px"></div>
     <ul class="nav flex-column">
         <li class="nav-item">
             <a href="<?= BASE_URI; ?>/home" class="nav-link active">
@@ -69,7 +69,7 @@
         </li>
         <li class="nav-item">
             <a href="<?= BASE_URI; ?>/iniciar-sesion" class="nav-link">
-                <img src="<?= BASE_URI; ?>/public/assets/images/logout.png" alt="" style="width: 20px; height: 20px;">SALIR
+                <img src="<?= BASE_URI; ?>/public/assets/images/logout.png" alt="" style="width: 20px; height: 20px;"> Salir
             </a>
         </li>
     </ul>

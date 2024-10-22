@@ -31,8 +31,10 @@ return [
     '/ventas/buscar' => [VentaController::class, 'buscar'],
     '/categorias' => [CategoriaController::class, 'index'],
     '/categorias/buscar' => [CategoriaController::class, 'buscar'],
-    '/categorias/editar' => [CategoriaController::class, 'update'],
+    '/categorias/editar' => [CategoriaController::class, 'edit'],
     '/categorias/eliminar' => [CategoriaController::class, 'delete'],
+    '/categorias/crear' => [CategoriaController::class, 'nuevaCategoria'],
+    '/categorias/store' => [CategoriaController::class, 'store'],
 
     '/sedes' => [SedesController::class, 'index'],
     '/sedes/buscar' => [SedesController::class, 'buscar'],

@@ -1,15 +1,26 @@
-<input type="text" id="buscar-sedes" placeholder="Buscar Sedes...">
 
-<table id="sedesTable" border="1" class="table table-striped">
-    <thead> 
+<h2 class="mb-4">Sedes</h2>
+<div id="navbar" class="mb-4">
+    <a href="<?= BASE_URI; ?>/sedes" class="nav-ventas btn btn-secondary">Listar Sedes</a>
+    <a href="<?= BASE_URI; ?>/sedes/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nueva Sede</a>
+</div>
+
+
+
+<div class="mb-4">
+    <input type="text" id="buscar-sedes" class="form-control" placeholder="Buscar Sedes...">
+</div>
+
+<table id="sedesTable"  class="table">
+  <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>Nombre</th>
             <th>Dirección</th>
             <th>Ciudad</th>
         </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
         <?php foreach ($sedes as $sede): ?>
             <tr>
                 <td><?php echo $sede->getId(); ?></td>
@@ -18,13 +29,13 @@
                 <td><?php echo $sede->getCiudad(); ?></td>
                 <td>
                     <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>">Editar</a>
-                    <a href="<?= BASE_URI; ?>/sedes/crear">Crear</a>
                     <button class="btnEliminar" data-id="<?php echo $sede->getId(); ?>">Eliminar</button>
                 </td>
             </tr>
         <?php endforeach; ?>
-    </tbody>
+  </tbody>
 </table>
+
 <!-- MODAL EDITAR -->
 <div id="editarModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

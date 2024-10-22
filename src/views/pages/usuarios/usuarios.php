@@ -1,8 +1,15 @@
 
-<h2>Usuarios</h2>
-<input type="text" id="buscar-usuarios" placeholder="Buscar usuarios...">
-<button onclick="window.location.href='<?= BASE_URI; ?>/usuarios/crear'" class="btn btn-primary">Agregar Usuarios</button>
 
+
+<h2 class="mb-4">Usuarios</h2>
+<div id="navbar" class="mb-4">
+    <a href="<?= BASE_URI; ?>/usuarios" class="btn btn-secondary">Listar Usuarios</a>
+    <button onclick="window.location.href='<?= BASE_URI; ?>/usuarios/crear'" class="btn btn-primary">Agregar Usuarios</button>
+</div>
+
+<div class="mb-4">
+    <input type="text" id="buscar-usuarios" class="form-control" placeholder="Buscar Usuarios...">
+</div>
 
 <table id="usuariosTable" border="1" class="table table-striped">
     <thead>

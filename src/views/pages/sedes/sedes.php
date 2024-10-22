@@ -30,7 +30,7 @@
                 <td><?php echo $sede->getCiudad(); ?></td>
                 <td>
                 <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>
-                <button class="btn btn-danger" data-id="<?php echo $sede->getId(); ?>">Eliminar</button>
+                <button class="btn btn-danger" onclick="confirmarEliminacionSede(<?= $sede->getId(); ?>)">Eliminar</button>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -54,27 +54,50 @@ class CategoriaController
         echo json_encode($categoriasArray);
     }
 
-    public function store()
+    public function nuevaCategoria()
     {
-        $body = $_POST;
-        // $addCategoria = new CategoriaAdd($this->repository, $this->validator);
-
-        try {
-            $categoria = CategoryFactory::create(null, $body['nombre'], $body['descripcion']);
-            // $addCategoria->add($categoria);
-            header('Location: /categorias');
-        } catch (ValidationException $e) {
-            echo $e->getMessage();
-        } catch (DataException $e) {
-            echo $e->getMessage();
+        $title = 'Nueva Sede';
+        $content = __DIR__ . '/../views/pages/categorias/create.php';
+        if ($this->isAjaxRequest()) {
+            include $content;
+        } else {
+            include __DIR__ . '/../views/layouts/main.php';
         }
     }
 
-    public function edit($id)
+    public function store()
     {
-        // $getCategoria = new CategoriaGet($this->repository, $this->validator);
-        // $categoria = $getCategoria->find(['id_categoria' => $id]);
+        try {
+            $id = $_POST['id'];
+            $nombre = $_POST['nombre'];
+            $descripcion = $_POST['descripcion'];
+            $categoria = new Categoria($id,$nombre, $descripcion);
+            $registrar_categoria = $this->repository->create($categoria);
+            if ($registrar_categoria) {
+                echo json_encode(['status' => 'success', 'message' => 'Categoria editada correctamente']);
+            }
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Error al actualizar sede' . $e->getMessage()]);
+        } 
     }
+
+    public function edit()
+    {
+        try {
+            $id = $_POST['id'];
+            $nombre = $_POST['nombre'];
+            $descripcion = $_POST['descripcion'];
+            $categoria = new Categoria($id,$nombre, $descripcion);
+            $registrar_categoria = $this->repository->create($categoria);
+            if ($registrar_categoria) {
+                echo json_encode(['status' => 'success', 'message' => 'Categoria editada correctamente']);
+            }
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Error al actualizar sede' . $e->getMessage()]);
+        } 
+    }
+
+    
 
     public function update($id)
     {
@@ -92,21 +115,28 @@ class CategoriaController
         }
     }
 
-    public function delete($id)
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_method']) && $_POST['_method'] === 'DELETE') {
-        $deleteCategoria = new CategoriaDelete($this->repository);
-        
+    public function delete()
+    {
+        $id = $_GET['id'];
         try {
-            $deleteCategoria->deleteById($id);
-            header('Location: /categorias');
+            $deleted = $this->repository->delete($id);
+    
+            if ($deleted) {
+                // Si la eliminación fue exitosa, redirigir o devolver un mensaje de éxito
+                header('Location: /categorias?message=Categoría eliminada correctamente');
+            } else {
+                // Si no se pudo eliminar, manejar el error
+                echo json_encode(['status' => 'error', 'message' => 'No se pudo eliminar la categoría']);
+            }
         } catch (DataException $e) {
-            echo $e->getMessage();
+            echo json_encode(['status' => 'error', 'message' => 'Error al eliminar la categoría: ' . $e->getMessage()]);
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Ocurrió un error inesperado: ' . $e->getMessage()]);
         }
-    } else {
-        
-        http_response_code(405);
-        echo "Método no permitido";
     }
-}   
+    
+    private function isAjaxRequest()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+    }
 }

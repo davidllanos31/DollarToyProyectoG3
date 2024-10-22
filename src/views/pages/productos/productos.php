@@ -24,8 +24,6 @@
             <th>Precio</th>
             <th>Imagen</th>
             <th>Categoria</th>
-            <th>Sede</th>
-            <th>Stock</th>
             <th>Acciones</th>
 
         </tr>
@@ -39,9 +37,6 @@
                 <td><?php echo $producto->getPrecio(); ?></td>
                 <td><?php echo $producto->getImg(); ?></td>
                 <td><?php echo $producto->getCategoria(); ?></td>
-                <td><?php echo $producto->getSede(); ?></td>
-                
-                <td><?php echo $producto->getStock(); ?></td>
                 <td>
                     <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>
                     <button class="btn btn-danger" onclick="confirmarEliminacionSede(<?= $sede->getId(); ?>)">Eliminar</button>

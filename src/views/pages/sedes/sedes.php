@@ -7,6 +7,7 @@
             <th>Nombre</th>
             <th>Dirección</th>
             <th>Ciudad</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>

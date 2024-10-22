@@ -12,7 +12,6 @@
 .close:hover {
     color: darkred;
 }
-
 </style>
 <h2 class="mb-4">Sedes</h2>
 <div id="navbar" class="mb-4">

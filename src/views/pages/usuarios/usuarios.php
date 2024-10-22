@@ -1,3 +1,5 @@
+
+<h2>Usuarios</h2>
 <input type="text" id="buscar-usuarios" placeholder="Buscar usuarios...">
 <button onclick="window.location.href='<?= BASE_URI; ?>/usuarios/crear'" class="btn btn-primary">Agregar Usuarios</button>
 

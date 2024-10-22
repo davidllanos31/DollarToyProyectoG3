@@ -45,8 +45,8 @@
             data: formData,
             success: function (response) {
                 var res = JSON.parse(response);
-                alert(res.message);
-                window.location.href = '/DollarToyProyectoG3/productos';
+                // alert(res.message);
+                // window.location.href = '/DollarToyProyectoG3/productos';
             },
             error: function () {
                 alert("Error al guardar el producto.");

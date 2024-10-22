@@ -36,8 +36,13 @@ class ProductoAdd
 
         $categoria = $this->categoria->find(['id_categoria' => $data['id_categoria_producto']]);
         $sede = $this->sede->find(['id_sede' => $data['id_sede']]);
-
-        $producto = new Producto(0, $data['nombre'], $data['descripcion'], $data['precio'], $data['imagen_url'], $categoria[0]);
+        // private int $id_producto,
+        // private string $nombre,
+        // private string $descripcion,
+        // private float $precio,
+        // private string $imagen_url,
+        // private int $id_categoria_producto,
+        $producto = new Producto(0, $data['nombre'], $data['descripcion'], $data['precio'], $data['imagen_url'], $data['id_categoria_producto']);
 
         $sedeProducto = new SedeProducto($data['id_sede'], 0, $data['stock_disponible']);
 

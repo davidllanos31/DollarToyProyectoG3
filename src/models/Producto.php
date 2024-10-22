@@ -4,28 +4,14 @@ namespace app\Models;
 
 class Producto
 {
-    private int $id_producto;
-    private string $nombre;
-    private string $descripcion;
-    private float $precio;
-    private string $imagen_url;
-    private int $id_categoria_producto;
-
     public function __construct(
-        int $id_producto,
-        string $nombre,
-        string $descripcion,
-        float $precio,
-        string $imagen_url,
-        int $id_categoria_producto,
-    ) {
-        $this->id_producto = $id_producto;
-        $this->nombre = $nombre;
-        $this->descripcion = $descripcion;
-        $this->precio = $precio;
-        $this->imagen_url = $imagen_url;
-        $this->id_categoria_producto = $id_categoria_producto;
-    }
+        private int $id_producto,
+        private string $nombre,
+        private string $descripcion,
+        private float $precio,
+        private string $imagen_url,
+        private int $id_categoria_producto,
+    ) {}
 
     public function getId()
     {

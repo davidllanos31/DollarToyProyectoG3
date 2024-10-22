@@ -29,6 +29,7 @@ return [
     '/ventas/crear' => [VentaController::class, 'nuevaVenta'],
     '/ventas/registrar' => [VentaController::class, 'registrarVenta'],
     '/ventas/buscar' => [VentaController::class, 'buscar'],
+    
     '/categorias' => [CategoriaController::class, 'index'],
     '/categorias/buscar' => [CategoriaController::class, 'buscar'],
     '/categorias/editar' => [CategoriaController::class, 'edit'],

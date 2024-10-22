@@ -100,6 +100,7 @@ class VentaController
             }
             $venta = new Venta($id_usuario, $cliente, $fecha_venta, $id_metodopago, $total, $detalles);
             $registrar_venta = $this->repository->create($venta);
+            // Envía el correo
             $this->enviarEmail($cliente, $fecha_venta, $total, $detalles);
             if ($registrar_venta) {
                 echo json_encode(['status' => 'success', 'message' => 'Venta registrada con éxito.']);
@@ -125,11 +126,16 @@ class VentaController
         $mail->setFrom('dollartoy@gmail.com', 'DOLLARTOY');
         $mail->addAddress('axelyurquina12@gmail.com'); 
 
-        $mensajeHtml = "<h1>Confirmación de Venta</h1>";
+        $mensajeHtml = "<h1>Confirmacion de Venta</h1>";
         $mensajeHtml .= "<p>Cliente: $cliente</p>";
         $mensajeHtml .= "<p>Fecha de la venta: $fecha_venta</p>";
         $mensajeHtml .= "<p>Total: $total</p>";
         $mensajeHtml .= "<h2>Detalles de la compra:</h2><ul>";
+
+        // Iterar sobre los detalles para agregar al mensaje
+        foreach ($detalles as $detalle) {
+            $mensajeHtml .= "<li>Producto ID: {$detalle->id_producto}, Cantidad: {$detalle->cantidad}, Precio Unitario: {$detalle->precio_unitario}</li>";
+        }
 
         $mensajeHtml .= "</ul><p>¡Gracias por tu compra!</p>";
 

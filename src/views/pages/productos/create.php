@@ -1,3 +1,9 @@
+<h1 class="mb-4">Nuevo Producto</h1>
+<div id="navbar" class="mb-4">
+    <a href="<?= BASE_URI; ?>/productos" class="nav-ventas btn btn-secondary">Listar Productos</a>
+    <a href="<?= BASE_URI; ?>/productos/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nuevo Producto</a>
+</div>
+
 <form id="productoForm" style="display: flex; flex-direction: column;">
     <label for="nombre">Nombre</label>
     <input type="text" name="nombre" id="nombre" required>

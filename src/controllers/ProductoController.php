@@ -114,7 +114,6 @@ class ProductoController
     public function store()
     {
         $body = $_POST;
-        $body['id_categoria'] = (int)$_POST['id_categoria_producto'];
         $img = $_POST['img'] ?? null;
         //guardar el nombre del archivo de la imagen con el filename
         $body['imagen_url'] = $img['name'] ?? 'imagen.jpg';
@@ -130,7 +129,7 @@ class ProductoController
             $addProducto = new ProductoAdd($this->repository, $this->validator, $this->categoriaRepository, $this->sedeRepository);
 
             $addProducto->add($body);
-            $res = json_encode(['status' => 'success', 'message' => 'Producto '. $body['id_producto'] === null ? 'agregado correctamente' : 'actualizado correctamente']);
+            $res = json_encode(['status' => 'success', 'message' => 'Producto '.'agregado correctamente' ]);
             echo $res;
         } catch (ValidationException $e) {
             echo $e->getMessage();

@@ -5,7 +5,7 @@
         padding: 20px;
         min-width: 16%;
         letter-spacing: 0.3px;
-        height: 100vh;
+        height: 110vh;
     }
 
     .nav-link {
@@ -69,7 +69,7 @@
         </li>
         <li class="nav-item">
             <a href="<?= BASE_URI; ?>/iniciar-sesion" class="nav-link">
-                <img src="<?= BASE_URI; ?>/public/assets/images/logout.png" alt="" style="width: 20px; height: 20px;">SALIR
+                <img src="<?= BASE_URI; ?>/public/assets/images/logout.png" alt="" style="width: 20px; height: 20px;"> Salir
             </a>
         </li>
     </ul>

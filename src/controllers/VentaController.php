@@ -129,15 +129,13 @@ class VentaController
         $mensajeHtml = "<h1>Confirmacion de Venta</h1>";
         $mensajeHtml .= "<p>Cliente: $cliente</p>";
         $mensajeHtml .= "<p>Fecha de la venta: $fecha_venta</p>";
-        $mensajeHtml .= "<p>Total: $total</p>";
+        $mensajeHtml .= "<p>Total: S/.$total</p>";
         $mensajeHtml .= "<h2>Detalles de la compra:</h2><ul>";
 
         // Iterar sobre los detalles para agregar al mensaje
         foreach ($detalles as $detalle) {
-            $mensajeHtml .= "<li>Producto ID: {$detalle->id_producto}, Cantidad: {$detalle->cantidad}, Precio Unitario: {$detalle->precio_unitario}</li>";
+            $mensajeHtml .= "<li>Producto ID: {$detalle->id_producto}, Cantidad: {$detalle->cantidad}, Precio Unitario: S/.{$detalle->precio_unitario}</li>";
         }
-
-        $mensajeHtml .= "</ul><p>¡Gracias por tu compra!</p>";
 
         $mail->isHTML(true);
         $mail->Subject = 'Confirmacion de Venta';

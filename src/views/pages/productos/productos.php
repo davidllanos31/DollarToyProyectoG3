@@ -3,25 +3,34 @@
     $lib_props = new Lib_props()
 ?>
 
-<input type="text" id="buscar-productos" placeholder="Buscar productos...">
-<button>
-    <a href="<?= $lib_props->generarEnlaceExcel($productos); ?>">Excel</a>
-</button>
-<select>
-    
-</select>
-<table id="productosTable" border="1" class="table table-striped">
-    <thead>
+<h2 class="mb-4">Productos</h2>
+<div id="navbar" class="mb-4">
+    <a href="<?= BASE_URI; ?>/productos" class="nav-ventas btn btn-secondary">Listar Productos</a>
+    <a href="<?= BASE_URI; ?>/productos/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nuevo Producto</a>
+    <button class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">
+        <a href="<?= $lib_props->generarEnlaceExcel($productos); ?>" style="color:black; border:none">Excel</a>
+    </button>
+</div>
+
+<div class="mb-4">
+    <input type="text" id="buscar-productos" class="form-control" placeholder="Buscar Productos">
+</div>
+<table id="productosTable"  class="table">
+  <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Precio</th>
             <th>Imagen</th>
+            <th>Categoria</th>
+            <th>Sede</th>
             <th>Stock</th>
+            <th>Acciones</th>
+
         </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
         <?php foreach ($productos as $producto): ?>
             <tr>
                 <td><?php echo $producto->getId(); ?></td>
@@ -29,16 +38,15 @@
                 <td><?php echo $producto->getDescripcion(); ?></td>
                 <td><?php echo $producto->getPrecio(); ?></td>
                 <td><?php echo $producto->getImg(); ?></td>
-                <td>H0la</td>
+                <td><?php echo $producto->getCategoria(); ?></td>
+                <td><?php echo $producto->getSede(); ?></td>
+                
+                <td><?php echo $producto->getStock(); ?></td>
                 <td>
-                    <!-- 
-                <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria['id']; ?>">Editar</a>
-                <a href="<?= BASE_URI; ?>/categorias/eliminar/<?php echo $categoria['id']; ?>" onclick="return confirm('¿Estás seguro?')">Eliminar</a> 
-                -->
+                    <a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>
+                    <button class="btn btn-danger" onclick="confirmarEliminacionSede(<?= $sede->getId(); ?>)">Eliminar</button>
                 </td>
             </tr>
         <?php endforeach; ?>
-    </tbody>
+  </tbody>
 </table>
-
-<a href="<?= BASE_URI; ?>/productos/crear">Nuevo Producto</a>

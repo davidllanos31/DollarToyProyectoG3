@@ -1,5 +1,8 @@
 <h2 class="mb-4">Categorias</h2>
-
+<div id="navbar" class="mb-4">
+    <a href="<?= BASE_URI; ?>/categorias" class="nav-ventas btn btn-secondary">Listar Categorias</a>
+    <a href="<?= BASE_URI; ?>/categorias/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nueva Categoria</a>
+</div>
 <input type="text" id="buscar-categorias" placeholder="Buscar categorias...">
 <!--<button><a href="<?= BASE_URI; ?>/src/controllers/lib_props.php?categorias=<?= urlencode(json_encode($categorias)); ?>">Excel</a></button>-->
 <table id="categoriasTable" border="1" class="table table-striped">
@@ -19,7 +22,6 @@
                 <td><?php echo $categoria->getDescripcion(); ?></td>
                 <td>
                 <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria->getId(); ?>" class="btn btn-success">Editar</a>
-                <a href="<?= BASE_URI; ?>/categorias/crear" class="btn btn-primary">Crear</a>
                 <a href="#" class="btn btn-danger" onclick="confirmarEliminacion(<?= $categoria->getId(); ?>)">Eliminar</a>
 
                 </td>

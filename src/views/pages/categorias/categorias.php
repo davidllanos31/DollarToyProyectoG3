@@ -1,5 +1,23 @@
+<style>
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none; 
+    font-size: 24px; 
+    color: red; 
+}
 
-
+.close:hover {
+    color: darkred;
+}
+</style>
+<h2 class="mb-4">Categorias</h2>
+<div id="navbar" class="mb-4">
+    <a href="<?= BASE_URI; ?>/categorias" class="nav-ventas btn btn-secondary">Listar Categorias</a>
+    <a href="<?= BASE_URI; ?>/categorias/crear" class="nav-ventas btn btn-primary me-2 link-nav-interno-activo">Registrar Nueva Categoria</a>
+</div>
 <input type="text" id="buscar-categorias" placeholder="Buscar categorias...">
 <!--<button><a href="<?= BASE_URI; ?>/src/controllers/lib_props.php?categorias=<?= urlencode(json_encode($categorias)); ?>">Excel</a></button>-->
 <table id="categoriasTable" border="1" class="table table-striped">
@@ -8,6 +26,7 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Descripción</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -17,9 +36,9 @@
                 <td><?php echo $categoria->getNombre(); ?></td>
                 <td><?php echo $categoria->getDescripcion(); ?></td>
                 <td>
-                    <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria->getId(); ?>">Editar</a>
-                    <a href="<?= BASE_URI; ?>/categorias/crear">Crear</a>
-                    <a href="#" onclick="confirmarEliminacion(<?= $categoria->getId(); ?>)">Eliminar</a>
+                <a href="<?= BASE_URI; ?>/categorias/editar/<?php echo $categoria->getId(); ?>" class="btn btn-success">Editar</a>
+                <a href="#" class="btn btn-danger" onclick="confirmarEliminacion(<?= $categoria->getId(); ?>)">Eliminar</a>
+
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -32,6 +51,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar Categoría</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form id="editarCategoriaForm">

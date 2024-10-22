@@ -24,8 +24,8 @@ $(document).ready(function () {
                         resultado += '<td>' + sede.direccion + '</td>';
                         resultado += '<td>' + sede.ciudad + '</td>';
                         resultado += '<td>';
-                        resultado += '<a href="/sedes/edit/' + sede.id + '">Editar</a>';
-                        resultado += ' <a href="/sedes/delete/' + sede.id + '" onclick="return confirm(\'¿Estás seguro?\')">Eliminar</a>';
+                        resultado += '<a href="<?= BASE_URI; ?>/sedes/editar/<?php echo $sede->getId(); ?>" class="btn btn-primary">Editar</a>';
+                        resultado += '<button class="btn btn-danger" data-id="<?php echo $sede->getId(); ?>">Eliminar</button>';
                         resultado += '</td>';
                         resultado += '</tr>';
                     });

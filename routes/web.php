@@ -48,5 +48,6 @@ return [
     '/productos' => [ProductoController::class, 'index'],
     '/productos/buscar' => [ProductoController::class, 'buscar'],
     '/productos/crear' => [ProductoController::class, 'nuevoProducto'],
+    '/productos/editar' => [ProductoController::class, 'edit'],
     '/productos/store' => [ProductoController::class, 'store'],
 ];

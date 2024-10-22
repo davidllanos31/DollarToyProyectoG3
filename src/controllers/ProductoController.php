@@ -2,14 +2,13 @@
 
 namespace app\controllers;
 
-use app\Business\Producto\ProductoAdd;
+use app\Business\ProductosBusiness\ProductoAdd;
 use app\Business\ProductosBusiness\ProductoGet;
-use app\Business\Producto\ProductoUpdate;
-use app\Business\Producto\ProductoDelete;
-use app\Data\CategoriaRepository;
+use app\Data\CategoriaData;
 use app\Data\ProductoData;
-use app\Data\ProductoRepository;
-use app\Data\SedeRepository;
+use app\Data\SedesData;
+use app\exceptions\DataException;
+use app\exceptions\ValidationException;
 use app\Validators\ProductoValidator;
 
 class ProductoController
@@ -23,7 +22,8 @@ class ProductoController
     {
         $this->validator = new ProductoValidator();
         $this->repository = new ProductoData();
-
+        $this->categoriaRepository = new CategoriaData();
+        $this->sedeRepository = new SedesData();
         // $this->sedeRepository = new SedeRepository();
     }
 
@@ -58,6 +58,27 @@ class ProductoController
 
     public function nuevoProducto()
     {
+        $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
+        $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
+        
+        $categorias = array_map(function ($categoria) {
+            return [
+                'id' => $categoria->getId(),
+                'nombre' => $categoria->getNombre(),
+                'descripcion' => $categoria->getDescripcion()
+            ];
+        }, $categorias);
+
+        $sedes = array_map(function ($sede) {
+            return [
+                'id' => $sede->getId(),
+                'nombre' => $sede->getNombre(),
+                'direccion' => $sede->getDireccion(),
+                'ciudad' => $sede->getCiudad()
+            ];
+        }, $sedes);
+
+        // var_dump($sedes);
         $title = 'Nuevo Producto';
         $content = __DIR__ . '/../views/pages/productos/create.php';
         if ($this->isAjaxRequest()) {
@@ -69,52 +90,61 @@ class ProductoController
 
     public function store()
     {
+        $body = $_POST;
+        $body['id_categoria'] = (int)$_POST['id_categoria_producto'];
+        $img = $_POST['img'];
+        //guardar el nombre del archivo de la imagen con el filename
+        $body['imagen_url'] = $img['name'] ?? 'imagen.jpg';
+        var_dump($body);
         try {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Procesar el formulario
-                $nombre = $_POST['nombre'];
-                $descripcion = $_POST['descripcion'];
-                $precio = $_POST['precio'];
-                $id_categoria_producto = $_POST['id_categoria_producto'];
-                $id_sede = $_POST['id_sede'];
-                $img = $_FILES['img']['name']; // Obtener la imagen del formulario
+            $addProducto = new ProductoAdd($this->repository, $this->validator, $this->categoriaRepository, $this->sedeRepository);
 
-                // Mover la imagen a la carpeta correspondiente
-                move_uploaded_file($_FILES['img']['tmp_name'], __DIR__ . '/../uploads/' . $img);
-
-                // Agregar el producto
-                $addProducto = new ProductoAdd($this->repository, $this->validator);
-                $addProducto->add($nombre, $descripcion, $precio, $id_categoria_producto, $id_sede, $img);
-
-                // Devolver respuesta de éxito
-                echo json_encode(['message' => 'Producto guardado con éxito']);
-            } else {
-                // Obtener las categorías y sedes para el formulario
-                $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
-                $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
-                require_once __DIR__ . '/../views/pages/productos/create.php';
-            }
-        } catch (\Exception $e) {
-            $error = $e->getMessage();
-            require_once __DIR__ . '/../views/pages/productos/create.php';
+            $addProducto->add($body);
+            header('Location: /productos');
+        } catch (ValidationException $e) {
+            echo $e->getMessage();
+        } catch (DataException $e) {
+            echo $e->getMessage();
         }
     }
 
     public function edit()
     {
-        $id = $_GET['id'];
-        $producto = $this->repository->find(['id_producto' => $id, 'nombre => null']);
         $categorias = $this->categoriaRepository->find(['id_categoria' => null, 'nombre' => null]);
         $sedes = $this->sedeRepository->find(['id_sede' => null, 'nombre' => null]);
-        require_once __DIR__ . '/../views/pages/productos/edit.php';
+        $id = $_POST['id'];
+        $productos = $this->repository->find(['id_producto' => $id, 'nombre => null']);
+        $categorias = array_map(function ($categoria) {
+            return [
+                'id' => $categoria->getId(),
+                'nombre' => $categoria->getNombre(),
+                'descripcion' => $categoria->getDescripcion()
+            ];
+        }, $categorias);
+
+        $sedes = array_map(function ($sede) {
+            return [
+                'id' => $sede->getId(),
+                'nombre' => $sede->getNombre(),
+                'direccion' => $sede->getDireccion(),
+                'ciudad' => $sede->getCiudad()
+            ];
+        }, $sedes);
+
+        $content = __DIR__ . '/../views/pages/productos/edit.php';
+        if ($this->isAjaxRequest()) {
+            include $content;
+        } else {
+            include __DIR__ . '/../views/layouts/main.php';
+        }
     }
 
-    public function delete ()
+    public function delete()
     {
-        $id = $_GET['id'];
-        $deleteProducto = new ProductoDelete($this->repository, $this->validator);
-        $deleteProducto->delete($id);
-        header('Location: /productos');
+        // $id = $_GET['id'];
+        // $deleteProducto = new ProductoDelete($this->repository, $this->validator);
+        // $deleteProducto->delete($id);
+        // header('Location: /productos');
     }
 
     private function isAjaxRequest()

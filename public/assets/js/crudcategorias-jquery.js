@@ -34,4 +34,84 @@ $(document).ready(function () {
         });
 
     });
+
+    $('#categoriaForm').on('submit',function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        console.log(formData);
+        $.ajax({
+            url: '/DollarToyProyectoG3/categorias/store',
+            method: 'POST',         
+            data: formData,
+            success: function (response) {
+                if (response) {
+                    var res = JSON.parse(response);
+                    alert(res.message);
+                    window.location.href = '/DollarToyProyectoG3/categorias';
+                    console.log(response);
+                    console.log(res);
+                }
+            },
+            
+            error: function () {
+                alert("Error al guardar la sede.");
+                
+            }
+        });
+        console.log('Formulario enviado', formData);
+
+    });
+
+    $('#guardarCambiosC').on('click', function() {
+        const formData = $('#editarCategoriaForm').serialize();
+        console.log(formData);
+        $.ajax({
+            url: '/DollarToyProyectoG3/categorias/editar', // Cambia esta URL según tu configuración
+            method: 'POST',
+            data: formData,
+            success: function(response) {
+                const data = JSON.parse(response);
+                alert(data.message);
+                if (data.status === 'success') {
+                    location.reload(); // Recargar la página para ver los cambios
+                }
+            },
+            error: function() {
+                alert('Error al guardar los cambios.');
+            }
+        });
+    
+        editarModal.hide(); // Cerrar el modal
+    });
 });
+
+function confirmarEliminacion(categoriaId) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás deshacer esta acción.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/DollarToyProyectoG3/categorias/eliminar?id=' + categoriaId,
+                type: 'POST',
+                data: 'json',
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    alert(data.message);
+                    if (data.status === 'success') {
+                        location.reload(); // Recargar la página para ver los cambios
+                    }
+                },
+                error: function() {
+                    location.reload();
+                }
+             });
+        }
+    });
+}

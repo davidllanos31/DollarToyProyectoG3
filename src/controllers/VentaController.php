@@ -119,7 +119,7 @@ class VentaController
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'axelyurquina12@gmail.com'; 
-        $mail->Password = 'ujpjgjzfwheoqlsf'; 
+        $mail->Password = ''; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
